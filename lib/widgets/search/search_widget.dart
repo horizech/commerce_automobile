@@ -44,7 +44,7 @@ class SearchWidget extends StatelessWidget {
             collection = state.collections!
                 .where((element) => element.name == "Used Cars")
                 .first
-                .id;
+                .id!;
           }
           if (state.productOptions != null &&
               state.productOptions!.isNotEmpty) {

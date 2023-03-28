@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_up/enums/text_style.dart';
+import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_checkbox.dart';
+import 'package:flutter_up/widgets/up_text.dart';
 import 'package:flutter_up/widgets/up_textfield.dart';
 import 'package:shop/constants.dart';
 
@@ -25,13 +28,11 @@ class _AddEditProductMetaWidgetState extends State<AddEditProductMetaWidget> {
   performance(String key, String value) {
     performanceMeta[key] = value;
     newMeta["Performance"] = performanceMeta;
-    widget.onChange(newMeta);
   }
 
   features(String key, bool value) {
     featuresMeta[key] = value;
     newMeta["Features"] = featuresMeta;
-    widget.onChange(newMeta);
   }
 
   @override
@@ -57,8 +58,16 @@ class _AddEditProductMetaWidgetState extends State<AddEditProductMetaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const UpText(
+          "Meta",
+          type: UpTextType.heading6,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
         ...automobilePerformance.keys.map(
           (key) => Padding(
             padding: const EdgeInsets.all(8.0),
@@ -96,6 +105,15 @@ class _AddEditProductMetaWidgetState extends State<AddEditProductMetaWidget> {
                     features(key, value ?? ""),
                   }),
             ),
+          ),
+        ),
+        SizedBox(
+          width: 100,
+          child: UpButton(
+            onPressed: () {
+              widget.onChange(newMeta);
+            },
+            text: "Save",
           ),
         )
       ],

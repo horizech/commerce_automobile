@@ -12,7 +12,7 @@ class NotFoundErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      heightFactor: AutomobileAppbar().preferredSize.height,
+      heightFactor: const AutomobileAppbar().preferredSize.height,
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

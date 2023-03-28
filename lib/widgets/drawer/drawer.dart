@@ -32,16 +32,13 @@ class CustomDrawer extends StatelessWidget {
             )
             .toList();
         return Drawer(
-          // backgroundColor: Colors.black,
           child: ExpandableTree(
             childIndent: 8,
-            // twistyPosition: TwistyPosition.after,
             childrenDecoration: const BoxDecoration(color: Colors.transparent),
             submenuOpenColor: Colors.transparent,
             submenuClosedColor: Colors.transparent,
             submenuDecoration: const BoxDecoration(
               color: Colors.transparent,
-              // border: Border.all(),
             ),
             submenuMargin: const EdgeInsets.all(3),
             childrenMargin: const EdgeInsets.all(3),
@@ -67,48 +64,3 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 }
-            
-            
-            
-//              Center(
-//               child: ListView(
-//                   padding: EdgeInsets.zero,
-//                   children: collectionTree!.roots!
-//                       .map(
-//                         (e) => Column(
-//                           children: [
-//                             ListTile(
-//                               title: Text(
-//                                 e.name,
-//                                 style: Theme.of(context).textTheme.headline6,
-//                               ),
-//                               onTap: () {
-//                                
-//                               },
-//                             ),
-//                             childrenWidget(context, e)
-//                           ],
-//                         ),
-//                       )
-//                       .toList()),
-//             ),
-//           );
-//         });
-//   }
-// }
-
-// Widget childrenWidget(
-//     BuildContext context, CollectionTreeItem collectionTreeItem) {
-//   return Column(
-//       children: collectionTreeItem.children != null
-//           ? collectionTreeItem.children!
-//               .map((e) => Text(
-//                     e.name,
-//                     style: Theme.of(context)
-//                         .textTheme
-//                         .headline6!
-//                         .copyWith(color: Colors.white),
-//                   ))
-//               .toList()
-//           : [const Text("")]);
-// }

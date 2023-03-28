@@ -56,7 +56,7 @@ class _AllProductsState extends State<ProductsGridPage> {
       state.collections!
           .where((element) => element.parent == parent)
           .forEach((child) {
-        collections = _getCollectionsByParent(state, child.id, collections);
+        collections = _getCollectionsByParent(state, child.id!, collections);
       });
     }
 

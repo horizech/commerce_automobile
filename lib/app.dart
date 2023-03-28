@@ -4,11 +4,6 @@ import 'package:flutter_up/themes/up_themes.dart';
 import 'package:apiraiser/apiraiser.dart';
 import 'package:flutter_up/models/up_route.dart';
 import 'package:flutter_up/models/up_router_state.dart';
-import 'package:shop/pages/admin/add_edit_product.dart';
-import 'package:shop/pages/admin/add_edit_product_variation.dart';
-import 'package:shop/pages/admin/admin_product_options.dart';
-import 'package:shop/pages/admin/admin_product_variations.dart';
-import 'package:shop/pages/admin/admin_products.dart';
 import 'package:shop/pages/authentication/loginsignup.dart';
 import 'package:shop/pages/home/home.dart';
 
@@ -23,6 +18,13 @@ import 'package:flutter_up/up_app.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/widgets/media/media_cubit.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
+
+import 'package:shop/pages/admin/admin.dart';
+import 'package:shop/pages/admin/admin_combos.dart';
+import 'package:shop/pages/admin/admin_gallery.dart';
+import 'package:shop/pages/admin/admin_keywords.dart';
+import 'package:shop/pages/admin/admin_attributes.dart';
+import 'package:shop/pages/admin/admin_products.dart';
 
 class ShopApp extends StatelessWidget {
   const ShopApp({
@@ -49,21 +51,15 @@ class ShopApp extends StatelessWidget {
           create: (_) => StoreCubit(),
           child: UpApp(
             theme: UpThemes.generateThemeByColor(
-              // primaryColor: Colors.greenAccent,
               primaryColor: const Color.fromRGBO(200, 16, 46, 1.0),
               secondaryColor: Colors.white,
+              tertiaryColor: const Color.fromARGB(255, 222, 84, 107),
+              warnColor: Colors.red,
+              successColor: Colors.green,
             ),
             title: 'Shop',
-            initialRoute: Routes.home,
+            initialRoute: Routes.loginSignup,
             upRoutes: [
-              UpRoute(
-                path: Routes.loginSignup,
-                pageBuilder: (BuildContext context, UpRouterState state) =>
-                    const LoginSignupPage(),
-                name: Routes.loginSignup,
-                shouldRedirect: () => Apiraiser.authentication.isSignedIn(),
-                redirectRoute: Routes.adminProduct,
-              ),
               UpRoute(
                 name: Routes.home,
                 path: Routes.home,
@@ -75,58 +71,20 @@ class ShopApp extends StatelessWidget {
                 ),
               ),
               UpRoute(
+                path: Routes.loginSignup,
+                pageBuilder: (BuildContext context, UpRouterState state) =>
+                    const LoginSignupPage(),
+                name: Routes.loginSignup,
+                shouldRedirect: () => Apiraiser.authentication.isSignedIn(),
+                redirectRoute: Routes.home,
+              ),
+              UpRoute(
                 name: Routes.searchAutomobile,
                 path: Routes.searchAutomobile,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
                     const StoreDependantPage(
                   page: SearchPage(),
                 ),
-              ),
-              UpRoute(
-                name: Routes.adminProduct,
-                path: Routes.adminProduct,
-                pageBuilder: (BuildContext context, UpRouterState state) =>
-                    const StoreDependantPage(
-                  page: AdminPage(),
-                ),
-                redirectRoute: Routes.loginSignup,
-                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
-              ),
-              UpRoute(
-                name: Routes.addEditProduct,
-                path: Routes.addEditProduct,
-                pageBuilder: (BuildContext context, UpRouterState state) =>
-                    StoreDependantPage(
-                  page: AddEditProduct(
-                    queryParams: state.queryParams,
-                  ),
-                ),
-                redirectRoute: Routes.loginSignup,
-                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
-              ),
-              UpRoute(
-                name: Routes.adminProductVariations,
-                path: Routes.adminProductVariations,
-                pageBuilder: (BuildContext context, UpRouterState state) =>
-                    StoreDependantPage(
-                  page: AdminProductvariationsPage(
-                    queryParams: state.queryParams,
-                  ),
-                ),
-                redirectRoute: Routes.loginSignup,
-                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
-              ),
-              UpRoute(
-                name: Routes.addEditProductVariaton,
-                path: Routes.addEditProductVariaton,
-                pageBuilder: (BuildContext context, UpRouterState state) =>
-                    StoreDependantPage(
-                  page: AddEditProductVariation(
-                    queryParams: state.queryParams,
-                  ),
-                ),
-                redirectRoute: Routes.loginSignup,
-                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
               ),
               UpRoute(
                 name: Routes.product,
@@ -139,14 +97,6 @@ class ShopApp extends StatelessWidget {
                 ),
               ),
               UpRoute(
-                name: Routes.adminProductOptions,
-                path: Routes.adminProductOptions,
-                pageBuilder: (BuildContext context, UpRouterState state) =>
-                    const StoreDependantPage(
-                  page: AdminProductOptionsPage(),
-                ),
-              ),
-              UpRoute(
                 name: Routes.products,
                 path: Routes.products,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
@@ -155,6 +105,68 @@ class ShopApp extends StatelessWidget {
                     queryParams: state.queryParams,
                   ),
                 ),
+              ),
+              UpRoute(
+                path: Routes.adminCombos,
+                name: Routes.adminCombos,
+                pageBuilder: (BuildContext context, UpRouterState state) =>
+                    StoreDependantPage(
+                  page: AdminCombos(
+                    queryParams: state.queryParams,
+                  ),
+                ),
+                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
+                redirectRoute: Routes.loginSignup,
+              ),
+              UpRoute(
+                path: Routes.adminProducts,
+                name: Routes.adminProducts,
+                pageBuilder: (BuildContext context, UpRouterState state) =>
+                    const StoreDependantPage(
+                  page: AdminProducts(),
+                ),
+                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
+                redirectRoute: Routes.loginSignup,
+              ),
+              UpRoute(
+                path: Routes.adminAttributes,
+                name: Routes.adminAttributes,
+                pageBuilder: (BuildContext context, UpRouterState state) =>
+                    const StoreDependantPage(
+                  page: AdminProductOptions(),
+                ),
+                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
+                redirectRoute: Routes.loginSignup,
+              ),
+              UpRoute(
+                path: Routes.adminGallery,
+                name: Routes.adminGallery,
+                pageBuilder: (BuildContext context, UpRouterState state) =>
+                    const StoreDependantPage(
+                  page: AdminGallery(),
+                ),
+                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
+                redirectRoute: Routes.loginSignup,
+              ),
+              UpRoute(
+                path: Routes.admin,
+                name: Routes.admin,
+                pageBuilder: (BuildContext context, UpRouterState state) =>
+                    const StoreDependantPage(
+                  page: Admin(),
+                ),
+                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
+                redirectRoute: Routes.loginSignup,
+              ),
+              UpRoute(
+                path: Routes.adminKeywords,
+                name: Routes.adminKeywords,
+                pageBuilder: (BuildContext context, UpRouterState state) =>
+                    const StoreDependantPage(
+                  page: AdminKeywords(),
+                ),
+                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
+                redirectRoute: Routes.loginSignup,
               ),
             ],
           ),

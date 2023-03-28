@@ -8,9 +8,15 @@ class StoreState {
   final List<Collection>? collections;
   final CollectionTree? collectionTree;
   final List<Keyword>? keywords;
+  final List<Attribute>? attributes;
+  final List<AttributeValue>? attributeValues;
+  final List<Gallery>? gallery;
+  final List<ProductCombo>? productCombos;
+  final List<Combo>? combos;
+  final List<AddOn>? addOns;
+  final List<ProductAttribute>? productAttributes;
   final List<ProductOption>? productOptions;
   final List<ProductOptionValue>? productOptionValues;
-  final List<Gallery>? mediaGroups;
 
   StoreState(
     this.isLoading,
@@ -20,10 +26,15 @@ class StoreState {
     this.collections,
     this.collectionTree,
     this.keywords,
-    // this.genders,
+    this.attributes,
+    this.attributeValues,
+    this.gallery,
+    this.combos,
+    this.productCombos,
+    this.addOns,
+    this.productAttributes,
     this.productOptions,
     this.productOptionValues,
-    this.mediaGroups,
   );
 
   get productOptionsValuesMod => null;

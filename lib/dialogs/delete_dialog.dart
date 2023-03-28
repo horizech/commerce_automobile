@@ -1,16 +1,12 @@
-import 'package:apiraiser/apiraiser.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_up/helpers/up_toast.dart';
+import 'package:flutter_up/enums/up_color_type.dart';
 import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_text.dart';
-import 'package:shop/services/add_edit_product_service/add_edit_product_service.dart';
 
-class DeleteProductOptionValueDialog extends StatelessWidget {
-  final int productOptionValueId;
-
-  const DeleteProductOptionValueDialog(
-      {Key? key, required this.productOptionValueId})
-      : super(key: key);
+class DeleteDialog extends StatelessWidget {
+  const DeleteDialog({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +14,7 @@ class DeleteProductOptionValueDialog extends StatelessWidget {
       title: const Padding(
         padding: EdgeInsets.all(8.0),
         child: UpText(
-          "Delete Product Option Value",
+          "Delete",
         ),
       ),
       actionsPadding: const EdgeInsets.all(0),
@@ -27,7 +23,7 @@ class DeleteProductOptionValueDialog extends StatelessWidget {
       content: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
-          height: 200,
+          height: 100,
           width: 200,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +31,7 @@ class DeleteProductOptionValueDialog extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: UpText(
-                  "Are you sure you want to delete product option value",
+                  "Are you sure you want to delete?",
                 ),
               ),
             ],
@@ -60,20 +56,10 @@ class DeleteProductOptionValueDialog extends StatelessWidget {
           child: SizedBox(
             width: 100,
             child: UpButton(
+              colorType: UpColorType.warn,
               text: "Yes",
-              onPressed: () async {
-                APIResult? result =
-                    await AddEditProductService.deleteProductOptionValue(
-                        productOptionValueId);
-                if (result != null && result.success) {
-                  showUpToast(context: context, text: result.message ?? "");
-                  Navigator.pop(context, "success");
-                } else {
-                  showUpToast(
-                    context: context,
-                    text: "An Error Occurred",
-                  );
-                }
+              onPressed: () {
+                Navigator.pop(context, "success");
               },
             ),
           ),

@@ -1,23 +1,30 @@
 import 'package:apiraiser/apiraiser.dart';
+import 'package:shop/models/add_on.dart';
 import 'package:shop/models/collection.dart';
+import 'package:shop/models/combo.dart';
+import 'package:shop/models/gallery.dart';
+import 'package:shop/models/keyword.dart';
+import 'package:shop/models/media.dart';
 import 'package:shop/models/product.dart';
-import 'package:shop/models/product_option_value.dart';
-import 'package:shop/models/product_options.dart';
+import 'package:shop/models/product_attribute.dart';
+import 'package:shop/models/product_combo.dart';
+import 'package:shop/models/attribute_value.dart';
+import 'package:shop/models/attribute.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:shop/models/product_variation.dart';
 
 class AddEditProductService {
-  static Future<APIResult?> addEditProductOptionValues({
-    int? productOptionValueId,
+  static Future<APIResult?> addEditAttributeValues({
+    int? attributeValueId,
     required Map<String, dynamic> data,
   }) async {
     APIResult? result;
-    if (productOptionValueId != null) {
+    if (attributeValueId != null) {
       result = await Apiraiser.data
-          .update("ProductOptionValues", productOptionValueId, data);
+          .update("AttributeValues", attributeValueId, data);
     } else {
-      result = await Apiraiser.data.insert("ProductOptionValues", data);
+      result = await Apiraiser.data.insert("AttributeValues", data);
     }
 
     if (result.success) {
@@ -27,9 +34,19 @@ class AddEditProductService {
     }
   }
 
-  static Future<APIResult?> deleteProductOption(int productOptionId) async {
+  static Future<APIResult?> deleteAttribute(int attributeId) async {
+    APIResult result = await Apiraiser.data.delete("Attributes", attributeId);
+
+    if (result.success) {
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<APIResult?> deleteAttributeValue(int attributeValueId) async {
     APIResult result =
-        await Apiraiser.data.delete("ProductOptions", productOptionId);
+        await Apiraiser.data.delete("AttributeValues", attributeValueId);
 
     if (result.success) {
       return result;
@@ -38,16 +55,15 @@ class AddEditProductService {
     }
   }
 
-  static Future<APIResult?> deleteProductOptionValue(
-      int productOptionValueId) async {
-    APIResult result = await Apiraiser.data
-        .delete("ProductOptionValues", productOptionValueId);
+  static Future<APIResult?> deleteAddon(int addOnId) async {
+    APIResult? result = await Apiraiser.data.delete("ProductAddons", addOnId);
 
-    if (result.success) {
-      return result;
-    } else {
-      return null;
-    }
+    return result;
+  }
+
+  static Future<APIResult?> addProductAddon(Map<String, dynamic> data) async {
+    APIResult? result = await Apiraiser.data.insert("ProductAddons", data);
+    return result;
   }
 
   static Future<APIResult?> addEditProduct(
@@ -87,25 +103,36 @@ class AddEditProductService {
     }
   }
 
-  static Future<ProductOption?> addEditProductOption(
-      {required Map<String, dynamic> data, int? productOptionId}) async {
+  static Future<APIResult?> addEditAttribute(
+      {required Map<String, dynamic> data, int? attributeId}) async {
     APIResult? result;
-    if (productOptionId != null) {
-      result =
-          await Apiraiser.data.update("ProductOptions", productOptionId, data);
+    if (attributeId != null) {
+      result = await Apiraiser.data.update("Attributes", attributeId, data);
     } else {
-      result = await Apiraiser.data.insert("ProductOptions", data);
+      result = await Apiraiser.data.insert("Attributes", data);
     }
 
     if (result.success) {
-      ProductOption? productOption = await getProductOptionByName(data["Name"]);
-      return productOption;
+      return result;
     } else {
       return null;
     }
   }
 
-  static Future<ProductOption?> getProductOptionByName(String name) async {
+  static Future<APIResult?> addEditProductAttribute(
+      {required Map<String, dynamic> data, int? proAttributeId}) async {
+    APIResult? result;
+    if (proAttributeId != null) {
+      result = await Apiraiser.data
+          .update("ProductAttributes", proAttributeId, data);
+    } else {
+      result = await Apiraiser.data.insert("ProductAttributes", data);
+    }
+
+    return result;
+  }
+
+  static Future<Attribute?> getProductOptionByName(String name) async {
     List<QuerySearchItem> conditions = [
       QuerySearchItem(
           name: "Name", condition: ColumnCondition.equal, value: name)
@@ -114,8 +141,8 @@ class AddEditProductService {
         await Apiraiser.data.getByConditions("ProductOptions", conditions);
 
     if (result.success) {
-      ProductOption productOption = (result.data as List<dynamic>)
-          .map((p) => ProductOption.fromJson(p as Map<String, dynamic>))
+      Attribute productOption = (result.data as List<dynamic>)
+          .map((p) => Attribute.fromJson(p as Map<String, dynamic>))
           .first;
       return productOption;
     } else {
@@ -144,6 +171,25 @@ class AddEditProductService {
     }
   }
 
+  static Future<List<ProductVariation>> getProductVariationByProductId(
+      int productId) async {
+    List<QuerySearchItem> conditions = [
+      QuerySearchItem(
+          name: "Product", condition: ColumnCondition.equal, value: productId)
+    ];
+    APIResult result =
+        await Apiraiser.data.getByConditions("ProductVariations", conditions);
+
+    if (result.success) {
+      List<ProductVariation> productVariations = (result.data as List<dynamic>)
+          .map((p) => ProductVariation.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return productVariations;
+    } else {
+      return [];
+    }
+  }
+
   static Future<Product?> getProductById(int productId) async {
     List<QuerySearchItem> conditions = [
       QuerySearchItem(
@@ -162,40 +208,95 @@ class AddEditProductService {
     }
   }
 
-  static Future<List<ProductOptionValue>?> getProductOptionValues(
-      int? currentCollection, int? currentProductOption) async {
-    List<QuerySearchItem> conditions = [];
-    if (currentProductOption != null) {
-      conditions.add(
-        QuerySearchItem(
-          name: "ProductOption",
-          condition: ColumnCondition.equal,
-          value: currentProductOption,
-        ),
-      );
-    }
-
-    if (currentCollection != null) {
-      conditions.add(
-        QuerySearchItem(
+  static Future<List<Product>> getProductBycollection(int collection) async {
+    List<QuerySearchItem> conditions = [
+      QuerySearchItem(
           name: "Collection",
           condition: ColumnCondition.equal,
-          value: currentCollection,
-        ),
-      );
-    }
-
+          value: collection)
+    ];
     APIResult result =
-        await Apiraiser.data.getByConditions("ProductOptionValues", conditions);
+        await Apiraiser.data.getByConditions("Products", conditions);
 
     if (result.success) {
-      List<ProductOptionValue> productOptionValues = (result.data
-              as List<dynamic>)
-          .map((p) => ProductOptionValue.fromJson(p as Map<String, dynamic>))
+      List<Product> products = (result.data as List<dynamic>)
+          .map((p) => Product.fromJson(p as Map<String, dynamic>))
           .toList();
-      return productOptionValues;
+      return products;
+    } else {
+      return [];
+    }
+  }
+
+  static Future<List<Product>> getVariedProducts() async {
+    List<QuerySearchItem> conditions = [
+      QuerySearchItem(
+          name: "IsVariedProduct",
+          condition: ColumnCondition.equal,
+          value: true)
+    ];
+    APIResult result =
+        await Apiraiser.data.getByConditions("Products", conditions);
+
+    if (result.success) {
+      List<Product> products = (result.data as List<dynamic>)
+          .map((p) => Product.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return products;
+    } else {
+      return [];
+    }
+  }
+
+  static Future<List<AttributeValue>?> getAttributeValues() async {
+    APIResult result = await Apiraiser.data.get("AttributeValues", -1);
+
+    if (result.success) {
+      List<AttributeValue> attributeValues = (result.data as List<dynamic>)
+          .map((p) => AttributeValue.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return attributeValues;
     } else {
       return null;
+    }
+  }
+
+  static Future<List<ProductAttribute>?> getProductAttributes() async {
+    APIResult result = await Apiraiser.data.get("ProductAttributes", -1);
+
+    if (result.success) {
+      List<ProductAttribute> productAttributes = (result.data as List<dynamic>)
+          .map((p) => ProductAttribute.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return productAttributes;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<AddOn>?> getAddons() async {
+    APIResult result = await Apiraiser.data.get("ProductAddons", -1);
+
+    if (result.success) {
+      List<AddOn> addons = (result.data as List<dynamic>)
+          .map((p) => AddOn.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return addons;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<Keyword>> getKeywords() async {
+    APIResult result = await Apiraiser.data.get("Keywords", -1);
+
+    if (result.success) {
+      List<Keyword> keywords = (result.data as List<dynamic>)
+          .map((p) => Keyword.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return keywords;
+    } else {
+      return [];
     }
   }
 
@@ -212,14 +313,27 @@ class AddEditProductService {
     }
   }
 
-  static Future<List<ProductOption>?> getProductOptions() async {
-    APIResult result = await Apiraiser.data.get("ProductOptions", -1);
+  static Future<List<Gallery>> getGallery() async {
+    APIResult result = await Apiraiser.data.get("Gallery", -1);
 
     if (result.success) {
-      List<ProductOption> productOptions = (result.data as List<dynamic>)
-          .map((p) => ProductOption.fromJson(p as Map<String, dynamic>))
+      List<Gallery> gallery = (result.data as List<dynamic>)
+          .map((p) => Gallery.fromJson(p as Map<String, dynamic>))
           .toList();
-      return productOptions;
+      return gallery;
+    } else {
+      return [];
+    }
+  }
+
+  static Future<List<Attribute>?> getAttributes() async {
+    APIResult result = await Apiraiser.data.get("Attributes", -1);
+
+    if (result.success) {
+      List<Attribute> attributes = (result.data as List<dynamic>)
+          .map((p) => Attribute.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return attributes;
     } else {
       return null;
     }
@@ -270,5 +384,227 @@ class AddEditProductService {
     //     File(filePath).readAsBytes().asStream(), File(filePath).lengthSync(),
     //     filename: filePath.split("/").last));
     // var res = await request.send();
+  }
+
+  static Future<APIResult?> addEditProductVariations(
+    List<Map<String, dynamic>> data,
+    int? productVariationId,
+  ) async {
+    // APIResult result;
+    List<APIResult> result = [];
+    if (productVariationId != null) {
+      dynamic futureResult = await Future.wait([
+        ...data
+            .map((e) => Apiraiser.data.update("ProductVariations", e["Id"], e))
+            .toList()
+      ]);
+      result = futureResult as List<APIResult>;
+    } else {
+      dynamic futureResult = await Future.wait([
+        ...data
+            .map((e) => Apiraiser.data.insert("ProductVariations", e))
+            .toList()
+      ]);
+      result = futureResult as List<APIResult>;
+    }
+
+    return result.first;
+  }
+
+  static Future<List<Product>?> getProductByIds(List<int>? productIds) async {
+    List<QuerySearchItem> conditions = [
+      QuerySearchItem(
+          name: "Id", condition: ColumnCondition.includes, value: productIds)
+    ];
+    APIResult result =
+        await Apiraiser.data.getByConditions("Products", conditions);
+
+    if (result.success) {
+      List<Product> products = (result.data as List<dynamic>)
+          .map((p) => Product.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return products;
+    } else {
+      return [];
+    }
+  }
+
+  static Future<APIResult?> addEditCombos(
+      {required Map<String, dynamic> data, int? comboId}) async {
+    APIResult? result;
+    if (comboId != null) {
+      result = await Apiraiser.data.update("Combos", comboId, data);
+    } else {
+      result = await Apiraiser.data.insert("Combos", data);
+    }
+
+    return result;
+  }
+
+  static Future<APIResult?> addEditGallery(
+      {required Map<String, dynamic> data, int? galleryId}) async {
+    APIResult? result;
+    if (galleryId != null) {
+      result = await Apiraiser.data.update("Gallery", galleryId, data);
+    } else {
+      result = await Apiraiser.data.insert("Gallery", data);
+    }
+
+    return result;
+  }
+
+  static Future<List<Combo>?> getCombos() async {
+    APIResult result = await Apiraiser.data.get("Combos", -1);
+
+    if (result.success) {
+      List<Combo> combos = (result.data as List<dynamic>)
+          .map((p) => Combo.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return combos;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<ProductCombo>?> getProductCombos() async {
+    APIResult result = await Apiraiser.data.get("ProductCombos", -1);
+
+    if (result.success) {
+      List<ProductCombo> productCombos = (result.data as List<dynamic>)
+          .map((p) => ProductCombo.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return productCombos;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<APIResult?> deleteCombo(int comboId) async {
+    APIResult result = await Apiraiser.data.delete("Combos", comboId);
+
+    return result;
+  }
+
+  static Future<APIResult?> deleteKeyword(int keywordId) async {
+    APIResult result = await Apiraiser.data.delete("Keywords", keywordId);
+
+    return result;
+  }
+
+  static Future<APIResult?> deleteGallery(int galleryId) async {
+    APIResult result = await Apiraiser.data.delete("Gallery", galleryId);
+
+    return result;
+  }
+
+  static Future<APIResult?> deleteCollection(int collectionId) async {
+    APIResult result = await Apiraiser.data.delete("Collections", collectionId);
+
+    return result;
+  }
+
+  static Future<APIResult?> insertProductCombo(
+    Map<String, dynamic> data,
+  ) async {
+    APIResult result;
+
+    result = await Apiraiser.data.insert("ProductCombos", data);
+
+    if (result.success) {
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<APIResult?> deleteProductCombo(int productComboId) async {
+    APIResult? result =
+        await Apiraiser.data.delete("ProductCombos", productComboId);
+    return result;
+  }
+
+  static Future<APIResult?> deleteProduct(int productId) async {
+    APIResult? result = await Apiraiser.data.delete("Products", productId);
+    return result;
+  }
+
+  static Future<APIResult?> deleteProductVariation(
+      int productVariationId) async {
+    APIResult? result =
+        await Apiraiser.data.delete("ProductVariations", productVariationId);
+    return result;
+  }
+
+  static Future<List<AttributeValue>?> getProductOptionValuesByConditions(
+      int? currentCollection, int? currentProductOption) async {
+    List<QuerySearchItem> conditions = [];
+    if (currentProductOption != null) {
+      conditions.add(
+        QuerySearchItem(
+          name: "ProductOption",
+          condition: ColumnCondition.equal,
+          value: currentProductOption,
+        ),
+      );
+    }
+
+    if (currentCollection != null) {
+      conditions.add(
+        QuerySearchItem(
+          name: "Collection",
+          condition: ColumnCondition.equal,
+          value: currentCollection,
+        ),
+      );
+    }
+
+    APIResult result =
+        await Apiraiser.data.getByConditions("ProductOptionValues", conditions);
+
+    if (result.success) {
+      List<AttributeValue> attributeValues = (result.data as List<dynamic>)
+          .map((p) => AttributeValue.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return attributeValues;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<APIResult?> addEditCollection(
+      {required Map<String, dynamic> data, int? collectionId}) async {
+    APIResult? result;
+    if (collectionId != null) {
+      result = await Apiraiser.data.update("Collections", collectionId, data);
+    } else {
+      result = await Apiraiser.data.insert("Collections", data);
+    }
+
+    return result;
+  }
+
+  static Future<APIResult?> addEditkeyword(
+      {required Map<String, dynamic> data, int? keywordId}) async {
+    APIResult? result;
+    if (keywordId != null) {
+      result = await Apiraiser.data.update("Keywords", keywordId, data);
+    } else {
+      result = await Apiraiser.data.insert("Keywords", data);
+    }
+
+    return result;
+  }
+
+  static Future<List<Media>> getMedia() async {
+    APIResult result = await Apiraiser.data.get("Media", -1);
+
+    if (result.success) {
+      List<Media> media = (result.data as List<dynamic>)
+          .map((p) => Media.fromJson(p as Map<String, dynamic>))
+          .toList();
+      return media;
+    } else {
+      return [];
+    }
   }
 }

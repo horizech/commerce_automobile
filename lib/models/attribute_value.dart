@@ -1,30 +1,28 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class Collection extends Equatable {
+class AttributeValue extends Equatable {
   final int? id;
   final DateTime? createdOn;
   final int? createdBy;
   final DateTime? lastUpdatedOn;
   final int? lastUpdatedBy;
   final String name;
-  final int? parent;
-  final int? media;
+  final int attribute;
 
-  const Collection({
+  const AttributeValue({
     this.id,
     this.createdOn,
     this.createdBy,
     this.lastUpdatedOn,
     this.lastUpdatedBy,
     required this.name,
-    this.media,
-    this.parent,
+    required this.attribute,
   });
 
-  factory Collection.fromJson(Map<String, dynamic> json) {
+  factory AttributeValue.fromJson(Map<String, dynamic> json) {
     try {
-      Collection collection = Collection(
+      AttributeValue attributeValues = AttributeValue(
         id: json['Id'] as int,
         createdOn: json['CreatedOn'] != null
             ? DateTime.parse(json['CreatedOn'] as String)
@@ -35,25 +33,23 @@ class Collection extends Equatable {
             : null,
         lastUpdatedBy: json['LastUpdatedBy'] as int?,
         name: json['Name'] as String,
-        media: json['Media'] as int?,
-        parent: json['Parent'] as int?,
+        attribute: json['Attribute'] as int,
       );
-      return collection;
+      return attributeValues;
     } catch (e) {
       debugPrint(e.toString());
       rethrow;
     }
   }
 
-  static Map<String, dynamic> toJson(Collection instance) => <String, dynamic>{
+  Map<String, dynamic> toJson(AttributeValue instance) => <String, dynamic>{
         'Id': instance.id,
         'CreatedOn': instance.createdOn,
         'CreatedBy': instance.createdBy,
         'LastUpdatedOn': instance.lastUpdatedOn,
         'LastUpdatedBy': instance.lastUpdatedBy,
         'Name': instance.name,
-        'Media': instance.media,
-        'Parent': instance.parent,
+        'Attribute': instance.attribute,
       };
 
   @override
@@ -64,7 +60,6 @@ class Collection extends Equatable {
         lastUpdatedOn,
         lastUpdatedBy,
         name,
-        media,
-        parent
+        attribute,
       ];
 }

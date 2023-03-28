@@ -6,14 +6,13 @@ import 'package:shop/constants.dart';
 
 class AutomobileAppbar extends StatelessWidget implements PreferredSizeWidget {
   final int? collection;
-  GlobalKey<ScaffoldState>? scaffoldKey;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
-  AutomobileAppbar({Key? key, this.collection, this.scaffoldKey})
+  const AutomobileAppbar({Key? key, this.collection, this.scaffoldKey})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(color: UpConfig.of(context).theme.primaryColor),
       height: 80,
@@ -58,56 +57,6 @@ class AutomobileAppbar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
     );
-    // UpAppBar(
-    //   style: UpStyle(
-    //     appBarColor: Colors.transparent,
-    //   ),
-    //   excludeHeaderSemantics: true,
-    //   automaticallyImplyLeading: false,
-    //   title: "Lazy Boy MCR",
-    //   leading: width < 600
-    //       ? IconButton(
-    //           icon: const Icon(
-    //             Icons.menu,
-    //             color: Colors.white,
-    //             size: 25,
-    //           ),
-    //           onPressed: () {
-    //             scaffoldKey!.currentState!.openDrawer();
-    //           },
-    //         )
-    //       : const Text(""),
-    //   actions: [
-    //     IconButton(
-    //       onPressed: () {
-    //         showSearch(
-    //           context: context,
-    //           delegate: CustomSearchDelegate(collectionId: collection),
-    //         );
-    //       },
-    //       icon: const Icon(Icons.search),
-    //     ),
-    //     Visibility(
-    //       visible: !Apiraiser.authentication.isSignedIn(),
-    //       child: IconButton(
-    //         onPressed: () {
-    //           ServiceManager<UpNavigationService>().navigateToNamed(
-    //             Routes.loginSignup,
-    //           );
-    //         },
-    //         icon: const Icon(Icons.person),
-    //       ),
-    //     ),
-    //     IconButton(
-    //       onPressed: () {
-    //         ServiceManager<UpNavigationService>().navigateToNamed(
-    //           Routes.cart,
-    //         );
-    //       },
-    //       icon: const Icon(Icons.shopping_bag),
-    //     ),
-    //   ],
-    // );
   }
 
   @override

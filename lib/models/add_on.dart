@@ -1,26 +1,26 @@
-import 'package:equatable/equatable.dart';
-
-class Gallery extends Equatable {
+class AddOn {
   final int? id;
   final DateTime? createdOn;
   final int? createdBy;
   final DateTime? lastUpdatedOn;
   final int? lastUpdatedBy;
-  final String? name;
-  final List<int> mediaList;
+  final int product;
+  final int addOn;
+  final double? price;
 
-  const Gallery({
+  const AddOn({
     this.id,
     this.createdOn,
     this.createdBy,
     this.lastUpdatedOn,
     this.lastUpdatedBy,
-    this.name,
-    required this.mediaList,
+    required this.addOn,
+    required this.price,
+    required this.product,
   });
 
-  factory Gallery.fromJson(Map<String, dynamic> json) {
-    Gallery gallery = Gallery(
+  factory AddOn.fromJson(Map<String, dynamic> json) {
+    AddOn addOn = AddOn(
       id: json['Id'] as int,
       createdOn: json['CreatedOn'] != null
           ? (json['CreatedOn'] is String)
@@ -34,38 +34,21 @@ class Gallery extends Equatable {
               : json['LastUpdatedOn']
           : null,
       lastUpdatedBy: json['LastUpdatedBy'] as int?,
-      name: json['Name'] as String?,
-      mediaList: json['MediaList'] != null
-          ? (json['MediaList'] as List<dynamic>)
-              .map((e) => convertToInt(e))
-              .toList()
-          // ? (json['Variations'] as List<int>)
-          : [],
+      product: json['Product'] as int,
+      addOn: json['Addon'] as int,
+      price: json['Price'] as double?,
     );
-    return gallery;
-  }
-  static int convertToInt(dynamic a) {
-    return int.parse(a.toString());
+    return addOn;
   }
 
-  static Map<String, dynamic> toJson(Gallery instance) => <String, dynamic>{
+  static Map<String, dynamic> toJson(AddOn instance) => <String, dynamic>{
         'Id': instance.id,
         'CreatedOn': instance.createdOn,
         'CreatedBy': instance.createdBy,
         'LastUpdatedOn': instance.lastUpdatedOn,
         'LastUpdatedBy': instance.lastUpdatedBy,
-        'Name': instance.name,
-        'MediaList': instance.mediaList,
+        'Product': instance.product,
+        'Addon': instance.addOn,
+        'Price': instance.price,
       };
-
-  @override
-  List<Object?> get props => [
-        id,
-        createdOn,
-        createdBy,
-        lastUpdatedOn,
-        lastUpdatedBy,
-        name,
-        mediaList,
-      ];
 }

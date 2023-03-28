@@ -107,8 +107,8 @@ class _ProductDetailedInfoState extends State<ProductDetailedInfo> {
       return BlocConsumer<StoreCubit, StoreState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if (state.mediaGroups != null && state.mediaGroups!.isNotEmpty) {
-            mediaList = state.mediaGroups!
+          if (state.gallery != null && state.gallery!.isNotEmpty) {
+            mediaList = state.gallery!
                 .where((element) => element.id == widget.product.gallery)
                 .first
                 .mediaList;

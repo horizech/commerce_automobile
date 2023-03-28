@@ -1,26 +1,24 @@
-import 'package:equatable/equatable.dart';
-
-class Gallery extends Equatable {
+class ProductCombo {
   final int? id;
   final DateTime? createdOn;
   final int? createdBy;
   final DateTime? lastUpdatedOn;
   final int? lastUpdatedBy;
-  final String? name;
-  final List<int> mediaList;
+  final int combo;
+  final int product;
 
-  const Gallery({
+  const ProductCombo({
     this.id,
     this.createdOn,
     this.createdBy,
     this.lastUpdatedOn,
     this.lastUpdatedBy,
-    this.name,
-    required this.mediaList,
+    required this.product,
+    required this.combo,
   });
 
-  factory Gallery.fromJson(Map<String, dynamic> json) {
-    Gallery gallery = Gallery(
+  factory ProductCombo.fromJson(Map<String, dynamic> json) {
+    ProductCombo combo = ProductCombo(
       id: json['Id'] as int,
       createdOn: json['CreatedOn'] != null
           ? (json['CreatedOn'] is String)
@@ -34,38 +32,25 @@ class Gallery extends Equatable {
               : json['LastUpdatedOn']
           : null,
       lastUpdatedBy: json['LastUpdatedBy'] as int?,
-      name: json['Name'] as String?,
-      mediaList: json['MediaList'] != null
-          ? (json['MediaList'] as List<dynamic>)
-              .map((e) => convertToInt(e))
-              .toList()
-          // ? (json['Variations'] as List<int>)
-          : [],
+      product: json['Product'] as int,
+      combo: json['Combo'] as int,
     );
-    return gallery;
+
+    return combo;
   }
+
   static int convertToInt(dynamic a) {
     return int.parse(a.toString());
   }
 
-  static Map<String, dynamic> toJson(Gallery instance) => <String, dynamic>{
+  static Map<String, dynamic> toJson(ProductCombo instance) =>
+      <String, dynamic>{
         'Id': instance.id,
         'CreatedOn': instance.createdOn,
         'CreatedBy': instance.createdBy,
         'LastUpdatedOn': instance.lastUpdatedOn,
         'LastUpdatedBy': instance.lastUpdatedBy,
-        'Name': instance.name,
-        'MediaList': instance.mediaList,
+        'Product': instance.product,
+        'Combo': instance.combo,
       };
-
-  @override
-  List<Object?> get props => [
-        id,
-        createdOn,
-        createdBy,
-        lastUpdatedOn,
-        lastUpdatedBy,
-        name,
-        mediaList,
-      ];
 }

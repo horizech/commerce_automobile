@@ -13,7 +13,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AutomobileAppbar(),
+      appBar: const AutomobileAppbar(),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(

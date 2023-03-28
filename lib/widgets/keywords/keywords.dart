@@ -62,7 +62,7 @@ Widget _keywordsWrap(BuildContext context, Function? onChange,
     children: [
       KeywordSelector(
           onChange: onChange,
-          keyword: const Keyword(-1, null, null, null, null, "All"),
+          keyword: const Keyword(id: -1, name: "All"),
           isSelected: (selectedKeywordId ?? -1) == -1),
       ...keywordsList
           .toList()
