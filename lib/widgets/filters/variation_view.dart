@@ -3,19 +3,19 @@ import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_checkbox.dart';
 import 'package:flutter_up/widgets/up_expansion_tile.dart';
-import 'package:shop/models/product_option_value.dart';
-import 'package:shop/models/product_options.dart';
+import 'package:shop/models/attribute.dart';
+import 'package:shop/models/attribute_value.dart';
 
 class VariationViewWidget extends StatefulWidget {
-  final List<ProductOptionValue>? otherVariations;
-  final ProductOption productOption;
+  final List<AttributeValue>? attributeValues;
+  final Attribute attribute;
   final Function? change;
 
   const VariationViewWidget({
     Key? key,
-    this.otherVariations,
-    required this.productOption,
     this.change,
+    required this.attribute,
+    this.attributeValues,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class _VariationViewWidgetState extends State<VariationViewWidget> {
   void initState() {
     super.initState();
     if (checkboxesValues.isEmpty) {
-      totalLength = widget.otherVariations!.length;
+      totalLength = widget.attributeValues!.length;
       for (int i = 0; i < totalLength; i++) {
         checkboxesValues.add(false);
       }
@@ -60,7 +60,7 @@ class _VariationViewWidgetState extends State<VariationViewWidget> {
             expandedCrossAxisAlignment: CrossAxisAlignment.start,
             expandedAlignment: Alignment.topLeft,
             childrenPadding: const EdgeInsets.all(8),
-            title: widget.productOption.name,
+            title: widget.attribute.name,
             style: UpStyle(
               textSize: 16,
               textWeight: FontWeight.bold,
@@ -69,10 +69,10 @@ class _VariationViewWidgetState extends State<VariationViewWidget> {
                   UpConfig.of(context).theme.primaryColor,
               expansionTileIconColor: UpConfig.of(context).theme.primaryColor,
             ),
-            children: widget.otherVariations!
+            children: widget.attributeValues!
                 .asMap()
                 .entries
-                .where((e) => e.value.productOption == widget.productOption.id)
+                .where((e) => e.value.attribute == widget.attribute.id)
                 .map(
                   (variation) => UpCheckbox(
                     label: variation.value.name,

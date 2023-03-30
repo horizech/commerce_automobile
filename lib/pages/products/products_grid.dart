@@ -11,7 +11,7 @@ import 'package:shop/widgets/drawer/MenuDrawer.dart';
 import 'package:shop/widgets/error/error.dart';
 import 'package:shop/widgets/filters/filter.dart';
 import 'package:shop/widgets/products/products_grid.dart';
-import 'package:shop/services/products_service.dart';
+import 'package:shop/services/product_service.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 
 class ProductsGridPage extends StatefulWidget {
@@ -33,12 +33,8 @@ class _AllProductsState extends State<ProductsGridPage> {
 
   change(int? id, Map<String, List<int>>? s) {
     selectedVariationsValues = {};
-    // setState(() {
     selectedKeywordId = id;
     selectedVariationsValues = s ?? {};
-    // filteredProducts!= filteredProducts(
-    // products, selectedVariationsValues, selectedKeywordId);
-    // });'
 
     ServiceManager<VariationService>().setVariation(s ?? {});
   }
@@ -139,7 +135,7 @@ class _AllProductsState extends State<ProductsGridPage> {
                                       ),
                                       // color: Colors.red[400],
                                       child: FilterPage(
-                                        collection: collection,
+                                        collection: collection!,
                                         change: (v) => change(0, v),
                                       ),
                                     ),

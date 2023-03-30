@@ -9,11 +9,12 @@ import 'package:flutter_up/widgets/up_icon.dart';
 import 'package:flutter_up/widgets/up_orientational_column_row.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/models/attribute.dart';
+import 'package:shop/models/attribute_value.dart';
 import 'package:shop/models/keyword.dart';
 import 'package:shop/models/media.dart';
 import 'package:shop/models/product.dart';
-import 'package:shop/models/product_option_value.dart';
-import 'package:shop/models/product_options.dart';
+
 import 'package:shop/widgets/appbar/automobile_appbar.dart';
 import 'package:shop/widgets/drawer/MenuDrawer.dart';
 import 'package:shop/widgets/error/error.dart';
@@ -98,8 +99,8 @@ class ProductDetailedInfo extends StatefulWidget {
 class _ProductDetailedInfoState extends State<ProductDetailedInfo> {
   List<Keyword> keywords = [];
   List<int> mediaList = [];
-  List<ProductOption> productOptions = [];
-  List<ProductOptionValue> productOptionValues = [];
+  List<Attribute> attributes = [];
+  List<AttributeValue> attributeValues = [];
 
   @override
   Widget build(BuildContext context) {
@@ -120,13 +121,12 @@ class _ProductDetailedInfoState extends State<ProductDetailedInfo> {
               );
             }
           }
-          if (state.productOptions != null &&
-              state.productOptions!.isNotEmpty) {
-            productOptions = state.productOptions!.toList();
+          if (state.attributes != null && state.attributes!.isNotEmpty) {
+            attributes = state.attributes!.toList();
           }
-          if (state.productOptionValues != null &&
-              state.productOptionValues!.isNotEmpty) {
-            productOptionValues = state.productOptionValues!.toList();
+          if (state.attributeValues != null &&
+              state.attributeValues!.isNotEmpty) {
+            attributeValues = state.attributeValues!.toList();
           }
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -214,8 +214,8 @@ class _ProductDetailedInfoState extends State<ProductDetailedInfo> {
                             padding: const EdgeInsets.all(8.0),
                             child: _ProductDetail(
                               product: widget.product,
-                              productOptions: productOptions,
-                              productOptionValues: productOptionValues,
+                              attributes: attributes,
+                              attributeValues: attributeValues,
                             ),
                           ),
                           const SizedBox(
@@ -240,14 +240,14 @@ class _ProductDetailedInfoState extends State<ProductDetailedInfo> {
 
 class _ProductDetail extends StatefulWidget {
   final Product product;
-  final List<ProductOption>? productOptions;
-  final List<ProductOptionValue>? productOptionValues;
-  const _ProductDetail(
-      {Key? key,
-      required this.product,
-      this.productOptionValues,
-      this.productOptions})
-      : super(key: key);
+  final List<Attribute>? attributes;
+  final List<AttributeValue>? attributeValues;
+  const _ProductDetail({
+    Key? key,
+    required this.product,
+    required this.attributeValues,
+    required this.attributes,
+  }) : super(key: key);
 
   @override
   State<_ProductDetail> createState() => __ProductDetail();
@@ -257,48 +257,49 @@ class __ProductDetail extends State<_ProductDetail> {
   int view = 1;
 
   Widget getDetailRow(String key) {
+    key;
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Visibility(
-        visible: widget.product.options != null &&
-            key.isNotEmpty &&
-            widget.product.options![key] != null &&
-            widget.productOptions != null &&
-            widget.productOptions!.isNotEmpty &&
-            widget.productOptionValues != null &&
-            widget.productOptionValues!.isNotEmpty,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              child: UpText(
-                widget.productOptions!
-                    .where((element) => element.name == key)
-                    .first
-                    .name
-                    .toString(),
-                style: UpStyle(
-                  textWeight: FontWeight.bold,
-                  textSize: 14,
+      child: widget.product.options != null &&
+              key.isNotEmpty &&
+              widget.product.options![key] != null &&
+              widget.attributes != null &&
+              widget.attributes!.isNotEmpty &&
+              widget.attributeValues != null &&
+              widget.attributeValues!.isNotEmpty &&
+              widget.attributes!.any((element) => element.id == int.parse(key))
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  child: UpText(
+                    widget.attributes!
+                        .where((element) => element.id == int.parse(key))
+                        .first
+                        .name
+                        .toString(),
+                    style: UpStyle(
+                      textWeight: FontWeight.bold,
+                      textSize: 14,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              child: UpText(
-                  widget.productOptionValues!
-                      .where((element) =>
-                          element.id == widget.product.options![key])
-                      .first
-                      .name
-                      .toString(),
-                  style: UpStyle(
-                    textSize: 14,
-                    // textColor: UpConfig.of(context).theme.primaryColor[400]),
-                  )),
+                SizedBox(
+                  child: UpText(
+                      widget.attributeValues!
+                          .where((element) =>
+                              element.id == widget.product.options![key])
+                          .first
+                          .name
+                          .toString(),
+                      style: UpStyle(
+                        textSize: 14,
+                        // textColor: UpConfig.of(context).theme.primaryColor[400]),
+                      )),
+                )
+              ],
             )
-          ],
-        ),
-      ),
+          : const SizedBox(),
     );
   }
 
@@ -414,16 +415,20 @@ class __ProductDetail extends State<_ProductDetail> {
   }
 
   Widget detailView() {
-    return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: widget.product.options!.keys
-            .map((key) => SizedBox(
-                  child: getDetailRow(key),
-                ))
-            .toList(),
-      ),
-    );
+    return widget.product.options != null
+        ? SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widget.product.options!.entries
+                  .where((element) =>
+                      element.key.length == 1 && element.value != null)
+                  .map((value) => SizedBox(
+                        child: getDetailRow(value.key),
+                      ))
+                  .toList(),
+            ),
+          )
+        : const SizedBox();
   }
 
   Widget getView() {

@@ -21,7 +21,7 @@ import 'package:shop/models/combo.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/models/product_combo.dart';
 import 'package:shop/services/add_edit_product_service/add_edit_product_service.dart';
-import 'package:shop/services/products_service.dart';
+import 'package:shop/services/product_service.dart';
 
 import 'package:shop/widgets/gallery_dropdown.dart';
 import 'package:shop/widgets/store/store_cubit.dart';

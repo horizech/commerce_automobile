@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/widgets/appbar/automobile_appbar.dart';
 import 'package:shop/widgets/products/products_grid.dart';
-import 'package:shop/services/products_service.dart';
+import 'package:shop/services/product_service.dart';
 
 class SearchPage extends StatelessWidget {
   final String query;

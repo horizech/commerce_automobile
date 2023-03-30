@@ -36,7 +36,9 @@ class _SearchPageState extends State<SearchPage> {
                   SizedBox(
                     height: 250,
                     width: 400,
-                    child: SearchWidget(),
+                    child: SearchWidget(
+                      collection: 0,
+                    ),
                   ),
                 ],
               ),

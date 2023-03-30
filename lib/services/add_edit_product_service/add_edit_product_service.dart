@@ -132,7 +132,7 @@ class AddEditProductService {
     return result;
   }
 
-  static Future<Attribute?> getProductOptionByName(String name) async {
+  static Future<Attribute?> getAttributeByName(String name) async {
     List<QuerySearchItem> conditions = [
       QuerySearchItem(
           name: "Name", condition: ColumnCondition.equal, value: name)

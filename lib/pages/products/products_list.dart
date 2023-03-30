@@ -10,7 +10,7 @@ import 'package:shop/widgets/header/header.dart';
 import 'package:shop/widgets/keywords/keywords.dart';
 
 import 'package:shop/widgets/products/products_list.dart';
-import 'package:shop/services/products_service.dart';
+import 'package:shop/services/product_service.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 
 class ProductsListPage extends StatefulWidget {
@@ -109,7 +109,7 @@ class _AllProductsState extends State<ProductsListPage> {
                                 // height: MediaQuery.of(context).size.height,
                                 color: Colors.grey[100],
                                 child: FilterPage(
-                                  collection: collection,
+                                  collection: collection!,
                                   change: (v) => change(0, v),
                                 ),
                               ),

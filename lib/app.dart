@@ -58,12 +58,12 @@ class ShopApp extends StatelessWidget {
               successColor: Colors.green,
             ),
             title: 'Shop',
-            initialRoute: Routes.loginSignup,
+            initialRoute: Routes.home,
             upRoutes: [
               UpRoute(
                 name: Routes.home,
                 path: Routes.home,
-                shouldRedirect: () => Apiraiser.authentication.isSignedIn(),
+                shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
                 redirectRoute: Routes.loginSignup,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
                     const StoreDependantPage(
@@ -133,7 +133,7 @@ class ShopApp extends StatelessWidget {
                 name: Routes.adminAttributes,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
                     const StoreDependantPage(
-                  page: AdminProductOptions(),
+                  page: AdminAttributes(),
                 ),
                 shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
                 redirectRoute: Routes.loginSignup,

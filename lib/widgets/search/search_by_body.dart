@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
+import 'package:flutter_up/services/up_navigation.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/constants.dart';
-import 'package:flutter_up/services/up_navigation.dart';
-import 'package:shop/models/product_option_value.dart';
+import 'package:shop/models/attribute_value.dart';
+
 import 'package:shop/services/variation.dart';
 
 class SearchByBodyWidget extends StatelessWidget {
   final int collection;
-  final List<ProductOptionValue>? productOptionValues;
+  final List<AttributeValue> attributeValues;
+  final int bodyTypeAttribute;
   const SearchByBodyWidget({
     super.key,
+    required this.bodyTypeAttribute,
+    required this.attributeValues,
     required this.collection,
-    this.productOptionValues,
   });
 
   gotoBodyType(id) {
     Map<String, List<int>> selectedVariationsValues = {
-      "Body Type": [id]
+      "$bodyTypeAttribute": [id]
     };
     ServiceManager<VariationService>().setVariation(selectedVariationsValues);
   }
@@ -27,12 +30,12 @@ class SearchByBodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: productOptionValues != null && productOptionValues!.isNotEmpty,
+      visible: attributeValues.isNotEmpty,
       child: Wrap(
         spacing: 8,
         runSpacing: 8,
         children: [
-          ...productOptionValues!.map(
+          ...attributeValues.map(
             (e) {
               return GestureDetector(
                 onTap: () {

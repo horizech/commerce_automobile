@@ -14,7 +14,7 @@ import 'package:shop/dialogs/delete_dialog.dart';
 import 'package:shop/models/add_on.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/services/add_edit_product_service/add_edit_product_service.dart';
-import 'package:shop/services/products_service.dart';
+import 'package:shop/services/product_service.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 
 class AddEditAddonWidget extends StatefulWidget {

@@ -12,15 +12,13 @@ import 'package:shop/models/product_attribute.dart';
 import 'package:shop/models/product_combo.dart';
 import 'package:shop/models/attribute_value.dart';
 import 'package:shop/models/attribute.dart';
-import 'package:shop/models/product_option_value.dart';
-import 'package:shop/models/product_options.dart';
 
 part 'store_state.dart';
 
 class StoreCubit extends Cubit<StoreState> {
   StoreCubit()
-      : super(StoreState(false, false, false, "", [], null, [], [], [], [], [],
-            [], [], [], [], []));
+      : super(StoreState(
+            false, false, false, "", [], null, [], [], [], [], [], [], [], []));
 
   void getStore() async {
     Apiraiser.validateAuthentication();
@@ -37,8 +35,6 @@ class StoreCubit extends Cubit<StoreState> {
         Apiraiser.data.get("Combos", 0),
         Apiraiser.data.get("ProductAddons", 0),
         Apiraiser.data.get("ProductAttributes", 0),
-        Apiraiser.data.get("ProductOptions", 0),
-        Apiraiser.data.get("ProductOptionValues", 0),
       ]);
 
       List<APIResult> result = futureResult as List<APIResult>;
@@ -75,30 +71,22 @@ class StoreCubit extends Cubit<StoreState> {
                 as List<dynamic>)
             .map((t) => ProductAttribute.fromJson(t as Map<String, dynamic>))
             .toList();
-        List<ProductOption> productOptions = (result[9].data as List<dynamic>)
-            .map((t) => ProductOption.fromJson(t as Map<String, dynamic>))
-            .toList();
-        List<ProductOptionValue> productOptionValues = (result[10].data
-                as List<dynamic>)
-            .map((t) => ProductOptionValue.fromJson(t as Map<String, dynamic>))
-            .toList();
 
         CollectionTree collectionTree =
             CollectionTree.fromCollectionList(collections);
 
         setStoreSuccess(
-            collections,
-            collectionTree,
-            keywords,
-            attributes,
-            attributeValues,
-            mediaGroups,
-            productCombos,
-            combos,
-            addons,
-            productAttributes,
-            productOptions,
-            productOptionValues);
+          collections,
+          collectionTree,
+          keywords,
+          attributes,
+          attributeValues,
+          mediaGroups,
+          productCombos,
+          combos,
+          addons,
+          productAttributes,
+        );
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -107,8 +95,8 @@ class StoreCubit extends Cubit<StoreState> {
 
   void setStoreStart() {
     emit(
-      StoreState(true, false, false, "", [], null, [], [], [], [], [], [], [],
-          [], [], []),
+      StoreState(
+          true, false, false, "", [], null, [], [], [], [], [], [], [], []),
     );
   }
 
@@ -123,32 +111,43 @@ class StoreCubit extends Cubit<StoreState> {
     List<Combo>? combos,
     List<AddOn>? addOns,
     List<ProductAttribute> productAttributes,
-    List<ProductOption>? productOptions,
-    List<ProductOptionValue>? productOptionsValues,
   ) {
     emit(StoreState(
-        false,
-        true,
-        false,
-        null,
-        collections,
-        collectionTree,
-        keywords,
-        attributes,
-        attributeValues,
-        mediaGroups,
-        combos,
-        productCombos,
-        addOns,
-        productAttributes,
-        productOptions,
-        productOptionsValues));
+      false,
+      true,
+      false,
+      null,
+      collections,
+      collectionTree,
+      keywords,
+      attributes,
+      attributeValues,
+      mediaGroups,
+      combos,
+      productCombos,
+      addOns,
+      productAttributes,
+    ));
   }
 
   void setStoreError(String? error) {
     emit(
-      StoreState(false, false, true, error, [], null, [], [], [], [], [], [],
-          [], [], [], []),
+      StoreState(
+        false,
+        false,
+        true,
+        error,
+        [],
+        null,
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+      ),
     );
   }
 }

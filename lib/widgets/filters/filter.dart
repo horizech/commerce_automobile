@@ -3,66 +3,97 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
 import 'package:flutter_up/themes/up_style.dart';
+import 'package:shop/models/attribute.dart';
+import 'package:shop/models/attribute_value.dart';
+import 'package:shop/services/attribute_service.dart';
 import 'package:shop/services/variation.dart';
 import 'package:flutter_up/widgets/up_button.dart';
-import 'package:shop/models/product_option_value.dart';
-import 'package:shop/models/product_options.dart';
 import 'package:shop/widgets/filters/variation_view.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/variations/variation_controller.dart';
 
-class FilterPage extends StatelessWidget {
-  final int? collection;
+class FilterPage extends StatefulWidget {
+  final int collection;
   final Function? change;
   const FilterPage({
     Key? key,
-    this.collection,
+    required this.collection,
     this.change,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    List<ProductOptionValue> otherVariations = [];
+  State<FilterPage> createState() => _FilterPageState();
+}
 
+class _FilterPageState extends State<FilterPage> {
+  List<Attribute> attributes = [];
+  List<AttributeValue> attributeValues = [];
+  List<dynamic> attributeValueList = [];
+  @override
+  void initState() {
+    super.initState();
+    getFilters();
+  }
+
+  getFilters() async {
+    attributeValueList = await AttributeService.getAttributeValuesByCollection(
+        widget.collection);
+
+    if (attributeValueList.isNotEmpty) {
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocConsumer<StoreCubit, StoreState>(
       listener: (context, state) {},
       builder: (context, state) {
-        List<ProductOption> productOptions = [];
-        if (state.productOptions != null && state.productOptions!.isNotEmpty) {
-          productOptions = state.productOptions!.toList();
+        if (attributes.isEmpty) {
+          if (state.attributes != null && state.attributes!.isNotEmpty) {
+            attributes = state.attributes!.toList();
+          }
         }
-        if (state.productOptionValues != null &&
-            state.productOptionValues!.isNotEmpty) {
-          otherVariations = state.productOptionValues!
-              .where(
-                (c) => c.collection == collection,
-              )
-              .toList();
+        if (attributeValues.isEmpty) {
+          if (attributeValueList.isNotEmpty) {
+            List<AttributeValue> aValues = [];
+            if (state.attributeValues != null &&
+                state.attributeValues!.isNotEmpty) {
+              aValues = state.attributeValues!.toList();
+            }
+            if (attributeValueList.isNotEmpty) {
+              for (var list in attributeValueList) {
+                if (aValues
+                    .any((element) => element.id == list["AttributeValues"])) {
+                  attributeValues.add(aValues
+                      .where((element) => element.id == list["AttributeValues"])
+                      .first);
+                }
+              }
+            }
+          }
         }
 
-        return VariationFilter(
-          otherVariations: otherVariations,
-          productOptions: productOptions,
-          change: change,
-        );
+        return attributeValues.isNotEmpty
+            ? VariationFilter(
+                attributes: attributes,
+                attributeValues: attributeValues,
+                change: widget.change,
+              )
+            : const SizedBox();
       },
     );
   }
 }
 
 class VariationFilter extends StatefulWidget {
-  // int? category;
-  final List<ProductOptionValue>? sizeVariations;
-  final List<ProductOptionValue>? colorVariations;
-  final List<ProductOptionValue>? otherVariations;
-  final List<ProductOption>? productOptions;
+  final List<AttributeValue>? attributeValues;
+  final List<Attribute>? attributes;
   final Function? change;
   const VariationFilter({
     Key? key,
-    this.sizeVariations,
-    this.colorVariations,
-    this.otherVariations,
-    this.productOptions,
+    this.attributes,
+    this.attributeValues,
     this.change,
   }) : super(key: key);
 
@@ -109,15 +140,15 @@ class _VariationFilterState extends State<VariationFilter> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ...widget.productOptions?.map(
+            ...widget.attributes?.map(
                   (element) {
-                    if (widget.otherVariations!
-                        .any((v) => v.productOption == element.id)) {
+                    if (widget.attributeValues!
+                        .any((v) => v.attribute == element.id)) {
                       return VariationViewWidget(
-                        productOption: element,
-                        otherVariations: widget.otherVariations,
+                        attribute: element,
+                        attributeValues: widget.attributeValues,
                         change: (values) =>
-                            onVariationChange(element.name, values),
+                            onVariationChange(element.id.toString(), values),
                       );
                     } else {
                       return Container();

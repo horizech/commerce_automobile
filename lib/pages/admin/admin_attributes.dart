@@ -20,14 +20,14 @@ import 'package:shop/services/add_edit_product_service/add_edit_product_service.
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/unauthorized_widget.dart';
 
-class AdminProductOptions extends StatefulWidget {
-  const AdminProductOptions({Key? key}) : super(key: key);
+class AdminAttributes extends StatefulWidget {
+  const AdminAttributes({Key? key}) : super(key: key);
 
   @override
-  State<AdminProductOptions> createState() => _AdminProductOptionsState();
+  State<AdminAttributes> createState() => _AdminAttributesState();
 }
 
-class _AdminProductOptionsState extends State<AdminProductOptions> {
+class _AdminAttributesState extends State<AdminAttributes> {
   String currentAttribute = "";
   List<Attribute> attributes = [];
   TextEditingController nameController = TextEditingController();
