@@ -227,26 +227,31 @@ class _AdminProductState extends State<AdminProduct> {
                 ),
               ),
             ),
-            GestureDetector(
-                onTap: (() {
-                  if (isProductDetailEnabled) {
-                    view = 2;
-                    setState(() {});
-                  }
-                }),
-                child: Container(
-                    color: view == 2
-                        ? UpConfig.of(context).theme.primaryColor[100]
-                        : Colors.transparent,
-                    child: ListTile(
-                      title: UpText(
-                        style: UpStyle(
-                            textColor: isProductDetailEnabled
-                                ? UpConfig.of(context).theme.primaryColor[700]
-                                : Colors.grey[700]),
-                        "Product Attributes",
-                      ),
-                    ))),
+            Visibility(
+              visible: currentProduct != null &&
+                  currentProduct!.isVariedProduct &&
+                  currentProduct!.id != null,
+              child: GestureDetector(
+                  onTap: (() {
+                    if (isProductDetailEnabled) {
+                      view = 2;
+                      setState(() {});
+                    }
+                  }),
+                  child: Container(
+                      color: view == 2
+                          ? UpConfig.of(context).theme.primaryColor[100]
+                          : Colors.transparent,
+                      child: ListTile(
+                        title: UpText(
+                          style: UpStyle(
+                              textColor: isProductDetailEnabled
+                                  ? UpConfig.of(context).theme.primaryColor[700]
+                                  : Colors.grey[700]),
+                          "Product Attributes",
+                        ),
+                      ))),
+            ),
             Visibility(
               visible: currentProduct != null &&
                   currentProduct!.isVariedProduct &&
@@ -496,26 +501,6 @@ class _AdminProductState extends State<AdminProduct> {
                         setState(() {}),
                       },
                     ),
-
-                    // currentProduct != null
-                    //     ? Padding(
-                    //         padding: const EdgeInsets.all(8.0),
-                    //         child: AddEditProductMetaWidget(
-                    //           meta: meta,
-                    //           onChange: (value) {
-                    //             meta = value;
-                    //           },
-                    //         ),
-                    //       )
-                    //     : Padding(
-                    //         padding: const EdgeInsets.all(8.0),
-                    //         child: AddEditProductMetaWidget(
-                    //           meta: meta,
-                    //           onChange: (value) {
-                    //             meta = value;
-                    //           },
-                    //         ),
-                    //       ),
                   ],
                 ),
               )),
@@ -543,7 +528,9 @@ class _AdminProductState extends State<AdminProduct> {
   Widget build(BuildContext context) {
     if (widget.isReset) {
       view = 1;
+      isProductDetailEnabled = false;
       clearFields();
+      currentProduct = null;
       widget.isReset = false;
     }
 

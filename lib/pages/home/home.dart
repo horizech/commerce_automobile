@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/themes/up_style.dart';
+import 'package:flutter_up/widgets/up_circualar_progress.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/models/attribute.dart';
 import 'package:shop/models/attribute_value.dart';
@@ -88,83 +89,88 @@ class _HomePageState extends State<HomePage> {
                 }
               }
             }
-            return Column(
-              children: [
-                AutomobileAppbar(
-                  scaffoldKey: scaffoldKey,
-                ),
-                bodyTypeAttributeValues.isNotEmpty &&
-                        collection != null &&
-                        bodyTypeAttribute != null
-                    ? Expanded(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                            children: [
-                              Container(),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 24),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: UpConfig.of(context)
-                                              .theme
-                                              .primaryColor,
-                                          width: 4,
-                                        ),
-                                        color: const Color.fromARGB(
-                                            64, 249, 153, 153),
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 12, left: 8),
-                                            child: UpText(
-                                              "Body Type",
-                                              style: UpStyle(
-                                                  textSize: 18,
-                                                  textWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          SearchByBodyWidget(
-                                              collection: collection!,
-                                              attributeValues:
-                                                  bodyTypeAttributeValues,
-                                              bodyTypeAttribute:
-                                                  bodyTypeAttribute!)
-                                        ],
-                                      ),
-                                    )),
-                              ),
-                              collection != null
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(16.0),
+            return bodyTypeAttributeValues.isNotEmpty
+                ? Column(
+                    children: [
+                      AutomobileAppbar(
+                        scaffoldKey: scaffoldKey,
+                      ),
+                      bodyTypeAttributeValues.isNotEmpty &&
+                              collection != null &&
+                              bodyTypeAttribute != null
+                          ? Expanded(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  children: [
+                                    Container(),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 24),
                                       child: Container(
-                                        width: 400,
-                                        decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(8),
-                                          ),
-                                        ),
-                                        child: SearchWidget(
-                                          collection: collection!,
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
-            );
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: UpConfig.of(context)
+                                                    .theme
+                                                    .primaryColor,
+                                                width: 4,
+                                              ),
+                                              color: const Color.fromARGB(
+                                                  64, 249, 153, 153),
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 12, left: 8),
+                                                  child: UpText(
+                                                    "Body Type",
+                                                    style: UpStyle(
+                                                        textSize: 18,
+                                                        textWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                SearchByBodyWidget(
+                                                    collection: collection!,
+                                                    attributeValues:
+                                                        bodyTypeAttributeValues,
+                                                    bodyTypeAttribute:
+                                                        bodyTypeAttribute!)
+                                              ],
+                                            ),
+                                          )),
+                                    ),
+                                    collection != null
+                                        ? Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Container(
+                                              width: 400,
+                                              decoration: const BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(8),
+                                                ),
+                                              ),
+                                              child: SearchWidget(
+                                                collection: collection!,
+                                              ),
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ],
+                  )
+                : const UpCircularProgress();
           },
         ),
       ),

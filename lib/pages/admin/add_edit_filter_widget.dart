@@ -117,7 +117,7 @@ class _AddEditFiltersWidgetState extends State<AddEditFiltersWidget> {
             ? SizedBox(
                 width: 500,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -274,7 +274,7 @@ class _AttributeDropdownWidgetState extends State<AttributeDropdownWidget> {
       child: Visibility(
         visible: attributeDropdown.isNotEmpty,
         child: SizedBox(
-          width: 200,
+          width: 300,
           child: UpDropDown(
             key: GlobalKey(),
             onChanged: ((value) => {

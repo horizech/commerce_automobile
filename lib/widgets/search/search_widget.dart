@@ -229,8 +229,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                         padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
                         child: UpButton(
                           onPressed: () {
-                            if (makeDropDownValue.isNotEmpty) {
-                              gotoMakeModel(int.parse(makeDropDownValue));
+                            if (modelDropDownValue.isNotEmpty) {
+                              gotoMakeModel(int.parse(modelDropDownValue));
                             }
 
                             ServiceManager<UpNavigationService>()
