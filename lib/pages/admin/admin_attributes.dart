@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/text_style.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
+import 'package:shop/isUserAdmin.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
 
 import 'package:flutter_up/themes/up_style.dart';
@@ -243,9 +244,7 @@ class _AdminAttributesState extends State<AdminAttributes> {
     return Scaffold(
       appBar: const UpAppBar(),
       drawer: const NavDrawer(),
-      body: user != null &&
-              user!.roleIds != null &&
-              (user!.roleIds!.contains(2) || user!.roleIds!.contains(1))
+      body: isUserAdmin()
           ? BlocConsumer<StoreCubit, StoreState>(
               listener: (context, state) {},
               builder: (context, state) {

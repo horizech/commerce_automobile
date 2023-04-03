@@ -15,6 +15,7 @@ import 'package:flutter_up/widgets/up_icon.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:flutter_up/widgets/up_textfield.dart';
 import 'package:shop/dialogs/delete_dialog.dart';
+import 'package:shop/isUserAdmin.dart';
 import 'package:shop/models/collection.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/pages/admin/admin_product.dart';
@@ -532,7 +533,7 @@ class _AdminProductsState extends State<AdminProducts> {
     return Scaffold(
       appBar: const UpAppBar(),
       drawer: const NavDrawer(),
-      body: isAuthorized
+      body: isUserAdmin()
           ? BlocConsumer<StoreCubit, StoreState>(
               listener: (context, state) {},
               builder: (context, state) {
