@@ -55,6 +55,15 @@ class _SearchWidgetState extends State<SearchWidget> {
     }
   }
 
+  gotoMake(id) {
+    if (manufacturerAttributeId != null) {
+      Map<String, List<int>> selectedVariationsValues = {
+        "$manufacturerAttributeId": [id]
+      };
+      ServiceManager<VariationService>().setVariation(selectedVariationsValues);
+    }
+  }
+
   getProducts() async {
     products = await ProductService.getProducts(
         [widget.collection], {}, null, null, {});
@@ -231,6 +240,9 @@ class _SearchWidgetState extends State<SearchWidget> {
                           onPressed: () {
                             if (modelDropDownValue.isNotEmpty) {
                               gotoMakeModel(int.parse(modelDropDownValue));
+                            } else if (makeDropDownValue.isNotEmpty &&
+                                modelDropDownValue.isEmpty) {
+                              gotoMake(int.parse(makeDropDownValue));
                             }
 
                             ServiceManager<UpNavigationService>()
