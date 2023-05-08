@@ -37,10 +37,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     List<Widget> view = [
       _mode == Constant.authLogin ? const LoginPage() : const SignupPage(),
       const SizedBox(
-        height: 15,
+        height: 8,
       ),
       SizedBox(
-        width: 192,
+        height: 42,
+        width: 160,
         child: UpButton(
           text: "${_mode == Constant.authLogin ? 'Signup' : 'Login'} instead",
           onPressed: () =>
@@ -65,7 +66,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       appBar: const UpAppBar(
         title: 'Shop',
       ),
-      body: getView(),
+      body: SingleChildScrollView(
+          scrollDirection: Axis.vertical, child: getView()),
     );
   }
 }
