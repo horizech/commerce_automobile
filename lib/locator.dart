@@ -8,7 +8,8 @@ void setupLocator() {
     FlutterUpLocators.upNavigationService,
     FlutterUpLocators.upScaffoldHelperService,
     FlutterUpLocators.upSearchService,
-    FlutterUpLocators.upUrlService
+    FlutterUpLocators.upUrlService,
+    FlutterUpLocators.upLayoutService
   ]);
   ServiceManager.registerLazySingleton(() => VariationService());
   ServiceManager.registerLazySingleton(() => ScrollToTopService());

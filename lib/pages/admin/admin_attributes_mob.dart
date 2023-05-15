@@ -21,14 +21,14 @@ import 'package:shop/services/add_edit_product_service/add_edit_product_service.
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/unauthorized_widget.dart';
 
-class AdminAttributes extends StatefulWidget {
-  const AdminAttributes({Key? key}) : super(key: key);
+class AdminAttributesMob extends StatefulWidget {
+  const AdminAttributesMob({Key? key}) : super(key: key);
 
   @override
-  State<AdminAttributes> createState() => _AdminAttributesState();
+  State<AdminAttributesMob> createState() => _AdminAttributesMobState();
 }
 
-class _AdminAttributesState extends State<AdminAttributes> {
+class _AdminAttributesMobState extends State<AdminAttributesMob> {
   String currentAttribute = "";
   List<Attribute> attributes = [];
   TextEditingController nameController = TextEditingController();
@@ -60,7 +60,7 @@ class _AdminAttributesState extends State<AdminAttributes> {
                 onTap: (() {
                   selectedAttribute = const Attribute(name: "", id: -1);
                   nameController.text = selectedAttribute.name;
-
+                  Navigator.pop(context);
                   setState(() {});
                 }),
                 child: Container(
@@ -78,6 +78,7 @@ class _AdminAttributesState extends State<AdminAttributes> {
                       selectedAttribute = e;
                       nameController.text = selectedAttribute.name;
                       _setAttributeValues();
+                      Navigator.pop(context);
                       setState(() {});
                     }),
                     child: Container(
@@ -246,6 +247,14 @@ class _AdminAttributesState extends State<AdminAttributes> {
     return Scaffold(
       appBar: const UpAppBar(),
       drawer: const NavDrawer(),
+      endDrawer: SafeArea(
+        child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return Drawer(
+            child: leftSide(),
+          );
+        }),
+      ),
       body: isUserAdmin()
           ? BlocConsumer<StoreCubit, StoreState>(
               listener: (context, state) {},
@@ -257,41 +266,52 @@ class _AdminAttributesState extends State<AdminAttributes> {
                   }
                 }
                 return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: SizedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  scrollDirection: Axis.vertical,
+                  child: Center(
+                    child: Column(
                       children: [
-                        leftSide(),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width - 300,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 20.0,
-                                right: 20,
-                                top: 10,
-                              ),
-                              child: SizedBox(
-                                width: 400,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: UpText(
-                                          "Attribute",
-                                          type: UpTextType.heading5,
+                        const SizedBox(height: 20),
+                        UpText(
+                          "Attributes",
+                          style: UpStyle(
+                              textSize: 24,
+                              textWeight: FontWeight.bold,
+                              textFontStyle: FontStyle.italic),
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color:
+                                      UpConfig.of(context).theme.primaryColor,
+                                  width: 1)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.5,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Align(
+                                            alignment: Alignment.topLeft,
+                                            child: UpText(
+                                              "Attribute",
+                                              type: UpTextType.heading6,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: 300,
-                                        child: Column(
+                                        SizedBox(
+                                            child: Column(
                                           children: [
                                             Padding(
                                               padding:
@@ -360,74 +380,84 @@ class _AdminAttributesState extends State<AdminAttributes> {
                                             ),
                                           ],
                                         )),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    SizedBox(
-                                      width: 400,
-                                      child: Visibility(
-                                        visible: selectedAttribute.id != -1,
-                                        child: Column(
-                                          children: [
-                                            const Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Align(
-                                                alignment: Alignment.topLeft,
-                                                child: UpText(
-                                                  "Add new attribute value",
-                                                  type: UpTextType.heading6,
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 400,
+                                          child: Visibility(
+                                            visible: selectedAttribute.id != -1,
+                                            child: Column(
+                                              children: [
+                                                const Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    child: UpText(
+                                                      "Add new attribute value",
+                                                      type: UpTextType.heading6,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(
-                                                    width: 250,
-                                                    child: UpTextField(
-                                                      controller:
-                                                          attributeValueNameController,
-                                                      label: "Attribute Value",
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: SizedBox(
-                                                      width: 100,
-                                                      child: UpButton(
-                                                        onPressed: () {
-                                                          _updateAttributeValue();
-                                                        },
-                                                        text: "Add",
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            2.4,
+                                                        child: UpTextField(
+                                                          controller:
+                                                              attributeValueNameController,
+                                                          label:
+                                                              "Attribute Value",
+                                                        ),
                                                       ),
-                                                    ),
+                                                      SizedBox(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            6,
+                                                        child: SizedBox(
+                                                          width: 100,
+                                                          child: UpButton(
+                                                            onPressed: () {
+                                                              _updateAttributeValue();
+                                                            },
+                                                            text: "Add",
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Visibility(
-                                                  visible:
-                                                      filteredAttributeValues
-                                                          .isNotEmpty,
-                                                  child: SizedBox(
-                                                    child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          ...filteredAttributeValues
-                                                              .map(
-                                                                  (e) =>
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Visibility(
+                                                      visible:
+                                                          filteredAttributeValues
+                                                              .isNotEmpty,
+                                                      child: SizedBox(
+                                                        child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              ...filteredAttributeValues
+                                                                  .map((e) =>
                                                                       Padding(
                                                                         padding:
                                                                             const EdgeInsets.only(
@@ -462,19 +492,22 @@ class _AdminAttributesState extends State<AdminAttributes> {
                                                                           ],
                                                                         ),
                                                                       ))
-                                                        ]),
-                                                  )),
+                                                            ]),
+                                                      )),
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),

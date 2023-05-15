@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/text_style.dart';
+import 'package:flutter_up/enums/up_button_type.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/models/up_label_value.dart';
 import 'package:flutter_up/themes/up_style.dart';
@@ -27,14 +28,14 @@ import 'package:shop/widgets/drawer/nav_drawer.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/unauthorized_widget.dart';
 
-class AdminProducts extends StatefulWidget {
-  const AdminProducts({Key? key}) : super(key: key);
+class AdminProductsMob extends StatefulWidget {
+  const AdminProductsMob({Key? key}) : super(key: key);
 
   @override
-  State<AdminProducts> createState() => _AdminProductsState();
+  State<AdminProductsMob> createState() => _AdminProductsMobState();
 }
 
-class _AdminProductsState extends State<AdminProducts> {
+class _AdminProductsMobState extends State<AdminProductsMob> {
   User? user;
   int? selectedMedia;
   List<UpLabelValuePair> collectionDropdown = [];
@@ -71,7 +72,6 @@ class _AdminProductsState extends State<AdminProducts> {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
-        color: Colors.grey[200],
         width: 300,
         constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height - 60,
@@ -87,13 +87,23 @@ class _AdminProductsState extends State<AdminProducts> {
                   view = 1;
                   isReset = false;
                   setState(() {});
+                  Navigator.pop(context);
                 }),
                 child: Container(
                   color: selectedCollection.id == -1
-                      ? UpConfig.of(context).theme.primaryColor[100]
+                      ? UpConfig.of(context).theme.primaryColor[50]
                       : Colors.transparent,
-                  child: const ListTile(
-                    title: UpText("Create a new collection"),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.add,
+                      color: UpConfig.of(context).theme.primaryColor,
+                    ),
+                    title: UpText(
+                      "Create a new collection",
+                      style: UpStyle(
+                        textWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 )),
             ...collections
@@ -114,14 +124,21 @@ class _AdminProductsState extends State<AdminProducts> {
                                 : "";
                             selectedMedia = selectedCollection.media;
                             view = 1;
-                            isExpanded = true;
-                            setState(() {});
+                            setState(() {
+                              isExpanded = true;
+                            });
+
+                            // Navigator.pop(context);
                           }),
                           child: Container(
                             color: selectedCollection.id == e.id
                                 ? UpConfig.of(context).theme.primaryColor[100]
                                 : Colors.transparent,
                             child: ListTile(
+                              leading: Icon(
+                                Icons.edit,
+                                color: UpConfig.of(context).theme.primaryColor,
+                              ),
                               title: UpText(e.name),
                             ),
                           ),
@@ -137,11 +154,16 @@ class _AdminProductsState extends State<AdminProducts> {
                             child: UpExpansionTile(
                               onExpansionChanged: (p0) {
                                 isExpanded = p0;
+
                                 if (p0) {
                                   view = 1;
                                 } else {}
                                 setState(() {});
                               },
+                              leading: Icon(
+                                Icons.edit,
+                                color: UpConfig.of(context).theme.primaryColor,
+                              ),
                               title: e.name,
                               expandedCrossAxisAlignment:
                                   CrossAxisAlignment.start,
@@ -159,6 +181,7 @@ class _AdminProductsState extends State<AdminProducts> {
                                         isReset = true;
                                         isExpanded = false;
                                         setState(() {});
+                                        Navigator.pop(context);
                                       },
                                       child: Container(
                                         color: view == 2
@@ -166,8 +189,15 @@ class _AdminProductsState extends State<AdminProducts> {
                                                 .theme
                                                 .primaryColor[100]
                                             : Colors.transparent,
-                                        child: const ListTile(
-                                          title: UpText("Create a new product"),
+                                        child: ListTile(
+                                          leading: Icon(
+                                            Icons.playlist_add_outlined,
+                                            color: UpConfig.of(context)
+                                                .theme
+                                                .primaryColor,
+                                          ),
+                                          title: const UpText(
+                                              "Create a new product"),
                                         ),
                                       ),
                                     ),
@@ -178,6 +208,7 @@ class _AdminProductsState extends State<AdminProducts> {
                                         view = 3;
                                         isReset = false;
                                         setState(() {});
+                                        Navigator.pop(context);
                                       }),
                                       child: Container(
                                         color: view == 3 || view == 4
@@ -185,8 +216,14 @@ class _AdminProductsState extends State<AdminProducts> {
                                                 .theme
                                                 .primaryColor[100]
                                             : Colors.transparent,
-                                        child: const ListTile(
-                                          title: UpText("All Products"),
+                                        child: ListTile(
+                                          leading: Icon(
+                                            Icons.list,
+                                            color: UpConfig.of(context)
+                                                .theme
+                                                .primaryColor,
+                                          ),
+                                          title: const UpText("All Products"),
                                         ),
                                       ),
                                     ),
@@ -225,7 +262,7 @@ class _AdminProductsState extends State<AdminProducts> {
 
   Widget allProductsView() {
     return SizedBox(
-      width: 500,
+      width: MediaQuery.of(context).size.width - 20,
       child: Visibility(
         visible: selectedCollection.id != -1,
         child: Column(
@@ -344,106 +381,125 @@ class _AdminProductsState extends State<AdminProducts> {
   }
 
   Widget editCollectionView() {
-    return SizedBox(
-      width: 400,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Align(
-          alignment: Alignment.topLeft,
-          child: UpText(
-            "Collection",
-            type: UpTextType.heading6,
-          ),
+    return Column(
+      children: [
+        UpText(
+          "Create a colllection",
+          style: UpStyle(
+              textSize: 24,
+              textWeight: FontWeight.bold,
+              textFontStyle: FontStyle.italic),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            width: 300,
-            child: UpTextField(
-              controller: nameController,
-              label: 'Name',
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            width: 300,
-            child: AddMediaWidget(
-              selectedMedia: selectedMedia,
-              onChnage: (media) {
-                selectedMedia = media;
-                setState(() {});
-              },
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-              width: 300,
-              child: UpDropDown(
-                label: "Parent",
-                value: currentParent,
-                itemList: collectionDropdown,
-                onChanged: (value) {
-                  currentParent = value.toString();
-
-                  setState(() {});
-                },
-              )),
-        ),
-        Visibility(
-          visible: selectedCollection.id != -1,
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 300,
-              child: UpText(
-                "*To delete a collection you must need to delete all its products",
+        const SizedBox(height: 20),
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                  color: UpConfig.of(context).theme.primaryColor, width: 1)),
+          child: Padding(
+            padding: const EdgeInsets.all(22.0),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Align(
+                alignment: Alignment.topLeft,
+                child: UpText(
+                  "Collection",
+                  type: UpTextType.heading6,
+                ),
               ),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 300,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Visibility(
-                visible: selectedCollection.id != -1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 70,
-                    height: 30,
-                    child: UpButton(
-                      onPressed: () {
-                        _deleteCollection(selectedCollection.id!);
-                      },
-                      text: "Delete",
-                    ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  child: UpTextField(
+                    controller: nameController,
+                    label: 'Name',
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  width: 70,
-                  height: 30,
-                  child: UpButton(
-                    onPressed: () {
-                      _updateCollection(selectedCollection.id != -1
-                          ? selectedCollection
-                          : null);
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  child: AddMediaWidget(
+                    selectedMedia: selectedMedia,
+                    onChnage: (media) {
+                      selectedMedia = media;
+                      setState(() {});
                     },
-                    text: "Save",
                   ),
                 ),
               ),
-            ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    child: UpDropDown(
+                      label: "Parent",
+                      value: currentParent,
+                      itemList: collectionDropdown,
+                      onChanged: (value) {
+                        currentParent = value.toString();
+
+                        setState(() {});
+                      },
+                    )),
+              ),
+              Visibility(
+                visible: selectedCollection.id != -1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    child: const UpText(
+                      "*To delete a collection you must need to delete all its products",
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible: selectedCollection.id != -1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 70,
+                          height: 30,
+                          child: UpButton(
+                            onPressed: () {
+                              _deleteCollection(selectedCollection.id!);
+                            },
+                            text: "Delete",
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 70,
+                        height: 30,
+                        child: UpButton(
+                          onPressed: () {
+                            _updateCollection(selectedCollection.id != -1
+                                ? selectedCollection
+                                : null);
+                          },
+                          text: "Save",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ]),
           ),
         ),
-      ]),
+      ],
     );
   }
 
@@ -535,6 +591,14 @@ class _AdminProductsState extends State<AdminProducts> {
     return Scaffold(
       appBar: const UpAppBar(),
       drawer: const NavDrawer(),
+      endDrawer: SafeArea(
+        child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return Drawer(
+            child: leftSide(),
+          );
+        }),
+      ),
       body: isUserAdmin()
           ? BlocConsumer<StoreCubit, StoreState>(
               listener: (context, state) {},
@@ -546,37 +610,20 @@ class _AdminProductsState extends State<AdminProducts> {
                   _getCollectionDropdown();
                 }
 
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          leftSide(),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 50.0,
-                                right: 20,
-                                top: 10,
-                              ),
-                              child: SizedBox(
-                                child: Center(
-                                  child: rightView(),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        rightView(),
+                      ],
                     ),
                   ),
                 );
-              })
+              },
+            )
           : const UnAuthorizedWidget(),
     );
   }

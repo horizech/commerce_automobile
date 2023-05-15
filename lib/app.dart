@@ -4,6 +4,10 @@ import 'package:flutter_up/themes/up_themes.dart';
 import 'package:apiraiser/apiraiser.dart';
 import 'package:flutter_up/models/up_route.dart';
 import 'package:flutter_up/models/up_router_state.dart';
+import 'package:flutter_up/widgets/up_responsive_page.dart';
+import 'package:shop/pages/admin/admin_attributes_mob.dart';
+import 'package:shop/pages/admin/admin_combos_mob.dart';
+import 'package:shop/pages/admin/admin_products_mob.dart';
 import 'package:shop/pages/authentication/loginsignup.dart';
 import 'package:shop/pages/home/home.dart';
 
@@ -108,10 +112,9 @@ class ShopApp extends StatelessWidget {
                 path: Routes.adminCombos,
                 name: Routes.adminCombos,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
-                    StoreDependantPage(
-                  page: AdminCombos(
-                    queryParams: state.queryParams,
-                  ),
+                    const UpResponsivePage(
+                  desktopPage: AdminCombos(),
+                  mobilePage: AdminCombosMob(),
                 ),
                 shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
                 redirectRoute: Routes.loginSignup,
@@ -120,8 +123,9 @@ class ShopApp extends StatelessWidget {
                 path: Routes.adminProducts,
                 name: Routes.adminProducts,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
-                    const StoreDependantPage(
-                  page: AdminProducts(),
+                    const UpResponsivePage(
+                  desktopPage: AdminProducts(),
+                  mobilePage: AdminProductsMob(),
                 ),
                 shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
                 redirectRoute: Routes.loginSignup,
@@ -130,8 +134,9 @@ class ShopApp extends StatelessWidget {
                 path: Routes.adminAttributes,
                 name: Routes.adminAttributes,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
-                    const StoreDependantPage(
-                  page: AdminAttributes(),
+                    const UpResponsivePage(
+                  desktopPage: AdminAttributes(),
+                  mobilePage: AdminAttributesMob(),
                 ),
                 shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
                 redirectRoute: Routes.loginSignup,

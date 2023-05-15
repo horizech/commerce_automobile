@@ -93,7 +93,9 @@ class _AdminKeywordsState extends State<AdminKeywords> {
       child: Container(
         color: Colors.grey[200],
         width: 300,
-        height: MediaQuery.of(context).size.height,
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height - 60,
+        ),
         child: Column(
           children: [
             GestureDetector(

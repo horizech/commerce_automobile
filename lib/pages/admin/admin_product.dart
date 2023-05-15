@@ -203,133 +203,128 @@ class _AdminProductState extends State<AdminProduct> {
   }
 
   Widget leftSide() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Container(
-        color: Colors.grey[200],
-        width: 200,
-        height: 400,
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: (() {
-                view = 1;
-                setState(() {});
-              }),
-              child: Container(
-                color: view == 1
-                    ? UpConfig.of(context).theme.primaryColor[100]
-                    : Colors.transparent,
-                child: const ListTile(
-                  title: UpText(
-                    "Product Info",
-                  ),
+    return Container(
+      width: 200,
+      child: Wrap(
+        children: [
+          GestureDetector(
+            onTap: (() {
+              view = 1;
+              setState(() {});
+            }),
+            child: Container(
+              color: view == 1
+                  ? UpConfig.of(context).theme.primaryColor[100]
+                  : Colors.transparent,
+              child: const ListTile(
+                title: UpText(
+                  "Product Info",
                 ),
               ),
             ),
-            Visibility(
-              visible: currentProduct != null &&
-                  currentProduct!.isVariedProduct &&
-                  currentProduct!.id != null,
-              child: GestureDetector(
-                  onTap: (() {
-                    if (isProductDetailEnabled) {
-                      view = 2;
-                      setState(() {});
-                    }
-                  }),
-                  child: Container(
-                      color: view == 2
-                          ? UpConfig.of(context).theme.primaryColor[100]
-                          : Colors.transparent,
-                      child: ListTile(
-                        title: UpText(
-                          style: UpStyle(
-                              textColor: isProductDetailEnabled
-                                  ? UpConfig.of(context).theme.primaryColor[700]
-                                  : Colors.grey[700]),
-                          "Product Attributes",
-                        ),
-                      ))),
-            ),
-            Visibility(
-              visible: currentProduct != null &&
-                  currentProduct!.isVariedProduct &&
-                  currentProduct!.id != null,
-              child: GestureDetector(
+          ),
+          Visibility(
+            visible: currentProduct != null &&
+                currentProduct!.isVariedProduct &&
+                currentProduct!.id != null,
+            child: GestureDetector(
                 onTap: (() {
                   if (isProductDetailEnabled) {
-                    view = 3;
+                    view = 2;
                     setState(() {});
                   }
                 }),
                 child: Container(
-                  color: view == 3
-                      ? UpConfig.of(context).theme.primaryColor[100]
-                      : Colors.transparent,
-                  child: ListTile(
-                    title: UpText(
-                      style: UpStyle(
-                          textColor: isProductDetailEnabled
-                              ? UpConfig.of(context).theme.primaryColor[700]
-                              : Colors.grey[700]),
-                      "Product Variations",
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Visibility(
-              visible: currentProduct != null &&
-                  currentProduct!.isVariedProduct == false &&
-                  currentProduct!.id != null,
-              child: GestureDetector(
-                onTap: (() {
-                  if (isProductDetailEnabled) {
-                    view = 5;
-                    setState(() {});
-                  }
-                }),
-                child: Container(
-                  color: view == 5
-                      ? UpConfig.of(context).theme.primaryColor[100]
-                      : Colors.transparent,
-                  child: ListTile(
-                    title: UpText(
-                      style: UpStyle(
-                          textColor: isProductDetailEnabled
-                              ? UpConfig.of(context).theme.primaryColor[700]
-                              : Colors.grey[700]),
-                      "Product Filters",
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
+                    color: view == 2
+                        ? UpConfig.of(context).theme.primaryColor[100]
+                        : Colors.transparent,
+                    child: ListTile(
+                      title: UpText(
+                        style: UpStyle(
+                            textColor: isProductDetailEnabled
+                                ? UpConfig.of(context).theme.primaryColor[700]
+                                : Colors.grey[700]),
+                        "Product Attributes",
+                      ),
+                    ))),
+          ),
+          Visibility(
+            visible: currentProduct != null &&
+                currentProduct!.isVariedProduct &&
+                currentProduct!.id != null,
+            child: GestureDetector(
               onTap: (() {
                 if (isProductDetailEnabled) {
-                  view = 4;
+                  view = 3;
                   setState(() {});
                 }
               }),
               child: Container(
-                color: view == 4
+                color: view == 3
                     ? UpConfig.of(context).theme.primaryColor[100]
                     : Colors.transparent,
                 child: ListTile(
                   title: UpText(
-                    "Product Addons",
                     style: UpStyle(
                         textColor: isProductDetailEnabled
                             ? UpConfig.of(context).theme.primaryColor[700]
                             : Colors.grey[700]),
+                    "Product Variations",
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          Visibility(
+            visible: currentProduct != null &&
+                currentProduct!.isVariedProduct == false &&
+                currentProduct!.id != null,
+            child: GestureDetector(
+              onTap: (() {
+                if (isProductDetailEnabled) {
+                  view = 5;
+                  setState(() {});
+                }
+              }),
+              child: Container(
+                color: view == 5
+                    ? UpConfig.of(context).theme.primaryColor[100]
+                    : Colors.transparent,
+                child: ListTile(
+                  title: UpText(
+                    style: UpStyle(
+                        textColor: isProductDetailEnabled
+                            ? UpConfig.of(context).theme.primaryColor[700]
+                            : Colors.grey[700]),
+                    "Product Filters",
+                  ),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: (() {
+              if (isProductDetailEnabled) {
+                view = 4;
+                setState(() {});
+              }
+            }),
+            child: Container(
+              color: view == 4
+                  ? UpConfig.of(context).theme.primaryColor[100]
+                  : Colors.transparent,
+              child: ListTile(
+                title: UpText(
+                  "Product Addons",
+                  style: UpStyle(
+                      textColor: isProductDetailEnabled
+                          ? UpConfig.of(context).theme.primaryColor[700]
+                          : Colors.grey[700]),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -386,140 +381,139 @@ class _AdminProductState extends State<AdminProduct> {
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           child: SizedBox(
-              width: 500,
               child: SizedBox(
-                width: 300,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            width: 300,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // name
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: UpTextField(
+                    controller: _nameController,
+                    label: "Name",
+                  ),
+                ),
+                // description
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: UpTextField(
+                    controller: _descriptionController,
+                    label: "Description",
+                    maxLines: 4,
+                  ),
+                ),
+                // price
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: UpTextField(
+                    keyboardType: TextInputType.number,
+                    controller: _priceController,
+                    label: "Price",
+                  ),
+                ),
+                // sku
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: UpTextField(
+                    controller: _skuController,
+                    label: "Sku",
+                  ),
+                ),
+                // discount price
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: UpTextField(
+                    controller: _discountPriceController,
+                    label: "Discound Price",
+                  ),
+                ),
+                // discount start date
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: UpTextField(
+                      controller: _discountStartController,
+                      prefixIcon: const Icon(Icons.calendar_today),
+                      label: "Discound Start Date",
+                      onTap: () {
+                        _discountStartDate();
+                      }),
+                ),
+                // discount end date
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: UpTextField(
+                      controller: _discountEndController,
+                      prefixIcon: const Icon(Icons.calendar_today),
+                      label: "Discound End Date",
+                      onTap: () {
+                        _discountEndDate();
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: AddEditKeywordWidget(
+                    keywordList: keywords,
+                    change: (value) {
+                      if (value != null) {
+                        keywords.clear();
+
+                        for (var element in (value as List<String>)) {
+                          keywords.add(int.parse(element));
+                        }
+                      }
+                    },
+                  ),
+                ),
+
+                GalleryDropdown(
+                  gallery: gallery,
+                  onChange: (value) {
+                    gallery = int.parse(value);
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AddMediaWidget(
+                    selectedMedia: selectedMedia,
+                    onChnage: (media) {
+                      selectedMedia = media;
+                      setState(() {});
+                    },
+                  ),
+                ),
+
+                // is varried checkbox
+                UpCheckbox(
+                  initialValue: isVariedProduct,
+                  label: "Is Varied",
+                  onChange: (newCheck) => {
+                    isVariedProduct = newCheck,
+                    setState(() {}),
+                  },
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // name
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: UpTextField(
-                        controller: _nameController,
-                        label: "Name",
-                      ),
-                    ),
-                    // description
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: UpTextField(
-                        controller: _descriptionController,
-                        label: "Description",
-                        maxLines: 4,
-                      ),
-                    ),
-                    // price
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: UpTextField(
-                        keyboardType: TextInputType.number,
-                        controller: _priceController,
-                        label: "Price",
-                      ),
-                    ),
-                    // sku
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: UpTextField(
-                        controller: _skuController,
-                        label: "Sku",
-                      ),
-                    ),
-                    // discount price
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: UpTextField(
-                        controller: _discountPriceController,
-                        label: "Discound Price",
-                      ),
-                    ),
-                    // discount start date
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: UpTextField(
-                          controller: _discountStartController,
-                          prefixIcon: const Icon(Icons.calendar_today),
-                          label: "Discound Start Date",
-                          onTap: () {
-                            _discountStartDate();
-                          }),
-                    ),
-                    // discount end date
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: UpTextField(
-                          controller: _discountEndController,
-                          prefixIcon: const Icon(Icons.calendar_today),
-                          label: "Discound End Date",
-                          onTap: () {
-                            _discountEndDate();
-                          }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AddEditKeywordWidget(
-                        keywordList: keywords,
-                        change: (value) {
-                          if (value != null) {
-                            keywords.clear();
-
-                            for (var element in (value as List<String>)) {
-                              keywords.add(int.parse(element));
-                            }
-                          }
+                    SizedBox(
+                      width: 100,
+                      child: UpButton(
+                        onPressed: () {
+                          addEditProduct();
                         },
+                        text: "Save",
                       ),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GalleryDropdown(
-                        gallery: gallery,
-                        onChange: (value) {
-                          gallery = int.parse(value);
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AddMediaWidget(
-                        selectedMedia: selectedMedia,
-                        onChnage: (media) {
-                          selectedMedia = media;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-
-                    // is varried checkbox
-                    UpCheckbox(
-                      initialValue: isVariedProduct,
-                      label: "Is Varied",
-                      onChange: (newCheck) => {
-                        isVariedProduct = newCheck,
-                        setState(() {}),
-                      },
                     ),
                   ],
                 ),
-              )),
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: SizedBox(
-            width: 100,
-            child: UpButton(
-              onPressed: () {
-                addEditProduct();
-              },
-              text: "Save",
+                const SizedBox(height: 20)
+              ],
             ),
-          ),
-        )
+          )),
+        ),
       ],
     );
   }
@@ -534,12 +528,15 @@ class _AdminProductState extends State<AdminProduct> {
       widget.isReset = false;
     }
 
-    return SizedBox(
+    return Container(
       key: GlobalKey(),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           leftSide(),
+         const SizedBox(
+            height: 22
+          ),
           rightSide(),
         ],
       ),
