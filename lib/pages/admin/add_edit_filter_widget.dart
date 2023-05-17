@@ -158,7 +158,7 @@ class _AddEditFiltersWidgetState extends State<AddEditFiltersWidget> {
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                2,
+                                                1.3,
                                         child: AttributeDropdownWidget(
                                           attribute: element,
                                           attributeValues: attributeValues,

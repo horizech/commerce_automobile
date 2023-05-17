@@ -304,7 +304,7 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
@@ -331,25 +331,41 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                                                 ],
                                               ),
                                             ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                view = 4;
-                                                currentProduct = e;
-                                                setState(() {});
-                                              },
-                                              child: UpIcon(
-                                                icon: Icons.edit,
-                                                style: UpStyle(iconSize: 20),
-                                              ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                _deleteProduct(e.id!);
-                                              },
-                                              child: UpIcon(
-                                                icon: Icons.delete,
-                                                style: UpStyle(iconSize: 20),
-                                              ),
+                                            Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 8.0),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      view = 4;
+                                                      currentProduct = e;
+                                                      setState(() {});
+                                                    },
+                                                    child: UpIcon(
+                                                      icon: Icons.edit,
+                                                      style:
+                                                          UpStyle(iconSize: 20),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 8.0),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      _deleteProduct(e.id!);
+                                                    },
+                                                    child: UpIcon(
+                                                      icon: Icons.delete,
+                                                      style:
+                                                          UpStyle(iconSize: 20),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),

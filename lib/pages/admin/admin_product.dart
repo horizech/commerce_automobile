@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:apiraiser/apiraiser.dart';
@@ -203,6 +204,134 @@ class _AdminProductState extends State<AdminProduct> {
   }
 
   Widget leftSide() {
+    // return DefaultTabController(
+    //     length: 5,
+    //     child: TabBar(
+    //       tabs: [
+    //         GestureDetector(
+    //           onTap: (() {
+    //             view = 1;
+    //             setState(() {});
+    //           }),
+    //           child: Tab(
+    //             icon: Icon(Icons.info,
+    //                 color: UpConfig.of(context).theme.primaryColor),
+    //             text: "Product Info",
+    //           ),
+    //         ),
+    //         Visibility(
+    //           visible: currentProduct != null &&
+    //               currentProduct!.isVariedProduct &&
+    //               currentProduct!.id != null,
+    //           child: Tab(
+    //             child: GestureDetector(
+    //               onTap: (() {
+    //                 if (isProductDetailEnabled) {
+    //                   view = 2;
+    //                   setState(() {});
+    //                 }
+    //               }),
+    //               child: Container(
+    //                 color: view == 2
+    //                     ? UpConfig.of(context).theme.primaryColor[100]
+    //                     : Colors.transparent,
+    //                 child: ListTile(
+    //                   title: UpText(
+    //                     style: UpStyle(
+    //                         textColor: isProductDetailEnabled
+    //                             ? UpConfig.of(context).theme.primaryColor[700]
+    //                             : Colors.grey[700]),
+    //                     "Product Attributes",
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //         Visibility(
+    //           visible: currentProduct != null &&
+    //               currentProduct!.isVariedProduct &&
+    //               currentProduct!.id != null,
+    //           child: Tab(
+    //             child: GestureDetector(
+    //               onTap: (() {
+    //                 if (isProductDetailEnabled) {
+    //                   view = 3;
+    //                   setState(() {});
+    //                 }
+    //               }),
+    //               child: Container(
+    //                 color: view == 3
+    //                     ? UpConfig.of(context).theme.primaryColor[100]
+    //                     : Colors.transparent,
+    //                 child: ListTile(
+    //                   title: UpText(
+    //                     style: UpStyle(
+    //                         textColor: isProductDetailEnabled
+    //                             ? UpConfig.of(context).theme.primaryColor[700]
+    //                             : Colors.grey[700]),
+    //                     "Product Variations",
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //         Visibility(
+    //           visible: currentProduct != null &&
+    //               currentProduct!.isVariedProduct == false &&
+    //               currentProduct!.id != null,
+    //           child: Tab(
+    //             child: GestureDetector(
+    //               onTap: (() {
+    //                 if (isProductDetailEnabled) {
+    //                   view = 5;
+    //                   setState(() {});
+    //                 }
+    //               }),
+    //               child: Container(
+    //                 color: view == 5
+    //                     ? UpConfig.of(context).theme.primaryColor[100]
+    //                     : Colors.transparent,
+    //                 child: ListTile(
+    //                   title: UpText(
+    //                     style: UpStyle(
+    //                         textColor: isProductDetailEnabled
+    //                             ? UpConfig.of(context).theme.primaryColor[700]
+    //                             : Colors.grey[700]),
+    //                     "Product Filters",
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //         Tab(
+    //           child: GestureDetector(
+    //             onTap: (() {
+    //               if (isProductDetailEnabled) {
+    //                 view = 4;
+    //                 setState(() {});
+    //               }
+    //             }),
+    //             child: Container(
+    //               color: view == 4
+    //                   ? UpConfig.of(context).theme.primaryColor[100]
+    //                   : Colors.transparent,
+    //               child: ListTile(
+    //                 title: UpText(
+    //                   "Product Addons",
+    //                   style: UpStyle(
+    //                       textColor: isProductDetailEnabled
+    //                           ? UpConfig.of(context).theme.primaryColor[700]
+    //                           : Colors.grey[700]),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ));
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Wrap(
@@ -217,17 +346,37 @@ class _AdminProductState extends State<AdminProduct> {
               setState(() {});
             }),
             child: Container(
-              color: view == 1
-                  ? UpConfig.of(context).theme.primaryColor[100]
-                  : Colors.transparent,
-              child: const SizedBox(
-                width: 140,
-                child: ListTile(
-                  title: UpText(
-                    "Product Info",
-                  ),
-                ),
+              decoration: BoxDecoration(
+                border: view == 1
+                    ? Border(
+                        bottom: BorderSide(
+                            width: 2,
+                            color: UpConfig.of(context).theme.primaryColor),
+                      )
+                    : const Border(
+                        bottom: BorderSide(width: 0, color: Colors.transparent),
+                      ),
+                color: view == 1
+                    ? UpConfig.of(context).theme.primaryColor[50]
+                    : Colors.transparent,
               ),
+              child: SizedBox(
+                  width: 120,
+                  height: 50,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 4),
+                      Icon(
+                        Icons.info,
+                        color: UpConfig.of(context).theme.primaryColor,
+                      ),
+                      const SizedBox(height: 2),
+                      UpText(
+                        "Product Info",
+                        style: UpStyle(textSize: 12),
+                      ),
+                    ],
+                  )),
             ),
           ),
           Visibility(
@@ -235,28 +384,48 @@ class _AdminProductState extends State<AdminProduct> {
                 currentProduct!.isVariedProduct &&
                 currentProduct!.id != null,
             child: GestureDetector(
-                onTap: (() {
-                  if (isProductDetailEnabled) {
-                    view = 2;
-                    setState(() {});
-                  }
-                }),
-                child: Container(
-                    color: view == 2
-                        ? UpConfig.of(context).theme.primaryColor[100]
-                        : Colors.transparent,
-                    child: SizedBox(
-                      width: 140,
-                      child: ListTile(
-                        title: UpText(
-                          style: UpStyle(
-                              textColor: isProductDetailEnabled
-                                  ? UpConfig.of(context).theme.primaryColor[700]
-                                  : Colors.grey[700]),
-                          "Product Attributes",
+              onTap: (() {
+                if (isProductDetailEnabled) {
+                  view = 2;
+                  setState(() {});
+                }
+              }),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: view == 2
+                      ? Border(
+                          bottom: BorderSide(
+                              width: 2,
+                              color: UpConfig.of(context).theme.primaryColor),
+                        )
+                      : const Border(
+                          bottom:
+                              BorderSide(width: 0, color: Colors.transparent),
                         ),
+                  color: view == 2
+                      ? UpConfig.of(context).theme.primaryColor[50]
+                      : Colors.transparent,
+                ),
+                child: SizedBox(
+                  width: 120,
+                  height: 50,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 4),
+                      Icon(
+                        Icons.link,
+                        color: UpConfig.of(context).theme.primaryColor,
                       ),
-                    ))),
+                      const SizedBox(height: 2),
+                      UpText(
+                        "Product Attributes",
+                        style: UpStyle(textSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
           Visibility(
             visible: currentProduct != null &&
@@ -270,19 +439,37 @@ class _AdminProductState extends State<AdminProduct> {
                 }
               }),
               child: Container(
-                color: view == 3
-                    ? UpConfig.of(context).theme.primaryColor[100]
-                    : Colors.transparent,
+                decoration: BoxDecoration(
+                  border: view == 3
+                      ? Border(
+                          bottom: BorderSide(
+                              width: 2,
+                              color: UpConfig.of(context).theme.primaryColor),
+                        )
+                      : const Border(
+                          bottom:
+                              BorderSide(width: 0, color: Colors.transparent),
+                        ),
+                  color: view == 3
+                      ? UpConfig.of(context).theme.primaryColor[50]
+                      : Colors.transparent,
+                ),
                 child: SizedBox(
-                  width: 140,
-                  child: ListTile(
-                    title: UpText(
-                      style: UpStyle(
-                          textColor: isProductDetailEnabled
-                              ? UpConfig.of(context).theme.primaryColor[700]
-                              : Colors.grey[700]),
-                      "Product Variations",
-                    ),
+                  width: 120,
+                  height: 50,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 4),
+                      Icon(
+                        Icons.data_exploration_sharp,
+                        color: UpConfig.of(context).theme.primaryColor,
+                      ),
+                      const SizedBox(height: 2),
+                      UpText(
+                        "Product Variations",
+                        style: UpStyle(textSize: 12),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -300,19 +487,37 @@ class _AdminProductState extends State<AdminProduct> {
                 }
               }),
               child: Container(
-                color: view == 5
-                    ? UpConfig.of(context).theme.primaryColor[100]
-                    : Colors.transparent,
+                decoration: BoxDecoration(
+                  border: view == 5
+                      ? Border(
+                          bottom: BorderSide(
+                              width: 2,
+                              color: UpConfig.of(context).theme.primaryColor),
+                        )
+                      : const Border(
+                          bottom:
+                              BorderSide(width: 0, color: Colors.transparent),
+                        ),
+                  color: view == 5
+                      ? UpConfig.of(context).theme.primaryColor[50]
+                      : Colors.transparent,
+                ),
                 child: SizedBox(
-                  width: 140,
-                  child: ListTile(
-                    title: UpText(
-                      style: UpStyle(
-                          textColor: isProductDetailEnabled
-                              ? UpConfig.of(context).theme.primaryColor[700]
-                              : Colors.grey[700]),
-                      "Product Filters",
-                    ),
+                  width: 120,
+                  height: 50,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 4),
+                      Icon(
+                        Icons.photo_filter,
+                        color: UpConfig.of(context).theme.primaryColor,
+                      ),
+                      const SizedBox(height: 2),
+                      UpText(
+                        "Product Filters",
+                        style: UpStyle(textSize: 12),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -326,19 +531,36 @@ class _AdminProductState extends State<AdminProduct> {
               }
             }),
             child: Container(
-              color: view == 4
-                  ? UpConfig.of(context).theme.primaryColor[100]
-                  : Colors.transparent,
+              decoration: BoxDecoration(
+                border: view == 4
+                    ? Border(
+                        bottom: BorderSide(
+                            width: 2,
+                            color: UpConfig.of(context).theme.primaryColor),
+                      )
+                    : const Border(
+                        bottom: BorderSide(width: 0, color: Colors.transparent),
+                      ),
+                color: view == 4
+                    ? UpConfig.of(context).theme.primaryColor[50]
+                    : Colors.transparent,
+              ),
               child: SizedBox(
-                width: 140,
-                child: ListTile(
-                  title: UpText(
-                    "Product Addons",
-                    style: UpStyle(
-                        textColor: isProductDetailEnabled
-                            ? UpConfig.of(context).theme.primaryColor[700]
-                            : Colors.grey[700]),
-                  ),
+                width: 120,
+                height: 50,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 4),
+                    Icon(
+                      Icons.add_box_outlined,
+                      color: UpConfig.of(context).theme.primaryColor,
+                    ),
+                    const SizedBox(height: 2),
+                    UpText(
+                      "Product Addons",
+                      style: UpStyle(textSize: 12),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -397,137 +619,134 @@ class _AdminProductState extends State<AdminProduct> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // name
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: UpTextField(
-                  controller: _nameController,
-                  label: "Name",
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // name
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: UpTextField(
+                controller: _nameController,
+                label: "Name",
               ),
-              // description
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: UpTextField(
-                  controller: _descriptionController,
-                  label: "Description",
-                  maxLines: 4,
-                ),
+            ),
+            // description
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: UpTextField(
+                controller: _descriptionController,
+                label: "Description",
+                maxLines: 4,
               ),
-              // price
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: UpTextField(
-                  keyboardType: TextInputType.number,
-                  controller: _priceController,
-                  label: "Price",
-                ),
+            ),
+            // price
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: UpTextField(
+                keyboardType: TextInputType.number,
+                controller: _priceController,
+                label: "Price",
               ),
-              // sku
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: UpTextField(
-                  controller: _skuController,
-                  label: "Sku",
-                ),
+            ),
+            // sku
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: UpTextField(
+                controller: _skuController,
+                label: "Sku",
               ),
-              // discount price
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: UpTextField(
-                  controller: _discountPriceController,
-                  label: "Discound Price",
-                ),
+            ),
+            // discount price
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: UpTextField(
+                controller: _discountPriceController,
+                label: "Discound Price",
               ),
-              // discount start date
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: UpTextField(
-                    controller: _discountStartController,
-                    prefixIcon: const Icon(Icons.calendar_today),
-                    label: "Discound Start Date",
-                    onTap: () {
-                      _discountStartDate();
-                    }),
-              ),
-              // discount end date
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: UpTextField(
-                    controller: _discountEndController,
-                    prefixIcon: const Icon(Icons.calendar_today),
-                    label: "Discound End Date",
-                    onTap: () {
-                      _discountEndDate();
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: AddEditKeywordWidget(
-                  keywordList: keywords,
-                  change: (value) {
-                    if (value != null) {
-                      keywords.clear();
+            ),
+            // discount start date
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: UpTextField(
+                  controller: _discountStartController,
+                  prefixIcon: const Icon(Icons.calendar_today),
+                  label: "Discound Start Date",
+                  onTap: () {
+                    _discountStartDate();
+                  }),
+            ),
+            // discount end date
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: UpTextField(
+                  controller: _discountEndController,
+                  prefixIcon: const Icon(Icons.calendar_today),
+                  label: "Discound End Date",
+                  onTap: () {
+                    _discountEndDate();
+                  }),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: AddEditKeywordWidget(
+                keywordList: keywords,
+                change: (value) {
+                  if (value != null) {
+                    keywords.clear();
 
-                      for (var element in (value as List<String>)) {
-                        keywords.add(int.parse(element));
-                      }
+                    for (var element in (value as List<String>)) {
+                      keywords.add(int.parse(element));
                     }
-                  },
-                ),
-              ),
-
-              GalleryDropdown(
-                gallery: gallery,
-                onChange: (value) {
-                  gallery = int.parse(value);
+                  }
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AddMediaWidget(
-                  selectedMedia: selectedMedia,
-                  onChnage: (media) {
-                    selectedMedia = media;
-                    setState(() {});
-                  },
-                ),
-              ),
+            ),
 
-              // is varried checkbox
-              UpCheckbox(
-                initialValue: isVariedProduct,
-                label: "Is Varied",
-                onChange: (newCheck) => {
-                  isVariedProduct = newCheck,
-                  setState(() {}),
+            GalleryDropdown(
+              gallery: gallery,
+              onChange: (value) {
+                gallery = int.parse(value);
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AddMediaWidget(
+                selectedMedia: selectedMedia,
+                onChnage: (media) {
+                  selectedMedia = media;
+                  setState(() {});
                 },
               ),
-              const SizedBox(
-                width: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    width: 100,
-                    child: UpButton(
-                      onPressed: () {
-                        addEditProduct();
-                      },
-                      text: "Save",
-                    ),
+            ),
+
+            // is varried checkbox
+            UpCheckbox(
+              initialValue: isVariedProduct,
+              label: "Is Varied",
+              onChange: (newCheck) => {
+                isVariedProduct = newCheck,
+                setState(() {}),
+              },
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: 100,
+                  child: UpButton(
+                    onPressed: () {
+                      addEditProduct();
+                    },
+                    text: "Save",
                   ),
-                ],
-              ),
-              const SizedBox(height: 20)
-            ],
-          ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20)
+          ],
         ),
       ),
     );
@@ -547,9 +766,10 @@ class _AdminProductState extends State<AdminProduct> {
       key: GlobalKey(),
       child: Center(
         child: SizedBox(
-          width: MediaQuery.of(context).size.width / 1.4,
+          width: MediaQuery.of(context).size.width <= 600
+              ? MediaQuery.of(context).size.width
+              : MediaQuery.of(context).size.width / 1.5,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               leftSide(),
               const SizedBox(height: 22),
