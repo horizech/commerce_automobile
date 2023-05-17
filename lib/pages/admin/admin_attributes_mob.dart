@@ -272,7 +272,9 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
                       children: [
                         const SizedBox(height: 20),
                         UpText(
-                          "Attributes",
+                          selectedAttribute.id == -1
+                              ? "Create Attribute"
+                              : "Update Attribute",
                           style: UpStyle(
                               textSize: 24,
                               textWeight: FontWeight.bold,

@@ -273,7 +273,10 @@ class _AdminProductsState extends State<AdminProducts> {
                                           children: [
                                             Flexible(
                                               child: SizedBox(
-                                                width: 400,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    1.5,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
@@ -297,15 +300,20 @@ class _AdminProductsState extends State<AdminProducts> {
                                                 ),
                                               ),
                                             ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                view = 4;
-                                                currentProduct = e;
-                                                setState(() {});
-                                              },
-                                              child: UpIcon(
-                                                icon: Icons.edit,
-                                                style: UpStyle(iconSize: 20),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  view = 4;
+                                                  currentProduct = e;
+                                                  setState(() {});
+                                                },
+                                                child: UpIcon(
+                                                  icon: Icons.edit,
+                                                  style: UpStyle(iconSize: 20),
+                                                ),
                                               ),
                                             ),
                                             GestureDetector(

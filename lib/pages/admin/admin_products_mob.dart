@@ -309,29 +309,26 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Flexible(
-                                              child: SizedBox(
-                                                width: 400,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    UpText(
-                                                      e.name,
-                                                      style: UpStyle(
-                                                        textSize: 16,
-                                                        textWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  UpText(
+                                                    e.name,
+                                                    style: UpStyle(
+                                                      textSize: 16,
+                                                      textWeight:
+                                                          FontWeight.bold,
                                                     ),
-                                                    UpText(
-                                                      e.description ?? "",
-                                                      style:
-                                                          UpStyle(textSize: 12),
-                                                    ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  UpText(
+                                                    e.description ?? "",
+                                                    style:
+                                                        UpStyle(textSize: 12),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             GestureDetector(
@@ -383,8 +380,11 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
   Widget editCollectionView() {
     return Column(
       children: [
+        const SizedBox(height: 20),
         UpText(
-          "Create a colllection",
+          selectedCollection.id == -1
+              ? "Create colllection"
+              : "Update collection",
           style: UpStyle(
               textSize: 24,
               textWeight: FontWeight.bold,
@@ -400,13 +400,6 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
             padding: const EdgeInsets.all(22.0),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Align(
-                alignment: Alignment.topLeft,
-                child: UpText(
-                  "Collection",
-                  type: UpTextType.heading6,
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
@@ -610,16 +603,13 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                   _getCollectionDropdown();
                 }
 
-                return Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        rightView(),
-                      ],
-                    ),
+                return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      rightView(),
+                    ],
                   ),
                 );
               },

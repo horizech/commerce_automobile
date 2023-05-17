@@ -318,7 +318,9 @@ class _AdminCombosMobState extends State<AdminCombosMob> {
                           children: [
                             const SizedBox(height: 20),
                             UpText(
-                              "Combos",
+                              selectedCombo.id == -1
+                                  ? "Create Combo"
+                                  : "Update Combo",
                               style: UpStyle(
                                   textSize: 24,
                                   textWeight: FontWeight.bold,

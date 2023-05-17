@@ -7,6 +7,8 @@ import 'package:flutter_up/models/up_router_state.dart';
 import 'package:flutter_up/widgets/up_responsive_page.dart';
 import 'package:shop/pages/admin/admin_attributes_mob.dart';
 import 'package:shop/pages/admin/admin_combos_mob.dart';
+import 'package:shop/pages/admin/admin_gallery_mob.dart';
+import 'package:shop/pages/admin/admin_keywords_mob.dart';
 import 'package:shop/pages/admin/admin_products_mob.dart';
 import 'package:shop/pages/authentication/loginsignup.dart';
 import 'package:shop/pages/home/home.dart';
@@ -145,8 +147,9 @@ class ShopApp extends StatelessWidget {
                 path: Routes.adminGallery,
                 name: Routes.adminGallery,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
-                    const StoreDependantPage(
-                  page: AdminGallery(),
+                    const UpResponsivePage(
+                  desktopPage: AdminGallery(),
+                  mobilePage: AdminGalleryMob(),
                 ),
                 shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
                 redirectRoute: Routes.loginSignup,
@@ -165,8 +168,9 @@ class ShopApp extends StatelessWidget {
                 path: Routes.adminKeywords,
                 name: Routes.adminKeywords,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
-                    const StoreDependantPage(
-                  page: AdminKeywords(),
+                    const UpResponsivePage(
+                  desktopPage: AdminKeywords(),
+                  mobilePage: AdminKeywordsMob(),
                 ),
                 shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
                 redirectRoute: Routes.loginSignup,

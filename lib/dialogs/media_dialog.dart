@@ -46,44 +46,42 @@ class _MediaDialogState extends State<MediaDialog> {
       titlePadding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       content: mediaList.isNotEmpty
-          ? SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: SizedBox(
-                  height: 500,
-                  width: 500,
-                  child: Wrap(
-                    children: mediaList
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: selectedMedia == e
-                                            ? UpConfig.of(context)
-                                                .theme
-                                                .primaryColor
-                                            : Colors.transparent)),
-                                child: SizedBox(
-                                  width: 98,
-                                  height: 98,
-                                  child: MediaWidget(
-                                    media: e,
-                                    onChange: () {
-                                      selectedMedia = e;
-                                      setState(() {});
-                                    },
+          ? Center(
+              child: Container(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Wrap(
+                      children: mediaList
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: selectedMedia == e
+                                              ? UpConfig.of(context)
+                                                  .theme
+                                                  .primaryColor
+                                              : Colors.transparent)),
+                                  child: SizedBox(
+                                    width: 98,
+                                    height: 98,
+                                    child: MediaWidget(
+                                      media: e,
+                                      onChange: () {
+                                        selectedMedia = e;
+                                        setState(() {});
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ))
-                        .toList(),
-                  )))
-          : const SizedBox(
-              width: 500,
-              height: 500,
-              child: Center(child: UpCircularProgress())),
+                              ))
+                          .toList(),
+                    )),
+              ),
+            )
+          : const SizedBox(child: Center(child: UpCircularProgress())),
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
