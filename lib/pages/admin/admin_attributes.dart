@@ -18,6 +18,7 @@ import 'package:shop/dialogs/delete_dialog.dart';
 import 'package:shop/models/attribute_value.dart';
 import 'package:shop/models/attribute.dart';
 import 'package:shop/services/add_edit_product_service/add_edit_product_service.dart';
+import 'package:flutter_up/widgets/up_app_bar.dart';
 
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/unauthorized_widget.dart';
@@ -212,7 +213,7 @@ class _AdminAttributesState extends State<AdminAttributes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const UpAppBar(),
       drawer: const NavDrawer(),
       body: isUserAdmin()
           ? BlocConsumer<StoreCubit, StoreState>(
