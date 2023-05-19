@@ -74,7 +74,7 @@ class StoreCubit extends Cubit<StoreState> {
             .map((t) => ProductAttribute.fromJson(t as Map<String, dynamic>))
             .toList();
         List<AttributeSwatch> attributeSwatches =
-            (result[10].data as List<dynamic>)
+            (result[9].data as List<dynamic>)
                 .map((t) => AttributeSwatch.fromJson(t as Map<String, dynamic>))
                 .toList();
 

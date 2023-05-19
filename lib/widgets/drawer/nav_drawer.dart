@@ -35,9 +35,9 @@ class NavDrawer extends StatelessWidget {
       ServiceManager<UpNavigationService>()
           .navigateToNamed(Routes.adminKeywords);
     }
-      void media(context) {
-      ServiceManager<UpNavigationService>()
-          .navigateToNamed(Routes.adminKeywords);
+
+    void media(context) {
+      ServiceManager<UpNavigationService>().navigateToNamed(Routes.adminMedia);
     }
 
     actions = [
