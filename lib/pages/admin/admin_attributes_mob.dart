@@ -107,19 +107,23 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
           data: newAttribute.toJson(newAttribute), attributeId: attribute?.id);
 
       if (result != null) {
-        showUpToast(
-          context: context,
-          text: result.message ?? "",
-        );
+        if (context.mounted) {
+          showUpToast(
+            context: context,
+            text: result.message ?? "",
+          );
+        }
         if (attribute == null) {
           nameController.text = "";
         }
         getAttributes();
       } else {
-        showUpToast(
-          context: context,
-          text: "An Error Occurred",
-        );
+        if (context.mounted) {
+          showUpToast(
+            context: context,
+            text: "An Error Occurred",
+          );
+        }
       }
     } else {
       showUpToast(
@@ -164,15 +168,19 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
         APIResult? result =
             await AddEditProductService.deleteAttribute(attributeId);
         if (result != null && result.success) {
-          showUpToast(context: context, text: result.message ?? "");
+          if (context.mounted) {
+            showUpToast(context: context, text: result.message ?? "");
+          }
           nameController.text = "";
           selectedAttribute = const Attribute(name: "", id: -1);
           getAttributes();
         } else {
-          showUpToast(
-            context: context,
-            text: "An Error Occurred",
-          );
+          if (context.mounted) {
+            showUpToast(
+              context: context,
+              text: "An Error Occurred",
+            );
+          }
         }
       }
     });
@@ -190,13 +198,17 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
         APIResult? result =
             await AddEditProductService.deleteAttributeValue(attributeValueId);
         if (result != null && result.success) {
-          showUpToast(context: context, text: result.message ?? "");
+          if (context.mounted) {
+            showUpToast(context: context, text: result.message ?? "");
+          }
           getAttributeValues();
         } else {
-          showUpToast(
-            context: context,
-            text: "An Error Occurred",
-          );
+          if (context.mounted) {
+            showUpToast(
+              context: context,
+              text: "An Error Occurred",
+            );
+          }
         }
       }
     });

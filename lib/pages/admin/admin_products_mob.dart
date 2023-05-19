@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/text_style.dart';
-import 'package:flutter_up/enums/up_button_type.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/models/up_label_value.dart';
 import 'package:flutter_up/themes/up_style.dart';
@@ -268,8 +267,8 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Align(
@@ -522,16 +521,20 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
         data: Collection.toJson(collection),
         collectionId: c != null ? c.id! : null);
     if (result != null && result.success) {
-      showUpToast(
-        context: context,
-        text: result.message ?? "",
-      );
+      if (context.mounted) {
+        showUpToast(
+          context: context,
+          text: result.message ?? "",
+        );
+      }
       getCollections();
     } else {
-      showUpToast(
-        context: context,
-        text: "An Error Occurred",
-      );
+      if (context.mounted) {
+        showUpToast(
+          context: context,
+          text: "An Error Occurred",
+        );
+      }
     }
   }
 
@@ -554,17 +557,21 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
     APIResult? result =
         await AddEditProductService.deleteCollection(collectionId);
     if (result != null && result.success) {
-      showUpToast(context: context, text: result.message ?? "");
+      if (context.mounted) {
+        showUpToast(context: context, text: result.message ?? "");
+      }
       selectedCollection = const Collection(name: "", id: -1);
       nameController.text = "";
       mediaController = TextEditingController();
       // currentParent = "";
       getCollections();
     } else {
-      showUpToast(
-        context: context,
-        text: "An Error Occurred",
-      );
+      if (context.mounted) {
+        showUpToast(
+          context: context,
+          text: "An Error Occurred",
+        );
+      }
     }
   }
 
@@ -580,16 +587,20 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
         APIResult? result =
             await AddEditProductService.deleteProduct(productId);
         if (result != null && result.success) {
-          showUpToast(
-            context: context,
-            text: result.message ?? "",
-          );
+          if (context.mounted) {
+            showUpToast(
+              context: context,
+              text: result.message ?? "",
+            );
+          }
           setState(() {});
         } else {
-          showUpToast(
-            context: context,
-            text: "An Error Occurred",
-          );
+          if (context.mounted) {
+            showUpToast(
+              context: context,
+              text: "An Error Occurred",
+            );
+          }
         }
       }
     });

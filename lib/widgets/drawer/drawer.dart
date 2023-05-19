@@ -47,10 +47,6 @@ class CustomDrawer extends StatelessWidget {
             nodes: nodes,
             nodeBuilder: (context, nodeValue) => Text(
               (nodeValue as CollectionTreeItem).name.toString(),
-              style: Theme.of(context).textTheme.headline6!.copyWith(
-                  backgroundColor: Colors.transparent,
-                  fontSize: 14,
-                  color: Colors.black),
             ),
             onSelect: (node) {
               ServiceManager<UpNavigationService>()

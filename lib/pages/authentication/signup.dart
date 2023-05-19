@@ -47,11 +47,12 @@ class _SignupPageState extends State<SignupPage> {
           password: _password,
         ),
       );
-
-      ServiceManager<UpDialogService>().completeDialog(
-          context: context,
-          completerId: loadingDialogCompleterId,
-          result: null);
+      if (context.mounted) {
+        ServiceManager<UpDialogService>().completeDialog(
+            context: context,
+            completerId: loadingDialogCompleterId,
+            result: null);
+      }
 
       _handleSignupResult(result);
     } else {

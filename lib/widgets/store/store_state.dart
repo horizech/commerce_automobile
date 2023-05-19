@@ -15,23 +15,24 @@ class StoreState {
   final List<Combo>? combos;
   final List<AddOn>? addOns;
   final List<ProductAttribute>? productAttributes;
+  final List<AttributeSwatch>? attributeSwatches;
 
   StoreState(
-    this.isLoading,
-    this.isSuccessful,
-    this.isError,
-    this.error,
-    this.collections,
-    this.collectionTree,
-    this.keywords,
-    this.attributes,
-    this.attributeValues,
-    this.gallery,
-    this.combos,
-    this.productCombos,
-    this.addOns,
-    this.productAttributes,
-  );
+      this.isLoading,
+      this.isSuccessful,
+      this.isError,
+      this.error,
+      this.collections,
+      this.collectionTree,
+      this.keywords,
+      this.attributes,
+      this.attributeValues,
+      this.gallery,
+      this.combos,
+      this.productCombos,
+      this.addOns,
+      this.productAttributes,
+      this.attributeSwatches);
 
   get productOptionsValuesMod => null;
 }

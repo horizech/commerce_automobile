@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:apiraiser/apiraiser.dart';
@@ -183,23 +182,29 @@ class _AdminProductState extends State<AdminProduct> {
                 : result.data);
         if (currentProduct != null && currentProduct!.id != null) {
           isProductDetailEnabled = true;
+          if (context.mounted) {
+            showUpToast(
+              context: context,
+              text: result.message ?? "",
+            );
+          }
+          setState(() {});
+        }
+      } else {
+        if (context.mounted) {
           showUpToast(
             context: context,
             text: result.message ?? "",
           );
-          setState(() {});
         }
-      } else {
-        showUpToast(
-          context: context,
-          text: result.message ?? "",
-        );
       }
     } else {
-      showUpToast(
-        context: context,
-        text: "An error occurred",
-      );
+      if (context.mounted) {
+        showUpToast(
+          context: context,
+          text: "An error occurred",
+        );
+      }
     }
   }
 
@@ -332,7 +337,7 @@ class _AdminProductState extends State<AdminProduct> {
     //         ),
     //       ],
     //     ));
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Wrap(
         alignment: WrapAlignment.start,

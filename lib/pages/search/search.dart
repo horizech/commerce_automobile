@@ -28,11 +28,11 @@ class _SearchPageState extends State<SearchPage> {
           AutomobileAppbar(
             scaffoldKey: scaffoldKey,
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
             child: Center(
               child: Column(
-                children: const [
+                children: [
                   SizedBox(
                     height: 250,
                     width: 400,

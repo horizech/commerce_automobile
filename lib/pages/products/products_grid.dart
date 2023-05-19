@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
-import 'package:flutter_up/enums/up_button_type.dart';
 // import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
-import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_orientational_column_row.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/services/variation.dart';
@@ -281,9 +279,7 @@ class _AllProductsState extends State<ProductsGridPage> {
               onTap: () {
                 scrollToTop();
               },
-              child: Container(
-                child: GoToTopButtonWidget(),
-              ),
+              child: GoToTopButtonWidget(),
             )
 
             //  showBackToTopButton == false

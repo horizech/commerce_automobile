@@ -580,11 +580,11 @@ class GetMedia extends StatelessWidget {
           return Container(
             height: 500,
             color: Colors.grey[200],
-            child: Center(
+            child: const Center(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
                       width: 40,
                       height: 40,

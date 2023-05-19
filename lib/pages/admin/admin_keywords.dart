@@ -48,16 +48,20 @@ class _AdminKeywordsState extends State<AdminKeywords> {
     APIResult? result = await AddEditProductService.addEditkeyword(
         data: Keyword.toJson(keyword), keywordId: k != null ? k.id! : null);
     if (result != null && result.success) {
-      showUpToast(
-        context: context,
-        text: result.message ?? "",
-      );
+      if (context.mounted) {
+        showUpToast(
+          context: context,
+          text: result.message ?? "",
+        );
+      }
       getKeywords();
     } else {
-      showUpToast(
-        context: context,
-        text: "An Error Occurred",
-      );
+      if (context.mounted) {
+        showUpToast(
+          context: context,
+          text: "An Error Occurred",
+        );
+      }
     }
   }
 
@@ -73,29 +77,31 @@ class _AdminKeywordsState extends State<AdminKeywords> {
         APIResult? result =
             await AddEditProductService.deleteKeyword(keywordId);
         if (result != null && result.success) {
-          showUpToast(context: context, text: result.message ?? "");
+          if (context.mounted) {
+            showUpToast(context: context, text: result.message ?? "");
+          }
           selectedKeyword = const Keyword(name: "", id: -1);
           nameController.text = "";
           getKeywords();
         } else {
-          showUpToast(
-            context: context,
-            text: "An Error Occurred",
-          );
+          if (context.mounted) {
+            showUpToast(
+              context: context,
+              text: "An Error Occurred",
+            );
+          }
         }
       }
     });
   }
 
   Widget leftSide() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Container(
-        color: Colors.grey[200],
-        width: 300,
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height - 60,
-        ),
+    return Container(
+      color: Colors.grey[200],
+      width: 300,
+      height: 900,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Column(
           children: [
             GestureDetector(

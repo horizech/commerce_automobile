@@ -7,9 +7,11 @@ import 'package:shop/dialogs/media_dialog.dart';
 import 'package:shop/widgets/media/media_widget.dart';
 
 class AddMediaWidget extends StatefulWidget {
+  final String? title;
   final int? selectedMedia;
   final Function? onChnage;
-  const AddMediaWidget({Key? key, this.selectedMedia, this.onChnage})
+  const AddMediaWidget(
+      {Key? key, this.selectedMedia, this.onChnage, this.title})
       : super(key: key);
 
   @override
@@ -40,7 +42,7 @@ class _AddMediaWidgetState extends State<AddMediaWidget> {
       children: [
         Column(
           children: [
-            const UpText("Thumbnail"),
+            UpText(widget.title ?? "Thumbnail"),
             Padding(
               padding: const EdgeInsets.only(top: 5.0),
               child: SizedBox(
