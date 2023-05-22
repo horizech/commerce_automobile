@@ -10,6 +10,7 @@ import 'package:shop/pages/admin/admin_combos_mob.dart';
 import 'package:shop/pages/admin/admin_gallery_mob.dart';
 import 'package:shop/pages/admin/admin_keywords_mob.dart';
 import 'package:shop/pages/admin/admin_media.dart';
+import 'package:shop/pages/admin/admin_media_mob.dart';
 import 'package:shop/pages/admin/admin_products_mob.dart';
 import 'package:shop/pages/authentication/loginsignup.dart';
 import 'package:shop/pages/home/home.dart';
@@ -150,6 +151,7 @@ class ShopApp extends StatelessWidget {
                 pageBuilder: (BuildContext context, UpRouterState state) =>
                     const UpResponsivePage(
                   desktopPage: AdminMedia(),
+                  mobilePage: AdminMediaMob(),
                 ),
                 shouldRedirect: () => !Apiraiser.authentication.isSignedIn(),
                 redirectRoute: Routes.loginSignup,

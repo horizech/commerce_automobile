@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/text_style.dart';
+import 'package:flutter_up/enums/up_button_type.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
+import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
 import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_circualar_progress.dart';
@@ -20,16 +22,16 @@ import 'package:shop/widgets/media/media_widget.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/unauthorized_widget.dart';
 
-class AdminMedia extends StatefulWidget {
-  const AdminMedia({
+class AdminMediaMob extends StatefulWidget {
+  const AdminMediaMob({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<AdminMedia> createState() => _AdminMediaState();
+  State<AdminMediaMob> createState() => _AdminMediaMobState();
 }
 
-class _AdminMediaState extends State<AdminMedia> {
+class _AdminMediaMobState extends State<AdminMediaMob> {
   List<Media> media = [];
   TextEditingController nameController = TextEditingController();
   Media selectedMedia = const Media(id: -1, name: "");
@@ -45,7 +47,7 @@ class _AdminMediaState extends State<AdminMedia> {
     if (media.isNotEmpty) {
       if (message != null && message.isNotEmpty) {
         isUploading = false;
-        showUpToast(context: context, text: message ?? "");
+        showUpToast(context: context, text: message);
       }
       setState(() {});
     }
@@ -124,55 +126,66 @@ class _AdminMediaState extends State<AdminMedia> {
     return Scaffold(
       appBar: const UpAppBar(),
       drawer: const NavDrawer(),
+      endDrawer: SafeArea(
+        child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return Drawer(
+            child: leftSide(),
+          );
+        }),
+      ),
       body: isUserAdmin()
           ? BlocConsumer<StoreCubit, StoreState>(
               listener: (context, state) {},
               builder: (context, state) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    leftSide(),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: SizedBox(
-                          width: 400,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: UpText(
-                                      "Media",
-                                      type: UpTextType.heading6,
-                                    ),
-                                  ),
-                                ),
-                                Visibility(
-                                  visible: selectedMedia.id == -1,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          width: 150,
-                                          height: 50,
-                                          child: UpButton(
-                                            text: "Upload Media",
-                                            onPressed: () {
-                                              uploadMedia();
-                                            },
-                                          ),
+                return Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      UpText(
+                        selectedMedia.id == -1
+                            ? "Upload Media"
+                            : selectedMedia.name,
+                        style: UpStyle(
+                            textSize: 24,
+                            textWeight: FontWeight.bold,
+                            textFontStyle: FontStyle.italic),
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: SizedBox(
+                            child: Column(children: [
+                              Visibility(
+                                visible: selectedMedia.id == -1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width: 120,
+                                        height: 50,
+                                        child: ElevatedButton.icon(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  UpConfig.of(context)
+                                                      .theme
+                                                      .primaryColor),
+                                          icon: const Icon(Icons.add_a_photo),
+                                          label: const Text("Upload"),
+                                          onPressed: () {
+                                            uploadMedia();
+                                          },
                                         ),
                                       ),
-                                      Visibility(
-                                        visible: isUploading == true,
-                                        child: const Padding(
+                                    ),
+                                    Visibility(
+                                      visible: isUploading == true,
+                                      child: const Center(
+                                        child: Padding(
                                           padding: EdgeInsets.all(8.0),
                                           child: UpCircularProgress(
                                             width: 20,
@@ -180,33 +193,34 @@ class _AdminMediaState extends State<AdminMedia> {
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Visibility(
-                                  visible: selectedMedia.id != -1,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          width: 200,
-                                          height: 200,
-                                          child: MediaWidget(
-                                            media: selectedMedia,
-                                          ),
+                              ),
+                              Visibility(
+                                visible: selectedMedia.id != -1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width: 200,
+                                        height: 200,
+                                        child: MediaWidget(
+                                          media: selectedMedia,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                )
-                              ]),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ]),
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 );
               },
             )
