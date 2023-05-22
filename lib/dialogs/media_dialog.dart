@@ -47,7 +47,7 @@ class _MediaDialogState extends State<MediaDialog> {
       contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       content: mediaList.isNotEmpty
           ? Center(
-              child: Container(
+              child: SizedBox(
                 child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Wrap(

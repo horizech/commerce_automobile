@@ -201,13 +201,15 @@ class _ProductDetailedInfoState extends State<ProductDetailedInfo> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: UpButton(
-                              onPressed: () {},
-                              style: UpStyle(
-                                isRounded: true,
-                                borderRadius: 4,
+                            child: Center(
+                              child: UpButton(
+                                onPressed: () {},
+                                style: UpStyle(
+                                  isRounded: true,
+                                  borderRadius: 4,
+                                ),
+                                text: "Contact Us",
                               ),
-                              text: "Contact Us",
                             ),
                           ),
                           Padding(
@@ -460,104 +462,92 @@ class __ProductDetail extends State<_ProductDetail> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  onViewChange(1);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+        Center(
+          child: Wrap(
+            spacing: 4,
+            children: [
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    onViewChange(1);
+                  },
                   child: UpText(
                     "Detail",
                     style: UpStyle(
                       textWeight:
                           view == 1 ? FontWeight.bold : FontWeight.normal,
-                      textSize: 16,
+                      textSize: 12,
                     ),
                   ),
                 ),
               ),
-            ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  onViewChange(4);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    onViewChange(4);
+                  },
                   child: UpText(
                     "Features",
                     style: UpStyle(
                       textWeight:
                           view == 4 ? FontWeight.bold : FontWeight.normal,
-                      textSize: 16,
+                      textSize: 12,
                     ),
                   ),
                 ),
               ),
-            ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  onViewChange(3);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    onViewChange(3);
+                  },
                   child: UpText(
                     "Performance",
                     style: UpStyle(
                       textWeight:
                           view == 3 ? FontWeight.bold : FontWeight.normal,
-                      textSize: 16,
+                      textSize: 12,
                     ),
                   ),
                 ),
               ),
-            ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  onViewChange(5);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    onViewChange(5);
+                  },
                   child: UpText(
                     "Gallery",
                     style: UpStyle(
                       textWeight:
                           view == 5 ? FontWeight.bold : FontWeight.normal,
-                      textSize: 16,
+                      textSize: 12,
                     ),
                   ),
                 ),
               ),
-            ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  onViewChange(2);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    onViewChange(2);
+                  },
                   child: UpText(
                     "Finance",
                     style: UpStyle(
                       textWeight:
                           view == 2 ? FontWeight.bold : FontWeight.normal,
-                      textSize: 16,
+                      textSize: 12,
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         SizedBox(
           child: getView(),

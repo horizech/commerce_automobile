@@ -4,12 +4,9 @@ import 'package:apiraiser/apiraiser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
-import 'package:flutter_up/enums/text_style.dart';
-import 'package:flutter_up/enums/up_button_type.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
-import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_circualar_progress.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/isUserAdmin.dart';
@@ -47,7 +44,9 @@ class _AdminMediaMobState extends State<AdminMediaMob> {
     if (media.isNotEmpty) {
       if (message != null && message.isNotEmpty) {
         isUploading = false;
-        UpToast().showToast(context: context, text: message);
+        if (mounted) {
+          UpToast().showToast(context: context, text: message);
+        }
       }
       setState(() {});
     }
@@ -85,7 +84,7 @@ class _AdminMediaMobState extends State<AdminMediaMob> {
                 onTap: (() {
                   selectedMedia = const Media(name: "", id: -1);
                   nameController.text = selectedMedia.name;
-
+                  Navigator.pop(context);
                   setState(() {});
                 }),
                 child: Container(
@@ -102,6 +101,7 @@ class _AdminMediaMobState extends State<AdminMediaMob> {
                     onTap: (() {
                       selectedMedia = e;
                       nameController.text = selectedMedia.name;
+                      Navigator.pop(context);
                       setState(() {});
                     }),
                     child: Container(
@@ -205,8 +205,22 @@ class _AdminMediaMobState extends State<AdminMediaMob> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: SizedBox(
-                                        width: 200,
-                                        height: 200,
+                                        width:
+                                            MediaQuery.of(context).size.width <=
+                                                    600
+                                                ? MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    1.8
+                                                : 300,
+                                        height:
+                                            MediaQuery.of(context).size.width <=
+                                                    600
+                                                ? MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    1.8
+                                                : 300,
                                         child: MediaWidget(
                                           media: selectedMedia,
                                         ),

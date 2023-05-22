@@ -57,10 +57,11 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
       }
       getKeywords();
     } else {
+      if(mounted){
       UpToast().showToast(
         context: context,
         text: "An Error Occurred",
-      );
+      );}
     }
   }
 
@@ -75,16 +76,16 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
       if (result == "success") {
         APIResult? result =
             await AddEditProductService.deleteKeyword(keywordId);
-        if (result != null && result.success) {
+        if (result != null && result.success) {if(mounted){
           UpToast().showToast(context: context, text: result.message ?? "");
-          selectedKeyword = const Keyword(name: "", id: -1);
+          }selectedKeyword = const Keyword(name: "", id: -1);
           nameController.text = "";
           getKeywords();
-        } else {
+        } else {if(mounted){
           UpToast().showToast(
             context: context,
             text: "An Error Occurred",
-          );
+          );}
         }
       }
     });

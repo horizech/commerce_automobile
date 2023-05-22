@@ -127,7 +127,7 @@ class _MainMenuState extends State<MainMenu> {
 
   void _showOverlay(
       BuildContext context, CollectionTree tree, int index) async {
-    overlayState = Overlay.of(context)!;
+    overlayState = Overlay.of(context);
 
     overlayEntry = OverlayEntry(
         maintainState: true,

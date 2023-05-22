@@ -566,19 +566,21 @@ class _AdminAttributesState extends State<AdminAttributes> {
           data: newAttribute.toJson(newAttribute), attributeId: attribute?.id);
 
       if (result != null) {
+        if(mounted){
         UpToast().showToast(
           context: context,
           text: result.message ?? "",
-        );
+        );}
         if (attribute == null) {
           nameController.text = "";
         }
         getAttributes();
       } else {
+        if(mounted){
         UpToast().showToast(
           context: context,
           text: "An Error Occurred",
-        );
+        );}
       }
     } else {
       UpToast().showToast(
@@ -623,15 +625,17 @@ class _AdminAttributesState extends State<AdminAttributes> {
         APIResult? result =
             await AddEditProductService.deleteAttribute(attributeId);
         if (result != null && result.success) {
-          UpToast().showToast(context: context, text: result.message ?? "");
+          if(mounted){
+          UpToast().showToast(context: context, text: result.message ?? "");}
           nameController.text = "";
           selectedAttribute = const Attribute(name: "", id: -1);
           getAttributes();
         } else {
+          if(mounted){
           UpToast().showToast(
             context: context,
             text: "An Error Occurred",
-          );
+          );}
         }
       }
     });
@@ -649,13 +653,14 @@ class _AdminAttributesState extends State<AdminAttributes> {
         APIResult? result =
             await AddEditProductService.deleteAttributeValue(attributeValueId);
         if (result != null && result.success) {
-          UpToast().showToast(context: context, text: result.message ?? "");
+          if(mounted){
+          UpToast().showToast(context: context, text: result.message ?? "");}
           getAttributeValues();
-        } else {
+        } else {if(mounted){
           UpToast().showToast(
             context: context,
             text: "An Error Occurred",
-          );
+          );}
         }
       }
     });

@@ -90,16 +90,17 @@ class _AdminCombosState extends State<AdminCombos> {
     APIResult? result = await AddEditProductService.addEditCombos(
         data: Combo.toJson(combo), comboId: c != null ? c.id! : null);
     if (result != null && result.success) {
+      if(mounted){
       UpToast().showToast(
         context: context,
         text: result.message ?? "",
-      );
+      );}
       getCombos();
-    } else {
+    } else {if(mounted){
       UpToast().showToast(
         context: context,
         text: "An Error Occurred",
-      );
+      );}
     }
   }
 
@@ -113,8 +114,8 @@ class _AdminCombosState extends State<AdminCombos> {
     ).then((result) async {
       if (result == "success") {
         APIResult? result = await AddEditProductService.deleteCombo(comboId);
-        if (result != null && result.success) {
-          UpToast().showToast(context: context, text: result.message ?? "");
+        if (result != null && result.success) {if(mounted){
+          UpToast().showToast(context: context, text: result.message ?? "");}
           selectedCombo =
               const Combo(name: "", price: 0, id: -1, thumbnail: null);
           nameController.text = "";
@@ -122,11 +123,11 @@ class _AdminCombosState extends State<AdminCombos> {
           descriptionController.text = "";
           selectedMedia = null;
           getCombos();
-        } else {
+        } else {if(mounted){
           UpToast().showToast(
             context: context,
             text: "An Error Occurred",
-          );
+          );}
         }
       }
     });
@@ -141,17 +142,18 @@ class _AdminCombosState extends State<AdminCombos> {
       APIResult? result = await AddEditProductService.insertProductCombo(
           ProductCombo.toJson(productCombo));
       if (result != null && result.success) {
+        if(mounted){
         UpToast().showToast(
           context: context,
           text: result.message ?? "",
-        );
+        );}
 
         getProductCombos();
-      } else {
+      } else {if(mounted){
         UpToast().showToast(
           context: context,
           text: "An Error Occurred",
-        );
+        );}
       }
     }
   }
@@ -234,17 +236,18 @@ class _AdminCombosState extends State<AdminCombos> {
           APIResult? result =
               await AddEditProductService.deleteProductCombo(id);
           if (result != null && result.success) {
+            if(mounted){
             UpToast().showToast(
               context: context,
               text: result.message ?? "",
-            );
+            );}
 
             getProductCombos();
-          } else {
+          } else {if(mounted){
             UpToast().showToast(
               context: context,
               text: "An Error Occurred",
-            );
+            );}
           }
         }
       }

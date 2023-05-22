@@ -398,7 +398,7 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
         const SizedBox(height: 20),
         UpText(
           selectedCollection.id == -1
-              ? "Create colllection"
+              ? "Create collection"
               : "Update collection",
           style: UpStyle(
               textSize: 24,
