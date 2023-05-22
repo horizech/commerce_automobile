@@ -85,7 +85,7 @@ class _AdminProductVariationsState extends State<AdminProductVariations> {
         await AddEditProductService.deleteProductVariation(productVariationId);
     if (result != null && result.success) {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: result.message ?? "",
         );
@@ -94,7 +94,7 @@ class _AdminProductVariationsState extends State<AdminProductVariations> {
     } else {
       if (result != null) {
         if (context.mounted) {
-          showUpToast(
+          UpToast().showToast(
             context: context,
             text: result.message ?? "",
           );
@@ -116,7 +116,7 @@ class _AdminProductVariationsState extends State<AdminProductVariations> {
         );
       }
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: result.message ?? "",
         );
@@ -124,7 +124,7 @@ class _AdminProductVariationsState extends State<AdminProductVariations> {
       _getProductVariations();
     } else {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: "An error occurred",
         );

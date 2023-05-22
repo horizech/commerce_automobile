@@ -185,7 +185,7 @@ class _AdminAttributesState extends State<AdminAttributes> {
           attributeValueId: value?.id);
       if (result != null) {
         if (mounted) {
-          showUpToast(
+          UpToast().showToast(
             context: context,
             text: result.message ?? "",
           );
@@ -196,14 +196,14 @@ class _AdminAttributesState extends State<AdminAttributes> {
         getAttributeValues();
       } else {
         if (mounted) {
-          showUpToast(
+          UpToast().showToast(
             context: context,
             text: "An Error Occurred",
           );
         }
       }
     } else {
-      showUpToast(
+      UpToast().showToast(
         context: context,
         text: "Please enter attribute value name",
       );
@@ -566,7 +566,7 @@ class _AdminAttributesState extends State<AdminAttributes> {
           data: newAttribute.toJson(newAttribute), attributeId: attribute?.id);
 
       if (result != null) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: result.message ?? "",
         );
@@ -575,13 +575,13 @@ class _AdminAttributesState extends State<AdminAttributes> {
         }
         getAttributes();
       } else {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: "An Error Occurred",
         );
       }
     } else {
-      showUpToast(
+      UpToast().showToast(
         context: context,
         text: "Please enter attribute name",
       );
@@ -623,12 +623,12 @@ class _AdminAttributesState extends State<AdminAttributes> {
         APIResult? result =
             await AddEditProductService.deleteAttribute(attributeId);
         if (result != null && result.success) {
-          showUpToast(context: context, text: result.message ?? "");
+          UpToast().showToast(context: context, text: result.message ?? "");
           nameController.text = "";
           selectedAttribute = const Attribute(name: "", id: -1);
           getAttributes();
         } else {
-          showUpToast(
+          UpToast().showToast(
             context: context,
             text: "An Error Occurred",
           );
@@ -649,10 +649,10 @@ class _AdminAttributesState extends State<AdminAttributes> {
         APIResult? result =
             await AddEditProductService.deleteAttributeValue(attributeValueId);
         if (result != null && result.success) {
-          showUpToast(context: context, text: result.message ?? "");
+          UpToast().showToast(context: context, text: result.message ?? "");
           getAttributeValues();
         } else {
-          showUpToast(
+          UpToast().showToast(
             context: context,
             text: "An Error Occurred",
           );

@@ -2,7 +2,7 @@ import 'package:apiraiser/apiraiser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
-import 'package:flutter_up/enums/text_style.dart';
+
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
@@ -49,13 +49,15 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
     APIResult? result = await AddEditProductService.addEditkeyword(
         data: Keyword.toJson(keyword), keywordId: k != null ? k.id! : null);
     if (result != null && result.success) {
-      showUpToast(
-        context: context,
-        text: result.message ?? "",
-      );
+      if (mounted) {
+        UpToast().showToast(
+          context: context,
+          text: result.message ?? "",
+        );
+      }
       getKeywords();
     } else {
-      showUpToast(
+      UpToast().showToast(
         context: context,
         text: "An Error Occurred",
       );
@@ -74,12 +76,12 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
         APIResult? result =
             await AddEditProductService.deleteKeyword(keywordId);
         if (result != null && result.success) {
-          showUpToast(context: context, text: result.message ?? "");
+          UpToast().showToast(context: context, text: result.message ?? "");
           selectedKeyword = const Keyword(name: "", id: -1);
           nameController.text = "";
           getKeywords();
         } else {
-          showUpToast(
+          UpToast().showToast(
             context: context,
             text: "An Error Occurred",
           );

@@ -49,7 +49,7 @@ class _AdminKeywordsState extends State<AdminKeywords> {
         data: Keyword.toJson(keyword), keywordId: k != null ? k.id! : null);
     if (result != null && result.success) {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: result.message ?? "",
         );
@@ -57,7 +57,7 @@ class _AdminKeywordsState extends State<AdminKeywords> {
       getKeywords();
     } else {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: "An Error Occurred",
         );
@@ -78,14 +78,14 @@ class _AdminKeywordsState extends State<AdminKeywords> {
             await AddEditProductService.deleteKeyword(keywordId);
         if (result != null && result.success) {
           if (context.mounted) {
-            showUpToast(context: context, text: result.message ?? "");
+            UpToast().showToast(context: context, text: result.message ?? "");
           }
           selectedKeyword = const Keyword(name: "", id: -1);
           nameController.text = "";
           getKeywords();
         } else {
           if (context.mounted) {
-            showUpToast(
+            UpToast().showToast(
               context: context,
               text: "An Error Occurred",
             );

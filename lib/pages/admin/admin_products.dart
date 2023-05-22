@@ -464,7 +464,7 @@ class _AdminProductsState extends State<AdminProducts> {
         collectionId: c != null ? c.id! : null);
     if (result != null && result.success) {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: result.message ?? "",
         );
@@ -472,7 +472,7 @@ class _AdminProductsState extends State<AdminProducts> {
       getCollections();
     } else {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: "An Error Occurred",
         );
@@ -500,7 +500,7 @@ class _AdminProductsState extends State<AdminProducts> {
         await AddEditProductService.deleteCollection(collectionId);
     if (result != null && result.success) {
       if (context.mounted) {
-        showUpToast(context: context, text: result.message ?? "");
+        UpToast().showToast(context: context, text: result.message ?? "");
       }
       selectedCollection = const Collection(name: "", id: -1);
       nameController.text = "";
@@ -509,7 +509,7 @@ class _AdminProductsState extends State<AdminProducts> {
       getCollections();
     } else {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: "An Error Occurred",
         );
@@ -530,7 +530,7 @@ class _AdminProductsState extends State<AdminProducts> {
             await AddEditProductService.deleteProduct(productId);
         if (result != null && result.success) {
           if (context.mounted) {
-            showUpToast(
+            UpToast().showToast(
               context: context,
               text: result.message ?? "",
             );
@@ -538,7 +538,7 @@ class _AdminProductsState extends State<AdminProducts> {
           setState(() {});
         } else {
           if (context.mounted) {
-            showUpToast(
+            UpToast().showToast(
               context: context,
               text: "An Error Occurred",
             );

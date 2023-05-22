@@ -522,7 +522,7 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
         collectionId: c != null ? c.id! : null);
     if (result != null && result.success) {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: result.message ?? "",
         );
@@ -530,7 +530,7 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
       getCollections();
     } else {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: "An Error Occurred",
         );
@@ -558,7 +558,7 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
         await AddEditProductService.deleteCollection(collectionId);
     if (result != null && result.success) {
       if (context.mounted) {
-        showUpToast(context: context, text: result.message ?? "");
+        UpToast().showToast(context: context, text: result.message ?? "");
       }
       selectedCollection = const Collection(name: "", id: -1);
       nameController.text = "";
@@ -567,7 +567,7 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
       getCollections();
     } else {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: "An Error Occurred",
         );
@@ -588,7 +588,7 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
             await AddEditProductService.deleteProduct(productId);
         if (result != null && result.success) {
           if (context.mounted) {
-            showUpToast(
+            UpToast().showToast(
               context: context,
               text: result.message ?? "",
             );
@@ -596,7 +596,7 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
           setState(() {});
         } else {
           if (context.mounted) {
-            showUpToast(
+            UpToast().showToast(
               context: context,
               text: "An Error Occurred",
             );

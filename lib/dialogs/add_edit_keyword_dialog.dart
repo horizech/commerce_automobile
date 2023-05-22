@@ -88,7 +88,7 @@ class _AddEditKeywordDialogState extends State<AddEditKeywordDialog> {
                         ? widget.currentKeyword!.id
                         : null);
                 if (result != null) {
-                  showUpToast(
+                  UpToast().showToast(
                     context: context,
                     text: result.message ?? "",
                   );
@@ -99,7 +99,7 @@ class _AddEditKeywordDialogState extends State<AddEditKeywordDialog> {
                     );
                   }
                 } else {
-                  showUpToast(
+                  UpToast().showToast(
                     context: context,
                     text: "An Error Occurred",
                   );

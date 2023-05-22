@@ -183,7 +183,7 @@ class _AdminProductState extends State<AdminProduct> {
         if (currentProduct != null && currentProduct!.id != null) {
           isProductDetailEnabled = true;
           if (context.mounted) {
-            showUpToast(
+            UpToast().showToast(
               context: context,
               text: result.message ?? "",
             );
@@ -192,7 +192,7 @@ class _AdminProductState extends State<AdminProduct> {
         }
       } else {
         if (context.mounted) {
-          showUpToast(
+          UpToast().showToast(
             context: context,
             text: result.message ?? "",
           );
@@ -200,7 +200,7 @@ class _AdminProductState extends State<AdminProduct> {
       }
     } else {
       if (context.mounted) {
-        showUpToast(
+        UpToast().showToast(
           context: context,
           text: "An error occurred",
         );

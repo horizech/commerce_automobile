@@ -47,7 +47,7 @@ class _AdminMediaMobState extends State<AdminMediaMob> {
     if (media.isNotEmpty) {
       if (message != null && message.isNotEmpty) {
         isUploading = false;
-        showUpToast(context: context, text: message);
+        UpToast().showToast(context: context, text: message);
       }
       setState(() {});
     }
