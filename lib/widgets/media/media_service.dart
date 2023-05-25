@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:shop/environment.dart';
 import 'package:shop/models/media.dart';
 import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
 
 class MediaService {
   static Future<Media?> getMedia(int? mediaId) async {
@@ -87,7 +86,7 @@ class MediaService {
     Map<String, String> headers = {
       "Authorization": "Bearer $jwt",
     };
-    var uuid = const Uuid();
+    // var uuid = const Uuid();
 
     var request = http.MultipartRequest(
       'POST',

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/text_style.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
-import 'package:shop/isUserAdmin.dart';
+import 'package:shop/is_user_admin.dart';
 import 'package:shop/widgets/add_media_widget.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
 import 'package:flutter_up/models/up_label_value.dart';
@@ -566,21 +566,23 @@ class _AdminAttributesState extends State<AdminAttributes> {
           data: newAttribute.toJson(newAttribute), attributeId: attribute?.id);
 
       if (result != null) {
-        if(mounted){
-        UpToast().showToast(
-          context: context,
-          text: result.message ?? "",
-        );}
+        if (mounted) {
+          UpToast().showToast(
+            context: context,
+            text: result.message ?? "",
+          );
+        }
         if (attribute == null) {
           nameController.text = "";
         }
         getAttributes();
       } else {
-        if(mounted){
-        UpToast().showToast(
-          context: context,
-          text: "An Error Occurred",
-        );}
+        if (mounted) {
+          UpToast().showToast(
+            context: context,
+            text: "An Error Occurred",
+          );
+        }
       }
     } else {
       UpToast().showToast(
@@ -625,17 +627,19 @@ class _AdminAttributesState extends State<AdminAttributes> {
         APIResult? result =
             await AddEditProductService.deleteAttribute(attributeId);
         if (result != null && result.success) {
-          if(mounted){
-          UpToast().showToast(context: context, text: result.message ?? "");}
+          if (mounted) {
+            UpToast().showToast(context: context, text: result.message ?? "");
+          }
           nameController.text = "";
           selectedAttribute = const Attribute(name: "", id: -1);
           getAttributes();
         } else {
-          if(mounted){
-          UpToast().showToast(
-            context: context,
-            text: "An Error Occurred",
-          );}
+          if (mounted) {
+            UpToast().showToast(
+              context: context,
+              text: "An Error Occurred",
+            );
+          }
         }
       }
     });
@@ -653,14 +657,17 @@ class _AdminAttributesState extends State<AdminAttributes> {
         APIResult? result =
             await AddEditProductService.deleteAttributeValue(attributeValueId);
         if (result != null && result.success) {
-          if(mounted){
-          UpToast().showToast(context: context, text: result.message ?? "");}
+          if (mounted) {
+            UpToast().showToast(context: context, text: result.message ?? "");
+          }
           getAttributeValues();
-        } else {if(mounted){
-          UpToast().showToast(
-            context: context,
-            text: "An Error Occurred",
-          );}
+        } else {
+          if (mounted) {
+            UpToast().showToast(
+              context: context,
+              text: "An Error Occurred",
+            );
+          }
         }
       }
     });

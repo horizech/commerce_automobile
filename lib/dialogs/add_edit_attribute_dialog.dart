@@ -122,19 +122,23 @@ class _AddEditAttributeDialogState extends State<AddEditAttributeDialog> {
                           data: newAttributeValue.toJson(newAttributeValue),
                         );
                         if (result1 != null) {
-                          UpToast().showToast(
-                            context: context,
-                            text: result1.message ?? "",
-                          );
+                          if (mounted) {
+                            UpToast().showToast(
+                              context: context,
+                              text: result1.message ?? "",
+                            );
+                          }
                           if (mounted) {
                             Navigator.pop(context, "success");
                           }
                         }
                       } else {
-                        UpToast().showToast(
-                          context: context,
-                          text: "An error occurred",
-                        );
+                        if (mounted) {
+                          UpToast().showToast(
+                            context: context,
+                            text: "An error occurred",
+                          );
+                        }
                         if (mounted) {
                           Navigator.pop(
                             context,

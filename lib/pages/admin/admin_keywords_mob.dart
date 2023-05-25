@@ -7,7 +7,7 @@ import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
 import 'package:flutter_up/widgets/up_button.dart';
-import 'package:shop/isUserAdmin.dart';
+import 'package:shop/is_user_admin.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
 
 import 'package:flutter_up/widgets/up_text.dart';
@@ -57,11 +57,12 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
       }
       getKeywords();
     } else {
-      if(mounted){
-      UpToast().showToast(
-        context: context,
-        text: "An Error Occurred",
-      );}
+      if (mounted) {
+        UpToast().showToast(
+          context: context,
+          text: "An Error Occurred",
+        );
+      }
     }
   }
 
@@ -76,16 +77,20 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
       if (result == "success") {
         APIResult? result =
             await AddEditProductService.deleteKeyword(keywordId);
-        if (result != null && result.success) {if(mounted){
-          UpToast().showToast(context: context, text: result.message ?? "");
-          }selectedKeyword = const Keyword(name: "", id: -1);
+        if (result != null && result.success) {
+          if (mounted) {
+            UpToast().showToast(context: context, text: result.message ?? "");
+          }
+          selectedKeyword = const Keyword(name: "", id: -1);
           nameController.text = "";
           getKeywords();
-        } else {if(mounted){
-          UpToast().showToast(
-            context: context,
-            text: "An Error Occurred",
-          );}
+        } else {
+          if (mounted) {
+            UpToast().showToast(
+              context: context,
+              text: "An Error Occurred",
+            );
+          }
         }
       }
     });

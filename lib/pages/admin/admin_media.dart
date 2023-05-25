@@ -10,7 +10,7 @@ import 'package:flutter_up/widgets/up_app_bar.dart';
 import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_circualar_progress.dart';
 import 'package:flutter_up/widgets/up_text.dart';
-import 'package:shop/isUserAdmin.dart';
+import 'package:shop/is_user_admin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shop/models/media.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
