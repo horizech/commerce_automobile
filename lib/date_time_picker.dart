@@ -8,11 +8,14 @@ Future<DateTime> getPicker(BuildContext context) async {
     firstDate: DateTime(2000),
     lastDate: DateTime(2101),
   );
+  TimeOfDay? pickedTime;
 
-  TimeOfDay? pickedTime = await UpDateTimeHelper.upTimePicker(
-    context: context,
-    initialTime: TimeOfDay.now(),
-  );
+  if (context.mounted) {
+    pickedTime = await UpDateTimeHelper.upTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+  }
 
   if (pickedDate != null) {
     if (pickedTime != null) {

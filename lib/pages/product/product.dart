@@ -16,7 +16,7 @@ import 'package:shop/models/media.dart';
 import 'package:shop/models/product.dart';
 
 import 'package:shop/widgets/appbar/automobile_appbar.dart';
-import 'package:shop/widgets/drawer/MenuDrawer.dart';
+import 'package:shop/widgets/drawer/menu_drawer.dart';
 import 'package:shop/widgets/error/error.dart';
 import 'package:shop/widgets/media/media_service.dart';
 import 'package:shop/services/product_detail_service.dart';

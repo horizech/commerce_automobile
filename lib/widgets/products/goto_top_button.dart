@@ -4,6 +4,8 @@ import 'package:flutter_up/locator.dart';
 import 'package:shop/widgets/products/scroll_to_top_service.dart';
 
 class GoToTopButtonWidget extends StatefulWidget {
+  const GoToTopButtonWidget({super.key});
+
   @override
   State<GoToTopButtonWidget> createState() => _GoToTopButtonWidgetState();
 }

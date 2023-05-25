@@ -7,7 +7,7 @@ import 'package:flutter_up/widgets/up_orientational_column_row.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/services/variation.dart';
 import 'package:shop/widgets/appbar/automobile_appbar.dart';
-import 'package:shop/widgets/drawer/MenuDrawer.dart';
+import 'package:shop/widgets/drawer/menu_drawer.dart';
 import 'package:shop/widgets/error/error.dart';
 import 'package:shop/widgets/filters/filter.dart';
 import 'package:shop/widgets/products/products_grid.dart';
@@ -279,7 +279,7 @@ class _AllProductsState extends State<ProductsGridPage> {
               onTap: () {
                 scrollToTop();
               },
-              child: GoToTopButtonWidget(),
+              child: const GoToTopButtonWidget(),
             )
 
             //  showBackToTopButton == false
