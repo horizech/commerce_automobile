@@ -40,8 +40,17 @@ class _MenuDrawerState extends State<MenuDrawer> {
         return Drawer(
           // backgroundColor: Colors.black,
           child: SafeArea(
-            child: Column(
+            child: ListView(
+              padding: EdgeInsets.zero,
               children: [
+                DrawerHeader(
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: UpConfig.of(context).theme.primaryColor,
+                    ),
+                    child: const Text('Drawer Header'),
+                  ),
+                ),
                 Container(
                   decoration: BoxDecoration(
                       color: Colors.white,

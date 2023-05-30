@@ -48,14 +48,22 @@ class SearchByBodyWidget extends StatelessWidget {
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: Container(
-                    height: 100,
+                    height: 80,
                     width: 100,
                     decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
                         border: Border.all(
                             color: UpConfig.of(context).theme.primaryColor,
-                            width: 3),
+                            width: 1),
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
+                            const BorderRadius.all(Radius.circular(12)),
                         color: UpConfig.of(context).theme.secondaryColor),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

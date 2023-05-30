@@ -159,8 +159,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                   decoration: BoxDecoration(
                     border: Border.all(
                         color: UpConfig.of(context).theme.primaryColor,
-                        width: 4),
-                    borderRadius: BorderRadius.circular(4),
+                        width: 2),
+                    borderRadius: BorderRadius.circular(12),
                     color: const Color.fromARGB(64, 249, 153, 153),
                   ),
                   child: Column(

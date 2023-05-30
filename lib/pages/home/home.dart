@@ -117,52 +117,48 @@ class _HomePageState extends State<HomePage> {
                                             padding:
                                                 const EdgeInsets.only(top: 24),
                                             child: Container(
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color:
-                                                          UpConfig.of(context)
-                                                              .theme
-                                                              .primaryColor,
-                                                      width: 4,
-                                                    ),
-                                                    color: const Color.fromARGB(
-                                                        64, 249, 153, 153),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8)),
+                                                // decoration: BoxDecoration(
+                                                //     border: Border.all(
+                                                //       color:
+                                                //           UpConfig.of(context)
+                                                //               .theme
+                                                //               .primaryColor,
+                                                //       width: 4,
+                                                //     ),
+                                                //     color: const Color.fromARGB(
+                                                //         64, 249, 153, 153),
+                                                //     borderRadius:
+                                                //         BorderRadius.circular(
+                                                //             8)),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 12,
-                                                                left: 8),
-                                                        child: UpText(
-                                                          "Body Type",
-                                                          style: UpStyle(
-                                                              textSize: 18,
-                                                              textWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                      SearchByBodyWidget(
-                                                          collection:
-                                                              collection!,
-                                                          attributeValues:
-                                                              bodyTypeAttributeValues,
-                                                          bodyTypeAttribute:
-                                                              bodyTypeAttribute!)
-                                                    ],
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 12,
+                                                            left: 8),
+                                                    child: UpText(
+                                                      "Body Type",
+                                                      style: UpStyle(
+                                                          textSize: 18,
+                                                          textWeight:
+                                                              FontWeight.bold),
+                                                    ),
                                                   ),
-                                                )),
+                                                  SearchByBodyWidget(
+                                                      collection: collection!,
+                                                      attributeValues:
+                                                          bodyTypeAttributeValues,
+                                                      bodyTypeAttribute:
+                                                          bodyTypeAttribute!)
+                                                ],
+                                              ),
+                                            )),
                                           ),
                                           collection != null
                                               ? Padding(
@@ -170,12 +166,22 @@ class _HomePageState extends State<HomePage> {
                                                       16.0),
                                                   child: Container(
                                                     width: 400,
-                                                    decoration:
-                                                        const BoxDecoration(
+                                                    decoration: BoxDecoration(
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.5),
+                                                          spreadRadius: 5,
+                                                          blurRadius: 7,
+                                                          offset: Offset(0,
+                                                              3), // changes position of shadow
+                                                        ),
+                                                      ],
                                                       color: Colors.white,
                                                       borderRadius:
-                                                          BorderRadius.all(
-                                                        Radius.circular(8),
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(12),
                                                       ),
                                                     ),
                                                     child: SearchWidget(

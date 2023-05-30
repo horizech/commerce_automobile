@@ -4,6 +4,7 @@ import 'package:flutter_up/config/up_config.dart';
 // import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
 import 'package:flutter_up/widgets/up_orientational_column_row.dart';
+import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/services/variation.dart';
 import 'package:shop/widgets/appbar/automobile_appbar.dart';
@@ -218,37 +219,55 @@ class _AllProductsState extends State<ProductsGridPage> {
                                                     if (snapshot
                                                             .connectionState !=
                                                         ConnectionState.done) {
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(30.0),
-                                                        child: GridView.builder(
-                                                          gridDelegate:
-                                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                            crossAxisCount: 2,
-                                                          ),
-                                                          itemCount: 3,
-                                                          shrinkWrap: true,
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(0),
-                                                              child: SizedBox(
-                                                                height: 300,
-                                                                width: 300,
-                                                                child: Container(
-                                                                    color: Colors
-                                                                            .grey[
-                                                                        200]),
+                                                      return Center(
+                                                        child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                "automobilelogo.jpg",
+                                                                height: 100,
+                                                                width: 100,
                                                               ),
-                                                            );
-                                                          },
-
-                                                          // itemCount: 6,
-                                                        ),
+                                                              const UpText(
+                                                                  "Loading...")
+                                                            ]),
                                                       );
+                                                      // return Padding(
+                                                      //   padding:
+                                                      //       const EdgeInsets
+                                                      //           .all(30.0),
+                                                      //   child: GridView.builder(
+                                                      //     gridDelegate:
+                                                      //         const SliverGridDelegateWithFixedCrossAxisCount(
+                                                      //       crossAxisCount: 2,
+                                                      //     ),
+                                                      //     itemCount: 3,
+                                                      //     shrinkWrap: true,
+                                                      //     itemBuilder:
+                                                      //         (context, index) {
+                                                      //       return Padding(
+                                                      //         padding:
+                                                      //             const EdgeInsets
+                                                      //                 .all(0),
+                                                      //         child: SizedBox(
+                                                      //           height: 300,
+                                                      //           width: 300,
+                                                      //           child: Container(
+                                                      //               color: Colors
+                                                      //                       .grey[
+                                                      //                   200]),
+                                                      //         ),
+                                                      //       );
+                                                      //     },
+
+                                                      //     // itemCount: 6,
+                                                      //   ),
+                                                      // );
                                                     }
                                                     return snapshot.hasData
                                                         ? ProductsGrid(
