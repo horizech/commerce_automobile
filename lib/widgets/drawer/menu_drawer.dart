@@ -44,11 +44,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
               padding: EdgeInsets.zero,
               children: [
                 DrawerHeader(
-                  child: DrawerHeader(
-                    decoration: BoxDecoration(
-                      color: UpConfig.of(context).theme.primaryColor,
+                  decoration: BoxDecoration(
+                    color: UpConfig.of(context).theme.primaryColor,
+                  ),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: UpText(
+                      'AutoMobile Shop',
+                      style: UpStyle(textColor: Colors.white, textSize: 34),
                     ),
-                    child: const Text('Drawer Header'),
                   ),
                 ),
                 Container(
