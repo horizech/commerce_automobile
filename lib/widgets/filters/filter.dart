@@ -11,6 +11,7 @@ import 'package:flutter_up/widgets/up_button.dart';
 import 'package:shop/widgets/filters/variation_view.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/variations/variation_controller.dart';
+import 'package:flutter/foundation.dart';
 
 class FilterPage extends StatefulWidget {
   final int collection;
@@ -117,11 +118,21 @@ class _VariationFilterState extends State<VariationFilter> {
 
   onChange() {
     widget.change!(selectedVariationsValues);
+    if (MediaQuery.of(context).size.width <= 600) {
+      Navigator.pop(context);
+    }
+
+    // if (defaultTargetPlatform == TargetPlatform.android) {
+    //   Navigator.pop(context);
+    // }
   }
 
   onReset() {
     setState(() {
       ServiceManager<VariationService>().removeVariation();
+      if (MediaQuery.of(context).size.width <= 600) {
+        Navigator.pop(context);
+      }
     });
 
     variationControllers.values

@@ -17,6 +17,7 @@ import 'package:shop/pages/home/home.dart';
 
 import 'package:shop/pages/product/product.dart';
 import 'package:shop/pages/products/products_grid.dart';
+import 'package:shop/pages/products/products_grid_mob.dart';
 import 'package:shop/pages/search/search.dart';
 import 'package:shop/pages/store_dependant_page.dart';
 
@@ -102,12 +103,25 @@ class ShopApp extends StatelessWidget {
                   ),
                 ),
               ),
+              // UpRoute(
+              //   name: Routes.products,
+              //   path: Routes.products,
+              //   pageBuilder: (BuildContext context, UpRouterState state) =>
+              //       StoreDependantPage(
+              //     page: ProductsGridPageMob(
+              //       queryParams: state.queryParams,
+              //     ),
+              //   ),
+              // ),
               UpRoute(
                 name: Routes.products,
                 path: Routes.products,
                 pageBuilder: (BuildContext context, UpRouterState state) =>
-                    StoreDependantPage(
-                  page: ProductsGridPage(
+                    UpResponsivePage(
+                  desktopPage: ProductsGridPage(
+                    queryParams: state.queryParams,
+                  ),
+                  mobilePage: ProductsGridPageMob(
                     queryParams: state.queryParams,
                   ),
                 ),

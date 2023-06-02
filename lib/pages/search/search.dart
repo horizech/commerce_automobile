@@ -29,19 +29,18 @@ class _SearchPageState extends State<SearchPage> {
             scaffoldKey: scaffoldKey,
           ),
           const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 250,
-                    width: 400,
-                    child: SearchWidget(
-                      collection: 0,
-                    ),
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SizedBox(height: 80),
+                SizedBox(
+                  height: 250,
+                  width: 400,
+                  child: SearchWidget(
+                    collection: 0,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         ],

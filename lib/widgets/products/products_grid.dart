@@ -38,7 +38,7 @@ class ProductsGrid extends StatelessWidget {
 Widget _allProductsList(
     BuildContext context, List<Product> products, int? collection) {
   return Padding(
-    padding: const EdgeInsets.all(30.0),
+    padding: const EdgeInsets.all(8.0),
     child: Wrap(
         spacing: 8,
         runSpacing: 4,

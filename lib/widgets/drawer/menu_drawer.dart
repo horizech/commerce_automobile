@@ -44,14 +44,24 @@ class _MenuDrawerState extends State<MenuDrawer> {
               padding: EdgeInsets.zero,
               children: [
                 DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: UpConfig.of(context).theme.primaryColor,
-                  ),
+                  // decoration: BoxDecoration(
+                  //   color: UpConfig.of(context).theme.primaryColor.shade50,
+                  // ),
                   child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: UpText(
-                      'AutoMobile Shop',
-                      style: UpStyle(textColor: Colors.white, textSize: 34),
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "automobilelogo.png",
+                          height: 80,
+                          width: 160,
+                        ),
+                        UpText(
+                          'AutoMobile',
+                          style: UpStyle(
+                              textSize: 34, textWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                 ),

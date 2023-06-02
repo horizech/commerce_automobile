@@ -220,22 +220,41 @@ class _AllProductsState extends State<ProductsGridPage> {
                                                             .connectionState !=
                                                         ConnectionState.done) {
                                                       return Center(
-                                                        child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Image.asset(
-                                                                "automobilelogo.jpg",
-                                                                height: 100,
-                                                                width: 100,
-                                                              ),
-                                                              const UpText(
-                                                                  "Loading...")
-                                                            ]),
+                                                        child: SizedBox(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height -
+                                                              100,
+                                                          child: Padding(
+                                                            padding: EdgeInsets.only(
+                                                                left: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height /
+                                                                    2),
+                                                            child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    "automobilelogo.jpg",
+                                                                    height: 100,
+                                                                    width: 100,
+                                                                  ),
+                                                                  const UpText(
+                                                                      "Loading...")
+                                                                ]),
+                                                          ),
+                                                        ),
                                                       );
                                                       // return Padding(
                                                       //   padding:
