@@ -2,8 +2,11 @@ import 'package:apiraiser/apiraiser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
-import 'package:flutter_up/enums/text_style.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
+import 'package:flutter_up/themes/up_themes.dart';
+import 'package:flutter_up/widgets/up_card.dart';
+import 'package:flutter_up/widgets/up_list_tile.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:shop/is_user_admin.dart';
 import 'package:shop/widgets/add_media_widget.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
@@ -19,7 +22,6 @@ import 'package:shop/models/attribute_value.dart';
 import 'package:shop/models/attribute.dart';
 import 'package:shop/services/add_edit_product_service/add_edit_product_service.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
-
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/unauthorized_widget.dart';
 
@@ -212,8 +214,12 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const UpAppBar(),
+    return UpScaffold(
+      appBar: UpAppBar(
+        style: UpStyle(
+            iconColor: UpThemes.getContrastColor(
+                UpConfig.of(context).theme.primaryColor)),
+      ),
       drawer: const NavDrawer(),
       endDrawer: SafeArea(
         child: StatefulBuilder(
@@ -260,14 +266,8 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
                               textFontStyle: FontStyle.italic),
                         ),
                         const SizedBox(height: 20),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: UpConfig.of(context).theme.primaryColor,
-                                width: 1),
-                          ),
-                          child: Padding(
+                        UpCard(
+                          body: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,25 +381,32 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            const Padding(
-                                              padding: EdgeInsets.all(8.0),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Align(
                                                 alignment: Alignment.topLeft,
                                                 child: UpText(
                                                   "Add new attribute value",
-                                                  type: UpTextType.heading6,
+                                                  style: UpStyle(
+                                                      textSize: 12,
+                                                      textFontStyle:
+                                                          FontStyle.italic),
                                                 ),
                                               ),
                                             ),
                                             SizedBox(
-                                              width: 70,
+                                              width: 30,
                                               height: 30,
-                                              child: UpButton(
-                                                  text: "Add",
-                                                  onPressed: () {
-                                                    _addEditAttributeValueDialog(
-                                                        null);
-                                                  }),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  _addEditAttributeValueDialog(
+                                                      null);
+                                                },
+                                                child: const UpIcon(
+                                                  icon: Icons.add,
+                                                ),
+                                              ),
                                             )
                                           ],
                                         ),
@@ -500,9 +507,10 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
 
   Widget leftSide() {
     return Container(
-      color: Colors.grey[200],
       width: 300,
-      height: 900,
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height - 60,
+      ),
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -518,10 +526,16 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
                 }),
                 child: Container(
                   color: selectedAttribute.id == -1
-                      ? UpConfig.of(context).theme.primaryColor[100]
+                      ? UpConfig.of(context).theme.primaryColor
                       : Colors.transparent,
-                  child: const ListTile(
-                    title: UpText("Create a new attribute"),
+                  child: UpListTile(
+                    title: "Create a new attribute",
+                    style: UpStyle(
+                      listTileTextColor: selectedAttribute.id == -1
+                          ? UpThemes.getContrastColor(
+                              UpConfig.of(context).theme.primaryColor)
+                          : UpConfig.of(context).theme.baseColor.shade900,
+                    ),
                   ),
                 )),
             ...attributes
@@ -543,14 +557,21 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
                       }
                       nameController.text = selectedAttribute.name;
                       _setAttributeValues();
+                      Navigator.pop(context);
                       setState(() {});
                     }),
                     child: Container(
                       color: selectedAttribute.id == e.id
-                          ? UpConfig.of(context).theme.primaryColor[100]
+                          ? UpConfig.of(context).theme.primaryColor
                           : Colors.transparent,
-                      child: ListTile(
-                        title: UpText(e.name),
+                      child: UpListTile(
+                        title: (e.name),
+                        style: UpStyle(
+                          listTileTextColor: selectedAttribute.id == e.id
+                              ? UpThemes.getContrastColor(
+                                  UpConfig.of(context).theme.primaryColor)
+                              : UpConfig.of(context).theme.baseColor.shade900,
+                        ),
                       ),
                     ),
                   ),

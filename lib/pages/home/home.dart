@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_circualar_progress.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/models/attribute.dart';
 import 'package:shop/models/attribute_value.dart';
@@ -56,22 +56,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: UpConfig.of(context).theme.secondaryColor,
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        key: scaffoldKey,
-        drawer: const MenuDrawer(),
-        // bottomNavigationBar: const FooterWidget(),
-        drawerEnableOpenDragGesture: false,
-        endDrawerEnableOpenDragGesture: false,
-        body: Column(
+    return UpScaffold(
+      bottomSheet: const FooterWidget(),
+      scaffoldKey: scaffoldKey,
+      drawer: const MenuDrawer(),
+      drawerEnableOpenDragGesture: false,
+      endDrawerEnableOpenDragGesture: false,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
           children: [
             Container(
-              constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height - 30),
+              constraints:
+                  BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
               child: BlocConsumer<StoreCubit, StoreState>(
                 listener: (context, state) {},
                 builder: (context, state) {
@@ -116,20 +113,7 @@ class _HomePageState extends State<HomePage> {
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(top: 24),
-                                            child: Container(
-                                                // decoration: BoxDecoration(
-                                                //     border: Border.all(
-                                                //       color:
-                                                //           UpConfig.of(context)
-                                                //               .theme
-                                                //               .primaryColor,
-                                                //       width: 4,
-                                                //     ),
-                                                //     color: const Color.fromARGB(
-                                                //         64, 249, 153, 153),
-                                                //     borderRadius:
-                                                //         BorderRadius.circular(
-                                                //             8)),
+                                            child: SizedBox(
                                                 child: Padding(
                                               padding:
                                                   const EdgeInsets.all(12.0),
@@ -164,29 +148,29 @@ class _HomePageState extends State<HomePage> {
                                               ? Padding(
                                                   padding: const EdgeInsets.all(
                                                       16.0),
-                                                  child: Container(
-                                                    width: 400,
-                                                    decoration: BoxDecoration(
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.grey
-                                                              .withOpacity(0.5),
-                                                          spreadRadius: 5,
-                                                          blurRadius: 7,
-                                                          offset: Offset(0,
-                                                              3), // changes position of shadow
-                                                        ),
-                                                      ],
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .all(
-                                                        Radius.circular(12),
-                                                      ),
-                                                    ),
-                                                    child: SearchWidget(
-                                                      collection: collection!,
-                                                    ),
+
+                                                  // width: 400,
+                                                  // decoration: BoxDecoration(
+                                                  //   boxShadow: [
+                                                  //     BoxShadow(
+                                                  //       color: Colors.grey
+                                                  //           .withOpacity(0.5),
+                                                  //       spreadRadius: 5,
+                                                  //       blurRadius: 7,
+                                                  //       offset: const Offset(
+                                                  //           0,
+                                                  //           3), // changes position of shadow
+                                                  //     ),
+                                                  //   ],
+                                                  //   color: Colors.white,
+                                                  //   borderRadius:
+                                                  //       const BorderRadius
+                                                  //           .all(
+                                                  //     Radius.circular(12),
+                                                  //   ),
+                                                  // ),
+                                                  child: SearchWidget(
+                                                    collection: collection!,
                                                   ),
                                                 )
                                               : const SizedBox(),
@@ -201,7 +185,6 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const FooterWidget(),
           ],
         ),
       ),

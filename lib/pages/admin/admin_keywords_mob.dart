@@ -5,8 +5,12 @@ import 'package:flutter_up/config/up_config.dart';
 
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/themes/up_style.dart';
+import 'package:flutter_up/themes/up_themes.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
 import 'package:flutter_up/widgets/up_button.dart';
+import 'package:flutter_up/widgets/up_card.dart';
+import 'package:flutter_up/widgets/up_list_tile.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:shop/is_user_admin.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
 
@@ -100,7 +104,6 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
-        color: Colors.grey[200],
         width: 300,
         constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height - 60,
@@ -116,10 +119,16 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
                 }),
                 child: Container(
                   color: selectedKeyword.id == -1
-                      ? UpConfig.of(context).theme.primaryColor[100]
+                      ? UpConfig.of(context).theme.primaryColor
                       : Colors.transparent,
-                  child: const ListTile(
-                    title: UpText("Create a new keyword"),
+                  child: UpListTile(
+                    title: "Create a new keyword",
+                    style: UpStyle(
+                      listTileTextColor: selectedKeyword.id == -1
+                          ? UpThemes.getContrastColor(
+                              UpConfig.of(context).theme.primaryColor)
+                          : UpConfig.of(context).theme.baseColor.shade900,
+                    ),
                   ),
                 )),
             ...keywords
@@ -133,10 +142,16 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
                     }),
                     child: Container(
                       color: selectedKeyword.id == e.id
-                          ? UpConfig.of(context).theme.primaryColor[100]
+                          ? UpConfig.of(context).theme.primaryColor
                           : Colors.transparent,
-                      child: ListTile(
-                        title: UpText(e.name),
+                      child: UpListTile(
+                        title: (e.name),
+                        style: UpStyle(
+                          listTileTextColor: selectedKeyword.id == e.id
+                              ? UpThemes.getContrastColor(
+                                  UpConfig.of(context).theme.primaryColor)
+                              : UpConfig.of(context).theme.baseColor.shade900,
+                        ),
                       ),
                     ),
                   ),
@@ -150,8 +165,12 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const UpAppBar(),
+    return UpScaffold(
+      appBar: UpAppBar(
+        style: UpStyle(
+            iconColor: UpThemes.getContrastColor(
+                UpConfig.of(context).theme.primaryColor)),
+      ),
       drawer: const NavDrawer(),
       endDrawer: SafeArea(
         child: StatefulBuilder(
@@ -187,14 +206,8 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
                               textFontStyle: FontStyle.italic),
                         ),
                         const SizedBox(height: 20),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: UpConfig.of(context).theme.primaryColor,
-                                width: 1),
-                          ),
-                          child: Padding(
+                        UpCard(
+                          body: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width / 1.5,

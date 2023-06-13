@@ -4,10 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/text_style.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
+import 'package:flutter_up/themes/up_themes.dart';
+import 'package:flutter_up/widgets/up_card.dart';
+import 'package:flutter_up/widgets/up_list_tile.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:shop/is_user_admin.dart';
 import 'package:shop/widgets/add_media_widget.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
-
 import 'package:flutter_up/models/up_label_value.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
@@ -23,7 +26,6 @@ import 'package:shop/models/product.dart';
 import 'package:shop/models/product_combo.dart';
 import 'package:shop/services/add_edit_product_service/add_edit_product_service.dart';
 import 'package:shop/services/product_service.dart';
-
 import 'package:shop/widgets/gallery_dropdown.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/unauthorized_widget.dart';
@@ -169,57 +171,71 @@ class _AdminCombosState extends State<AdminCombos> {
   }
 
   Widget leftSide() {
-    return Container(
-      color: Colors.grey[200],
-      width: 300,
-      height: 900,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            GestureDetector(
-                onTap: (() {
-                  selectedCombo = const Combo(name: "", price: 0, id: -1);
-                  nameController.text = selectedCombo.name;
-                  priceController = TextEditingController();
-                  descriptionController.text = selectedCombo.description ?? "";
-                  selectedMedia = null;
-                  setState(() {});
-                }),
-                child: Container(
-                  color: selectedCombo.id == -1
-                      ? UpConfig.of(context).theme.primaryColor[100]
-                      : Colors.transparent,
-                  child: const ListTile(
-                    title: UpText("Create a new combo"),
-                  ),
-                )),
-            ...combos
-                .map(
-                  (e) => GestureDetector(
-                    onTap: (() {
-                      selectedCombo = e;
-                      nameController.text = selectedCombo.name;
-                      priceController.text = selectedCombo.price.toString();
-                      descriptionController.text =
-                          selectedCombo.description ?? "";
-                      gallery = selectedCombo.gallery;
-                      selectedMedia = selectedCombo.thumbnail;
-                      _setProducts();
-                      setState(() {});
-                    }),
-                    child: Container(
-                      color: selectedCombo.id == e.id
-                          ? UpConfig.of(context).theme.primaryColor[100]
-                          : Colors.transparent,
-                      child: ListTile(
-                        title: UpText(e.name),
+    return UpCard(
+      body: SizedBox(
+        width: 300,
+        height: 900,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              GestureDetector(
+                  onTap: (() {
+                    selectedCombo = const Combo(name: "", price: 0, id: -1);
+                    nameController.text = selectedCombo.name;
+                    priceController = TextEditingController();
+                    descriptionController.text =
+                        selectedCombo.description ?? "";
+                    selectedMedia = null;
+                    setState(() {});
+                  }),
+                  child: Container(
+                    color: selectedCombo.id == -1
+                        ? UpConfig.of(context).theme.primaryColor
+                        : Colors.transparent,
+                    child: UpListTile(
+                      title: "Create a new combo",
+                      style: UpStyle(
+                        listTileTextColor: selectedCombo.id == -1
+                            ? UpThemes.getContrastColor(
+                                UpConfig.of(context).theme.primaryColor)
+                            : UpConfig.of(context).theme.baseColor.shade900,
                       ),
                     ),
-                  ),
-                )
-                .toList()
-          ],
+                  )),
+              ...combos
+                  .map(
+                    (e) => GestureDetector(
+                      onTap: (() {
+                        selectedCombo = e;
+                        nameController.text = selectedCombo.name;
+                        priceController.text = selectedCombo.price.toString();
+                        descriptionController.text =
+                            selectedCombo.description ?? "";
+                        gallery = selectedCombo.gallery;
+                        selectedMedia = selectedCombo.thumbnail;
+                        _setProducts();
+                        setState(() {});
+                      }),
+                      child: Container(
+                        color: selectedCombo.id == e.id
+                            ? UpConfig.of(context).theme.primaryColor
+                            : Colors.transparent,
+                        child: UpListTile(
+                          title: (e.name),
+                          style: UpStyle(
+                            listTileTextColor: selectedCombo.id == e.id
+                                ? UpThemes.getContrastColor(
+                                    UpConfig.of(context).theme.primaryColor)
+                                : UpConfig.of(context).theme.baseColor.shade900,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList()
+            ],
+          ),
         ),
       ),
     );
@@ -284,8 +300,12 @@ class _AdminCombosState extends State<AdminCombos> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const UpAppBar(),
+    return UpScaffold(
+      appBar: UpAppBar(
+        style: UpStyle(
+            iconColor: UpThemes.getContrastColor(
+                UpConfig.of(context).theme.primaryColor)),
+      ),
       drawer: const NavDrawer(),
       body: isUserAdmin()
           ? products.isNotEmpty
@@ -316,7 +336,7 @@ class _AdminCombosState extends State<AdminCombos> {
                     }
 
                     return SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: Axis.vertical,
                       child: SizedBox(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -483,7 +503,8 @@ class _AdminCombosState extends State<AdminCombos> {
                                                 child: Divider(
                                                   color: UpConfig.of(context)
                                                       .theme
-                                                      .primaryColor,
+                                                      .baseColor
+                                                      .shade200,
                                                   thickness: 1,
                                                 ),
                                               ),

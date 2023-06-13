@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/models/product.dart';
 
 class PriceWidget extends StatelessWidget {
@@ -23,9 +24,8 @@ class PriceWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
+                  UpText(
                     "${getDiscountPercentage(price, discountPrice).toString()}% discount",
-                    style: const TextStyle(fontSize: 16, color: Colors.red),
                   ),
                   const SizedBox(
                     height: 5,
@@ -33,30 +33,21 @@ class PriceWidget extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      UpText(
                         price.toString(),
-                        style: const TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          decorationColor: Colors.red,
-                          decorationStyle: TextDecorationStyle.solid,
-                          decorationThickness: 3,
-                          fontSize: 16,
-                        ),
                       ),
                       const SizedBox(
                         width: 5,
                       ),
-                      Text(
+                      UpText(
                         discountPrice.toString(),
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
                       ),
                     ],
                   ),
                 ],
               )
-            : Align(alignment: Alignment.topLeft, child: Text(price.toString()))
+            : Align(
+                alignment: Alignment.topLeft, child: UpText(price.toString()))
         : const Text("");
   }
 }

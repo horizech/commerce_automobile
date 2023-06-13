@@ -5,6 +5,7 @@ import 'package:apiraiser/apiraiser.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_checkbox.dart';
+import 'package:flutter_up/widgets/up_icon.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:flutter_up/widgets/up_textfield.dart';
 import 'package:shop/date_time_picker.dart';
@@ -351,38 +352,24 @@ class _AdminProductState extends State<AdminProduct> {
               setState(() {});
             }),
             child: Container(
-              decoration: BoxDecoration(
-                border: view == 1
-                    ? Border(
-                        bottom: BorderSide(
-                            width: 2,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )
-                    : const Border(
-                        bottom: BorderSide(width: 0, color: Colors.transparent),
-                      ),
                 color: view == 1
-                    ? UpConfig.of(context).theme.primaryColor[50]
-                    : Colors.transparent,
-              ),
-              child: SizedBox(
-                  width: 120,
-                  height: 50,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 4),
-                      Icon(
-                        Icons.info,
-                        color: UpConfig.of(context).theme.primaryColor,
-                      ),
-                      const SizedBox(height: 2),
-                      UpText(
-                        "Product Info",
-                        style: UpStyle(textSize: 12),
-                      ),
-                    ],
-                  )),
-            ),
+                    ? UpConfig.of(context).theme.baseColor.shade200
+                    : UpConfig.of(context).theme.baseColor.shade50,
+                width: 120,
+                height: 50,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 4),
+                    const UpIcon(
+                      icon: Icons.info,
+                    ),
+                    const SizedBox(height: 4),
+                    UpText(
+                      "Product Info",
+                      style: UpStyle(textSize: 12),
+                    ),
+                  ],
+                )),
           ),
           Visibility(
             visible: currentProduct != null &&
@@ -396,30 +383,17 @@ class _AdminProductState extends State<AdminProduct> {
                 }
               }),
               child: Container(
-                decoration: BoxDecoration(
-                  border: view == 2
-                      ? Border(
-                          bottom: BorderSide(
-                              width: 2,
-                              color: UpConfig.of(context).theme.primaryColor),
-                        )
-                      : const Border(
-                          bottom:
-                              BorderSide(width: 0, color: Colors.transparent),
-                        ),
-                  color: view == 2
-                      ? UpConfig.of(context).theme.primaryColor[50]
-                      : Colors.transparent,
-                ),
+                color: view == 2
+                    ? UpConfig.of(context).theme.baseColor.shade200
+                    : UpConfig.of(context).theme.baseColor.shade50,
                 child: SizedBox(
                   width: 120,
                   height: 50,
                   child: Column(
                     children: [
                       const SizedBox(height: 4),
-                      Icon(
-                        Icons.link,
-                        color: UpConfig.of(context).theme.primaryColor,
+                      const UpIcon(
+                        icon: Icons.link,
                       ),
                       const SizedBox(height: 2),
                       UpText(
@@ -444,30 +418,17 @@ class _AdminProductState extends State<AdminProduct> {
                 }
               }),
               child: Container(
-                decoration: BoxDecoration(
-                  border: view == 3
-                      ? Border(
-                          bottom: BorderSide(
-                              width: 2,
-                              color: UpConfig.of(context).theme.primaryColor),
-                        )
-                      : const Border(
-                          bottom:
-                              BorderSide(width: 0, color: Colors.transparent),
-                        ),
-                  color: view == 3
-                      ? UpConfig.of(context).theme.primaryColor[50]
-                      : Colors.transparent,
-                ),
+                color: view == 3
+                    ? UpConfig.of(context).theme.baseColor.shade200
+                    : UpConfig.of(context).theme.baseColor.shade50,
                 child: SizedBox(
                   width: 120,
                   height: 50,
                   child: Column(
                     children: [
                       const SizedBox(height: 4),
-                      Icon(
-                        Icons.data_exploration_sharp,
-                        color: UpConfig.of(context).theme.primaryColor,
+                      const UpIcon(
+                        icon: Icons.data_exploration_sharp,
                       ),
                       const SizedBox(height: 2),
                       UpText(
@@ -492,30 +453,17 @@ class _AdminProductState extends State<AdminProduct> {
                 }
               }),
               child: Container(
-                decoration: BoxDecoration(
-                  border: view == 5
-                      ? Border(
-                          bottom: BorderSide(
-                              width: 2,
-                              color: UpConfig.of(context).theme.primaryColor),
-                        )
-                      : const Border(
-                          bottom:
-                              BorderSide(width: 0, color: Colors.transparent),
-                        ),
-                  color: view == 5
-                      ? UpConfig.of(context).theme.primaryColor[50]
-                      : Colors.transparent,
-                ),
+                color: view == 5
+                    ? UpConfig.of(context).theme.baseColor.shade200
+                    : UpConfig.of(context).theme.baseColor.shade50,
                 child: SizedBox(
                   width: 120,
                   height: 50,
                   child: Column(
                     children: [
                       const SizedBox(height: 4),
-                      Icon(
-                        Icons.photo_filter,
-                        color: UpConfig.of(context).theme.primaryColor,
+                      const UpIcon(
+                        icon: Icons.photo_filter,
                       ),
                       const SizedBox(height: 2),
                       UpText(
@@ -536,37 +484,23 @@ class _AdminProductState extends State<AdminProduct> {
               }
             }),
             child: Container(
-              decoration: BoxDecoration(
-                border: view == 4
-                    ? Border(
-                        bottom: BorderSide(
-                            width: 2,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )
-                    : const Border(
-                        bottom: BorderSide(width: 0, color: Colors.transparent),
-                      ),
-                color: view == 4
-                    ? UpConfig.of(context).theme.primaryColor[50]
-                    : Colors.transparent,
-              ),
-              child: SizedBox(
-                width: 120,
-                height: 50,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 4),
-                    Icon(
-                      Icons.add_box_outlined,
-                      color: UpConfig.of(context).theme.primaryColor,
-                    ),
-                    const SizedBox(height: 2),
-                    UpText(
-                      "Product Addons",
-                      style: UpStyle(textSize: 12),
-                    ),
-                  ],
-                ),
+              color: view == 4
+                  ? UpConfig.of(context).theme.baseColor.shade200
+                  : UpConfig.of(context).theme.baseColor.shade50,
+              width: 120,
+              height: 50,
+              child: Column(
+                children: [
+                  const SizedBox(height: 4),
+                  const UpIcon(
+                    icon: Icons.add_box_outlined,
+                  ),
+                  const SizedBox(height: 2),
+                  UpText(
+                    "Product Addons",
+                    style: UpStyle(textSize: 12),
+                  ),
+                ],
               ),
             ),
           ),

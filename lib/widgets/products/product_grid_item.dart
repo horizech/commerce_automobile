@@ -3,6 +3,7 @@ import 'package:flutter_up/services/up_navigation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_up/themes/up_style.dart';
+import 'package:flutter_up/widgets/up_card.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/models/product.dart';
@@ -36,59 +37,57 @@ Widget getWebInfo(BuildContext context, Product product, int? collection) {
         );
       },
       child: Wrap(children: [
-        Container(
-          height: 300,
-          width: 300,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                width: 4,
-                color: const Color.fromRGBO(200, 16, 46, 1.0),
-              ),
-              borderRadius: BorderRadius.circular(8)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 280,
-                height: 192,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MediaWidget(
-                    mediaId: product.thumbnail,
-                    onChange: () => {
-                      ServiceManager<UpNavigationService>().navigateToNamed(
-                        Routes.product,
-                        queryParams: {'productId': '${product.id}'},
-                      ),
-                    },
-                  ),
-                ),
-              ),
-              Expanded(
+        UpCard(
+          body: SizedBox(
+            height: 300,
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 280,
+                  height: 192,
                   child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  // color: Colors.yellow[400],
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      UpText(
-                        product.name,
-                        style: UpStyle(textSize: 20),
-                      ),
-                      PriceWidget(
-                        price: product.price,
-                        discountPrice: product.discounPrice,
-                        discountStartDate: product.discountStartDate,
-                        discountEndDate: product.discountEndDate,
-                      ),
-                    ],
+                    padding: const EdgeInsets.all(8.0),
+                    child: MediaWidget(
+                      mediaId: product.thumbnail,
+                      onChange: () => {
+                        ServiceManager<UpNavigationService>().navigateToNamed(
+                          Routes.product,
+                          queryParams: {'productId': '${product.id}'},
+                        ),
+                      },
+                    ),
                   ),
                 ),
-              )),
-            ],
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    // color: Colors.yellow[400],
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        UpText(
+                          product.name,
+                          style: UpStyle(textSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        PriceWidget(
+                          price: product.price,
+                          discountPrice: product.discounPrice,
+                          discountStartDate: product.discountStartDate,
+                          discountEndDate: product.discountEndDate,
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+              ],
+            ),
           ),
         ),
       ]),

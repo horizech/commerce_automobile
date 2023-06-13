@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:shop/widgets/appbar/automobile_appbar.dart';
 import 'package:shop/widgets/drawer/menu_drawer.dart';
 import 'package:shop/widgets/search/search_widget.dart';
@@ -18,7 +19,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    return Scaffold(
+    return UpScaffold(
       key: scaffoldKey,
       drawer: const MenuDrawer(),
       drawerEnableOpenDragGesture: false,
@@ -34,8 +35,6 @@ class _SearchPageState extends State<SearchPage> {
               children: [
                 SizedBox(height: 80),
                 SizedBox(
-                  height: 250,
-                  width: 400,
                   child: SearchWidget(
                     collection: 0,
                   ),

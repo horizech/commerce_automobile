@@ -4,6 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/text_style.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
+import 'package:flutter_up/themes/up_themes.dart';
+import 'package:flutter_up/widgets/up_card.dart';
+import 'package:flutter_up/widgets/up_list_tile.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:shop/is_user_admin.dart';
 import 'package:shop/widgets/add_media_widget.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
@@ -212,8 +216,12 @@ class _AdminAttributesState extends State<AdminAttributes> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const UpAppBar(),
+    return UpScaffold(
+      appBar: UpAppBar(
+        style: UpStyle(
+            iconColor: UpThemes.getContrastColor(
+                UpConfig.of(context).theme.primaryColor)),
+      ),
       drawer: const NavDrawer(),
       body: isUserAdmin()
           ? BlocConsumer<StoreCubit, StoreState>(
@@ -237,7 +245,7 @@ class _AdminAttributesState extends State<AdminAttributes> {
                   }
                 }
                 return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                  scrollDirection: Axis.vertical,
                   child: SizedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -491,64 +499,77 @@ class _AdminAttributesState extends State<AdminAttributes> {
   }
 
   Widget leftSide() {
-    return Container(
-      color: Colors.grey[200],
-      width: 300,
-      height: 900,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            GestureDetector(
-                onTap: (() {
-                  selectedAttribute =
-                      const Attribute(name: "", id: -1, swatch: 0);
-                  nameController.text = selectedAttribute.name;
-                  currentSwatch = "-1";
+    return UpCard(
+      body: Container(
+        width: 300,
+        height: 900,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              GestureDetector(
+                  onTap: (() {
+                    selectedAttribute =
+                        const Attribute(name: "", id: -1, swatch: 0);
+                    nameController.text = selectedAttribute.name;
+                    currentSwatch = "-1";
 
-                  setState(() {});
-                }),
-                child: Container(
-                  color: selectedAttribute.id == -1
-                      ? UpConfig.of(context).theme.primaryColor[100]
-                      : Colors.transparent,
-                  child: const ListTile(
-                    title: UpText("Create a new attribute"),
-                  ),
-                )),
-            ...attributes
-                .map(
-                  (e) => GestureDetector(
-                    onTap: (() {
-                      selectedAttribute = e;
-                      if (swatches.isNotEmpty &&
-                          swatches.any((element) =>
-                              int.parse(element.value) ==
-                              selectedAttribute.swatch)) {
-                        currentSwatch = swatches
-                            .where((element) =>
-                                int.parse(element.value) ==
-                                selectedAttribute.swatch)
-                            .first
-                            .value
-                            .toString();
-                      }
-                      nameController.text = selectedAttribute.name;
-                      _setAttributeValues();
-                      setState(() {});
-                    }),
-                    child: Container(
-                      color: selectedAttribute.id == e.id
-                          ? UpConfig.of(context).theme.primaryColor[100]
-                          : Colors.transparent,
-                      child: ListTile(
-                        title: UpText(e.name),
+                    setState(() {});
+                  }),
+                  child: Container(
+                    color: selectedAttribute.id == -1
+                        ? UpConfig.of(context).theme.primaryColor
+                        : Colors.transparent,
+                    child: UpListTile(
+                      title: "Create a new attribute",
+                      style: UpStyle(
+                        listTileTextColor: selectedAttribute.id == -1
+                            ? UpThemes.getContrastColor(
+                                UpConfig.of(context).theme.primaryColor)
+                            : UpConfig.of(context).theme.baseColor.shade900,
                       ),
                     ),
-                  ),
-                )
-                .toList()
-          ],
+                  )),
+              ...attributes
+                  .map(
+                    (e) => GestureDetector(
+                      onTap: (() {
+                        selectedAttribute = e;
+                        if (swatches.isNotEmpty &&
+                            swatches.any((element) =>
+                                int.parse(element.value) ==
+                                selectedAttribute.swatch)) {
+                          currentSwatch = swatches
+                              .where((element) =>
+                                  int.parse(element.value) ==
+                                  selectedAttribute.swatch)
+                              .first
+                              .value
+                              .toString();
+                        }
+                        nameController.text = selectedAttribute.name;
+                        _setAttributeValues();
+                        setState(() {});
+                      }),
+                      child: Container(
+                        color: selectedAttribute.id == e.id
+                            ? UpConfig.of(context).theme.primaryColor
+                            : Colors.transparent,
+                        child: UpListTile(
+                          title: (e.name),
+                          style: UpStyle(
+                            listTileTextColor: selectedAttribute.id == e.id
+                                ? UpThemes.getContrastColor(
+                                    UpConfig.of(context).theme.primaryColor)
+                                : UpConfig.of(context).theme.baseColor.shade900,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList()
+            ],
+          ),
         ),
       ),
     );

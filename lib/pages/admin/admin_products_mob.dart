@@ -6,12 +6,16 @@ import 'package:flutter_up/enums/text_style.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/models/up_label_value.dart';
 import 'package:flutter_up/themes/up_style.dart';
+import 'package:flutter_up/themes/up_themes.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
 import 'package:flutter_up/widgets/up_button.dart';
+import 'package:flutter_up/widgets/up_card.dart';
 import 'package:flutter_up/widgets/up_circualar_progress.dart';
 import 'package:flutter_up/widgets/up_dropdown.dart';
 import 'package:flutter_up/widgets/up_expansion_tile.dart';
 import 'package:flutter_up/widgets/up_icon.dart';
+import 'package:flutter_up/widgets/up_list_tile.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:flutter_up/widgets/up_textfield.dart';
 import 'package:shop/dialogs/delete_dialog.dart';
@@ -90,17 +94,25 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                 }),
                 child: Container(
                   color: selectedCollection.id == -1
-                      ? UpConfig.of(context).theme.primaryColor[50]
+                      ? UpConfig.of(context).theme.primaryColor
                       : Colors.transparent,
                   child: ListTile(
-                    leading: Icon(
-                      Icons.add,
-                      color: UpConfig.of(context).theme.primaryColor,
+                    leading: UpIcon(
+                      icon: Icons.add,
+                      style: UpStyle(
+                        iconColor: selectedCollection.id == -1
+                            ? UpThemes.getContrastColor(
+                                UpConfig.of(context).theme.primaryColor)
+                            : UpConfig.of(context).theme.baseColor.shade900,
+                      ),
                     ),
                     title: UpText(
                       "Create a new collection",
                       style: UpStyle(
-                        textWeight: FontWeight.bold,
+                        textColor: selectedCollection.id == -1
+                            ? UpThemes.getContrastColor(
+                                UpConfig.of(context).theme.primaryColor)
+                            : UpConfig.of(context).theme.baseColor.shade900,
                       ),
                     ),
                   ),
@@ -131,14 +143,13 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                           }),
                           child: Container(
                             color: selectedCollection.id == e.id
-                                ? UpConfig.of(context).theme.primaryColor[100]
+                                ? UpConfig.of(context).theme.baseColor[200]
                                 : Colors.transparent,
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.edit,
-                                color: UpConfig.of(context).theme.primaryColor,
+                            child: UpListTile(
+                              leading: const UpIcon(
+                                icon: Icons.edit,
                               ),
-                              title: UpText(e.name),
+                              title: (e.name),
                             ),
                           ),
                         ),
@@ -148,8 +159,8 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                               selectedCollection.id != -1,
                           child: Container(
                             color: isExpanded
-                                ? UpConfig.of(context).theme.primaryColor[100]
-                                : Colors.grey[200],
+                                ? UpConfig.of(context).theme.baseColor[200]
+                                : Colors.transparent,
                             child: UpExpansionTile(
                               onExpansionChanged: (p0) {
                                 isExpanded = p0;
@@ -159,9 +170,8 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                                 } else {}
                                 setState(() {});
                               },
-                              leading: Icon(
-                                Icons.edit,
-                                color: UpConfig.of(context).theme.primaryColor,
+                              leading: const UpIcon(
+                                icon: Icons.edit,
                               ),
                               title: e.name,
                               expandedCrossAxisAlignment:
@@ -170,63 +180,105 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
                               childrenPadding: const EdgeInsets.all(0),
                               initiallyExpanded: true,
                               children: <Widget>[
-                                Container(
-                                  color: Colors.grey[200],
-                                  child: Column(children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        currentProduct = null;
-                                        view = 2;
-                                        isReset = true;
-                                        isExpanded = false;
-                                        setState(() {});
-                                        Navigator.pop(context);
-                                      },
-                                      child: Container(
-                                        color: view == 2
-                                            ? UpConfig.of(context)
-                                                .theme
-                                                .primaryColor[100]
-                                            : Colors.transparent,
-                                        child: ListTile(
-                                          leading: Icon(
-                                            Icons.playlist_add_outlined,
-                                            color: UpConfig.of(context)
-                                                .theme
-                                                .primaryColor,
+                                UpCard(
+                                  body: Container(
+                                    child: Column(children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          currentProduct = null;
+                                          view = 2;
+                                          isReset = true;
+                                          isExpanded = false;
+                                          setState(() {});
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                          color: view == 2
+                                              ? UpConfig.of(context)
+                                                  .theme
+                                                  .primaryColor
+                                              : Colors.transparent,
+                                          child: ListTile(
+                                            leading: UpIcon(
+                                              icon: Icons.playlist_add_outlined,
+                                              style: UpStyle(
+                                                iconColor: view == 2
+                                                    ? UpThemes.getContrastColor(
+                                                        UpConfig.of(context)
+                                                            .theme
+                                                            .primaryColor)
+                                                    : UpConfig.of(context)
+                                                        .theme
+                                                        .baseColor
+                                                        .shade900,
+                                              ),
+                                            ),
+                                            title: UpText(
+                                              "Create a new product",
+                                              style: UpStyle(
+                                                textColor: view == 2
+                                                    ? UpThemes.getContrastColor(
+                                                        UpConfig.of(context)
+                                                            .theme
+                                                            .primaryColor)
+                                                    : UpConfig.of(context)
+                                                        .theme
+                                                        .baseColor
+                                                        .shade900,
+                                              ),
+                                            ),
                                           ),
-                                          title: const UpText(
-                                              "Create a new product"),
                                         ),
                                       ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: (() {
-                                        isExpanded = false;
+                                      GestureDetector(
+                                        onTap: (() {
+                                          isExpanded = false;
 
-                                        view = 3;
-                                        isReset = false;
-                                        setState(() {});
-                                        Navigator.pop(context);
-                                      }),
-                                      child: Container(
-                                        color: view == 3 || view == 4
-                                            ? UpConfig.of(context)
-                                                .theme
-                                                .primaryColor[100]
-                                            : Colors.transparent,
-                                        child: ListTile(
-                                          leading: Icon(
-                                            Icons.list,
-                                            color: UpConfig.of(context)
-                                                .theme
-                                                .primaryColor,
+                                          view = 3;
+                                          isReset = false;
+                                          setState(() {});
+                                          Navigator.pop(context);
+                                        }),
+                                        child: Container(
+                                          color: view == 3 || view == 4
+                                              ? UpConfig.of(context)
+                                                  .theme
+                                                  .primaryColor
+                                              : Colors.transparent,
+                                          child: UpListTile(
+                                            style: UpStyle(
+                                              listTileTextColor: view == 3 ||
+                                                      view == 4
+                                                  ? UpThemes.getContrastColor(
+                                                      UpConfig.of(context)
+                                                          .theme
+                                                          .primaryColor)
+                                                  : UpConfig.of(context)
+                                                      .theme
+                                                      .baseColor
+                                                      .shade900,
+                                            ),
+                                            title: "All Products",
+                                            leading: UpIcon(
+                                              icon: Icons.list,
+                                              style: UpStyle(
+                                                iconColor: view == 3 ||
+                                                        view == 4
+                                                    ? UpThemes.getContrastColor(
+                                                        UpConfig.of(context)
+                                                            .theme
+                                                            .primaryColor)
+                                                    : UpConfig.of(context)
+                                                        .theme
+                                                        .baseColor
+                                                        .shade900,
+                                              ),
+                                            ),
                                           ),
-                                          title: const UpText("All Products"),
                                         ),
-                                      ),
-                                    ),
-                                  ]),
+                                      )
+                                    ]),
+                                  ),
                                 ),
                               ],
                             ),
@@ -406,105 +458,104 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
               textFontStyle: FontStyle.italic),
         ),
         const SizedBox(height: 20),
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                  color: UpConfig.of(context).theme.primaryColor, width: 1)),
-          child: Padding(
-            padding: const EdgeInsets.all(22.0),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  child: UpTextField(
-                    controller: nameController,
-                    label: 'Name',
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  child: AddMediaWidget(
-                    selectedMedia: selectedMedia,
-                    onChnage: (media) {
-                      selectedMedia = media;
-                      setState(() {});
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    child: UpDropDown(
-                      label: "Parent",
-                      value: currentParent,
-                      itemList: collectionDropdown,
-                      onChanged: (value) {
-                        currentParent = value.toString();
-
-                        setState(() {});
-                      },
-                    )),
-              ),
-              Visibility(
-                visible: selectedCollection.id != -1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    child: const UpText(
-                      "*To delete a collection you must need to delete all its products",
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 1.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+        UpCard(
+          body: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(22.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Visibility(
-                      visible: selectedCollection.id != -1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 70,
-                          height: 30,
-                          child: UpButton(
-                            onPressed: () {
-                              _deleteCollection(selectedCollection.id!);
-                            },
-                            text: "Delete",
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        child: UpTextField(
+                          controller: nameController,
+                          label: 'Name',
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
-                        width: 70,
-                        height: 30,
-                        child: UpButton(
-                          onPressed: () {
-                            _updateCollection(selectedCollection.id != -1
-                                ? selectedCollection
-                                : null);
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        child: AddMediaWidget(
+                          selectedMedia: selectedMedia,
+                          onChnage: (media) {
+                            selectedMedia = media;
+                            setState(() {});
                           },
-                          text: "Save",
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ]),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: UpDropDown(
+                            label: "Parent",
+                            value: currentParent,
+                            itemList: collectionDropdown,
+                            onChanged: (value) {
+                              currentParent = value.toString();
+
+                              setState(() {});
+                            },
+                          )),
+                    ),
+                    Visibility(
+                      visible: selectedCollection.id != -1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: const UpText(
+                            "*To delete a collection you must need to delete all its products",
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Visibility(
+                            visible: selectedCollection.id != -1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 70,
+                                height: 30,
+                                child: UpButton(
+                                  onPressed: () {
+                                    _deleteCollection(selectedCollection.id!);
+                                  },
+                                  text: "Delete",
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 70,
+                              height: 30,
+                              child: UpButton(
+                                onPressed: () {
+                                  _updateCollection(selectedCollection.id != -1
+                                      ? selectedCollection
+                                      : null);
+                                },
+                                text: "Save",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+            ),
           ),
         ),
       ],
@@ -608,8 +659,12 @@ class _AdminProductsMobState extends State<AdminProductsMob> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const UpAppBar(),
+    return UpScaffold(
+      appBar: UpAppBar(
+        style: UpStyle(
+            iconColor: UpThemes.getContrastColor(
+                UpConfig.of(context).theme.primaryColor)),
+      ),
       drawer: const NavDrawer(),
       endDrawer: SafeArea(
         child: StatefulBuilder(

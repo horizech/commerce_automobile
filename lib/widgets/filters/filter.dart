@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
-import 'package:flutter_up/themes/up_style.dart';
+import 'package:flutter_up/widgets/up_card.dart';
 import 'package:shop/models/attribute.dart';
 import 'package:shop/models/attribute_value.dart';
 import 'package:shop/services/attribute_service.dart';
@@ -11,7 +10,6 @@ import 'package:flutter_up/widgets/up_button.dart';
 import 'package:shop/widgets/filters/variation_view.dart';
 import 'package:shop/widgets/store/store_cubit.dart';
 import 'package:shop/widgets/variations/variation_controller.dart';
-import 'package:flutter/foundation.dart';
 
 class FilterPage extends StatefulWidget {
   final int collection;
@@ -167,45 +165,30 @@ class _VariationFilterState extends State<VariationFilter> {
                   },
                 ).toList() ??
                 [],
-            Padding(
-              padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-              child: Center(
-                child: UpButton(
-                  icon: Icons.delete,
-                  style: UpStyle(
-                      buttonTextSize: 16,
-                      buttonHoverBorderColor:
-                          UpConfig.of(context).theme.primaryColor,
-                      buttonHoverBackgroundColor:
-                          UpConfig.of(context).theme.primaryColor.shade300,
-                      buttonWidth: 250,
-                      buttonBorderColor:
-                          UpConfig.of(context).theme.secondaryColor),
-                  onPressed: onReset,
-                  text: "Clear Filters",
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: UpButton(
-                  icon: Icons.photo_filter_rounded,
-                  style: UpStyle(
-                    buttonTextSize: 16,
-                    buttonHoverBorderColor:
-                        UpConfig.of(context).theme.primaryColor,
-                    buttonHoverBackgroundColor:
-                        UpConfig.of(context).theme.primaryColor.shade300,
-                    buttonWidth: 250,
-                    buttonBackgroundColor:
-                        UpConfig.of(context).theme.primaryColor,
-                    buttonBorderColor:
-                        UpConfig.of(context).theme.secondaryColor,
+            UpCard(
+              body: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                    child: Center(
+                      child: UpButton(
+                        icon: Icons.delete,
+                        onPressed: onReset,
+                        text: "Clear Filters",
+                      ),
+                    ),
                   ),
-                  onPressed: onChange,
-                  text: "Apply Filters",
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: UpButton(
+                        icon: Icons.photo_filter_rounded,
+                        onPressed: onChange,
+                        text: "Apply Filters",
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_expansion_tile.dart';
+import 'package:flutter_up/widgets/up_icon.dart';
+import 'package:flutter_up/widgets/up_list_tile.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/services/variation.dart';
@@ -38,15 +40,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
         //     )
         //     .toList();
         return Drawer(
-          // backgroundColor: Colors.black,
+          backgroundColor: UpConfig.of(context).theme.baseColor.shade50,
           child: SafeArea(
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                DrawerHeader(
-                  // decoration: BoxDecoration(
-                  //   color: UpConfig.of(context).theme.primaryColor.shade50,
-                  // ),
+                SizedBox(
+                  height: 150,
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(
@@ -65,38 +65,20 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )),
-                  child: ListTile(
+                SizedBox(
+                  child: UpListTile(
                     onTap: () {
                       setState(() {
                         ServiceManager<UpNavigationService>()
                             .navigateToNamed(Routes.home);
                       });
                     },
-                    leading: Icon(Icons.home,
-                        color: UpConfig.of(context).theme.primaryColor),
-                    title: const UpText(
-                      'Home',
-                      type: UpTextType.heading5,
-                    ),
+                    leading: const UpIcon(icon: Icons.home),
+                    title: 'Home',
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )),
-                  child: ListTile(
+                SizedBox(
+                  child: UpListTile(
                     onTap: () {
                       ServiceManager<VariationService>().removeVariation();
 
@@ -105,88 +87,51 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         "collection": '9',
                       });
                     },
-                    leading: Icon(Icons.directions_car,
-                        color: UpConfig.of(context).theme.primaryColor),
-                    title: const UpText(
-                      'Used Cars',
-                      type: UpTextType.heading5,
-                    ),
+                    leading: const UpIcon(icon: Icons.directions_car),
+                    title: 'Used Cars',
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )),
-                  child: ListTile(
+                SizedBox(
+                  child: UpListTile(
                     onTap: () {
                       setState(() {
                         ServiceManager<UpNavigationService>()
                             .navigateToNamed(Routes.home);
                       });
                     },
-                    leading: Icon(Icons.airport_shuttle,
-                        color: UpConfig.of(context).theme.primaryColor),
-                    title: const UpText(
-                      'Used Vans',
-                      type: UpTextType.heading5,
-                    ),
+                    leading: const UpIcon(icon: Icons.airport_shuttle),
+                    title: 'Used Vans',
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )),
+                const SizedBox(
                   child: UpExpansionTile(
-                    leading: const Icon(Icons.payments),
+                    leading: UpIcon(icon: Icons.payments),
                     title: "Finance",
-                    style: UpStyle(textSize: 24),
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 26.0),
+                        padding: EdgeInsets.only(left: 26.0),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               UpText(
                                 "Car Finance",
-                                style: UpStyle(
-                                    textSize: 16, textWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               UpText(
                                 "Finance Explaned",
-                                style: UpStyle(
-                                    textSize: 16, textWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               UpText(
                                 "Free Finance Checker",
-                                style: UpStyle(
-                                    textSize: 16, textWeight: FontWeight.bold),
                               )
                             ]),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )),
+                const SizedBox(
                   child: UpExpansionTile(
-                    leading: const Icon(Icons.price_check),
-                    style: UpStyle(textSize: 24),
+                    leading: const UpIcon(icon: Icons.price_check),
                     title: "Valuation",
                     children: [
                       Padding(
@@ -196,14 +141,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
                           children: [
                             UpText(
                               "Part Exchange",
-                              style: UpStyle(
-                                  textSize: 16, textWeight: FontWeight.bold),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             UpText(
                               "Sell Your Car",
-                              style: UpStyle(
-                                  textSize: 16, textWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -211,102 +152,66 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     ],
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )),
+                const SizedBox(
                   child: UpExpansionTile(
-                    leading: const Icon(Icons.account_circle),
-                    style: UpStyle(textSize: 24),
+                    leading: UpIcon(icon: Icons.account_circle),
                     title: "About Us",
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 26.0),
+                        padding: EdgeInsets.only(left: 26.0),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               UpText(
                                 "About Us",
-                                style: UpStyle(
-                                    textSize: 16, textWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               UpText(
                                 "Reviews",
-                                style: UpStyle(
-                                    textSize: 16, textWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               UpText(
                                 "Blog",
-                                style: UpStyle(
-                                    textSize: 16, textWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               UpText(
                                 "Careers",
-                                style: UpStyle(
-                                    textSize: 16, textWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               UpText(
                                 "Working with Us",
-                                style: UpStyle(
-                                    textSize: 16, textWeight: FontWeight.bold),
                               ),
                             ]),
                       )
                     ],
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )),
-                  child: ListTile(
+                SizedBox(
+                  child: UpListTile(
                     onTap: () {
                       setState(() {
                         ServiceManager<UpNavigationService>()
                             .navigateToNamed(Routes.home);
                       });
                     },
-                    leading: Icon(Icons.location_on,
-                        color: UpConfig.of(context).theme.primaryColor),
-                    title: const UpText(
-                      'Locations',
-                      type: UpTextType.heading5,
+                    leading: const UpIcon(
+                      icon: Icons.location_on,
                     ),
+                    title: 'Locations',
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1,
-                            color: UpConfig.of(context).theme.primaryColor),
-                      )),
-                  child: ListTile(
+                SizedBox(
+                  child: UpListTile(
                     onTap: () {
                       setState(() {
                         ServiceManager<UpNavigationService>()
                             .navigateToNamed(Routes.home);
                       });
                     },
-                    leading: Icon(Icons.contact_mail_rounded,
-                        color: UpConfig.of(context).theme.primaryColor),
-                    title: const UpText(
-                      'Contact Us',
-                      type: UpTextType.heading5,
+                    leading: const UpIcon(
+                      icon: Icons.contact_mail_rounded,
                     ),
+                    title: 'Contact Us',
                   ),
                 ),
               ],

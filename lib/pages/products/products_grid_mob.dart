@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/up_button_type.dart';
-// import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_button.dart';
-import 'package:flutter_up/widgets/up_orientational_column_row.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/services/variation.dart';
@@ -130,214 +129,195 @@ class _AllProductsState extends State<ProductsGridPageMob> {
 
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-    return Container(
-        decoration: BoxDecoration(
-          color: UpConfig.of(context).theme.secondaryColor,
-          // image: DecorationImage(
-          //   image: AssetImage("assets/car.jpg"),
-          //   fit: BoxFit.fill,
-          // ),
-        ),
-        child: Scaffold(
-            backgroundColor: Colors.transparent,
-            key: scaffoldKey,
-            drawer: const MenuDrawer(),
-            endDrawer: SafeArea(
-              child: StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState) {
-                return Drawer(
-                  child: SizedBox(
-                    child: FilterPage(
-                      collection: collection!,
-                      change: (v) => change(0, v),
-                    ),
-                  ),
-                );
-              }),
-            ),
-            drawerEnableOpenDragGesture: false,
-            endDrawerEnableOpenDragGesture: false,
-            body: Column(
-              children: [
-                AutomobileAppbar(
-                  scaffoldKey: scaffoldKey,
+    return UpScaffold(
+        key: scaffoldKey,
+        drawer: const MenuDrawer(),
+        endDrawer: SafeArea(
+          child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Drawer(
+              child: SizedBox(
+                child: FilterPage(
+                  collection: collection!,
+                  change: (v) => change(0, v),
                 ),
-                Expanded(
-                  child: isCollectionFilter
-                      ? BlocConsumer<StoreCubit, StoreState>(
-                          listener: (context, state) {},
-                          builder: (context, state) {
-                            collections = [];
-                            if (collection != null) {
-                              int parent = collection;
-                              collections =
-                                  _getCollectionsByParent(state, parent, []);
-                            }
-                            return Column(
-                              children: [
-                                StreamBuilder(
-                                  stream: ServiceManager<VariationService>()
-                                      .variationStream$,
+              ),
+            );
+          }),
+        ),
+        body: Column(
+          children: [
+            AutomobileAppbar(
+              scaffoldKey: scaffoldKey,
+            ),
+            Expanded(
+              child: isCollectionFilter
+                  ? BlocConsumer<StoreCubit, StoreState>(
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                        collections = [];
+                        if (collection != null) {
+                          int parent = collection;
+                          collections =
+                              _getCollectionsByParent(state, parent, []);
+                        }
+                        return Column(
+                          children: [
+                            StreamBuilder(
+                              stream: ServiceManager<VariationService>()
+                                  .variationStream$,
+                              builder: (BuildContext context,
+                                  storedVariationsValues) {
+                                return FutureBuilder<List<Product>>(
+                                  future: ProductService.getProducts(
+                                      collections,
+                                      storedVariationsValues.data ?? {},
+                                      selectedKeywordId,
+                                      "", {}),
                                   builder: (BuildContext context,
-                                      storedVariationsValues) {
-                                    return FutureBuilder<List<Product>>(
-                                      future: ProductService.getProducts(
-                                          collections,
-                                          storedVariationsValues.data ?? {},
-                                          selectedKeywordId,
-                                          "", {}),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<List<Product>>
-                                              snapshot) {
-                                        products = snapshot.data;
-                                        // filteredProducts ??= products;
+                                      AsyncSnapshot<List<Product>> snapshot) {
+                                    products = snapshot.data;
+                                    // filteredProducts ??= products;
 
-                                        if (snapshot.connectionState !=
-                                            ConnectionState.done) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.done) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context)
                                                   .size
-                                                  .width,
-                                              height: MediaQuery.of(context)
+                                                  .height -
+                                              100,
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  "automobilelogo.png",
+                                                  height: 100,
+                                                  width: 150,
+                                                ),
+                                                const UpText("Loading...")
+                                              ]),
+                                        ),
+                                      );
+                                    }
+                                    return snapshot.hasData
+                                        ? Expanded(
+                                            child: Stack(children: [
+                                              SingleChildScrollView(
+                                                controller: scrollController,
+                                                scrollDirection: Axis.vertical,
+                                                child: SizedBox(
+                                                  width: MediaQuery.of(context)
                                                       .size
-                                                      .height -
-                                                  100,
-                                              child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Image.asset(
-                                                      "automobilelogo.jpg",
-                                                      height: 100,
-                                                      width: 100,
+                                                      .width,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 50),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        ProductsGrid(
+                                                          // products: filteredProducts!,
+                                                          collection:
+                                                              collection,
+                                                          products:
+                                                              snapshot.data!,
+                                                        ),
+                                                      ],
                                                     ),
-                                                    const UpText("Loading...")
-                                                  ]),
-                                            ),
-                                          );
-                                        }
-                                        return snapshot.hasData
-                                            ? Expanded(
-                                                child: Stack(children: [
-                                                  SingleChildScrollView(
-                                                    controller:
-                                                        scrollController,
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    child: SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(top: 50),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            ProductsGrid(
-                                                              // products: filteredProducts!,
-                                                              collection:
-                                                                  collection,
-                                                              products: snapshot
-                                                                  .data!,
-                                                            ),
-                                                          ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 8.0,
+                                                              right: 16),
+                                                      child: SizedBox(
+                                                        width: 100,
+                                                        child: UpButton(
+                                                          style: UpStyle(
+                                                              buttonBorderRadius:
+                                                                  26,
+                                                              buttonBorderColor:
+                                                                  Colors.white),
+                                                          onPressed: () {
+                                                            showDialog(
+                                                              context: context,
+                                                              barrierDismissible:
+                                                                  true,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return AlertDialog(
+                                                                  content:
+                                                                      SingleChildScrollView(
+                                                                    scrollDirection:
+                                                                        Axis.vertical,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      child:
+                                                                          FilterPage(
+                                                                        collection:
+                                                                            collection!,
+                                                                        change: (v) => change(
+                                                                            0,
+                                                                            v),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+                                                          },
+                                                          type: UpButtonType
+                                                              .elevated,
+                                                          icon: Icons.filter,
+                                                          text: "filters",
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 8.0,
-                                                                  right: 16),
-                                                          child: SizedBox(
-                                                            width: 100,
-                                                            child: UpButton(
-                                                              style: UpStyle(
-                                                                  buttonBorderRadius:
-                                                                      26,
-                                                                  buttonBorderColor:
-                                                                      Colors
-                                                                          .white),
-                                                              onPressed: () {
-                                                                showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  barrierDismissible:
-                                                                      true,
-                                                                  builder:
-                                                                      (BuildContext
-                                                                          context) {
-                                                                    return AlertDialog(
-                                                                      content:
-                                                                          SingleChildScrollView(
-                                                                        scrollDirection:
-                                                                            Axis.vertical,
-                                                                        child:
-                                                                            SizedBox(
-                                                                          child:
-                                                                              FilterPage(
-                                                                            collection:
-                                                                                collection!,
-                                                                            change: (v) =>
-                                                                                change(0, v),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                );
-                                                              },
-                                                              type: UpButtonType
-                                                                  .elevated,
-                                                              icon:
-                                                                  Icons.filter,
-                                                              text: "filters",
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ]),
-                                                ]),
-                                              )
-                                            : const CircularProgressIndicator();
-                                      },
-                                    );
+                                                  ]),
+                                            ]),
+                                          )
+                                        : const CircularProgressIndicator();
                                   },
-                                ),
-                              ],
-                            );
-                          })
-                      : const NotFoundErrorWidget(),
-                ),
-              ],
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      })
+                  : const NotFoundErrorWidget(),
             ),
-            floatingActionButton: GestureDetector(
-              onTap: () {
-                scrollToTop();
-              },
-              child: const GoToTopButtonWidget(),
-            )
+          ],
+        ),
+        floatingActionButton: GestureDetector(
+          onTap: () {
+            scrollToTop();
+          },
+          child: const GoToTopButtonWidget(),
+        )
 
-            //  showBackToTopButton == false
-            //     ? null
-            //     :
-            //   FloatingActionButton(
-            // backgroundColor: UpConfig.of(context).theme.primaryColor,
-            // onPressed: scrollToTop,
-            // child: const Icon(Icons.arrow_upward),
-            ));
+        //  showBackToTopButton == false
+        //     ? null
+        //     :
+        //   FloatingActionButton(
+        // backgroundColor: UpConfig.of(context).theme.primaryColor,
+        // onPressed: scrollToTop,
+        // child: const Icon(Icons.arrow_upward),
+        );
   }
 }

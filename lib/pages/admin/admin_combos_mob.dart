@@ -4,6 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/text_style.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
+import 'package:flutter_up/themes/up_themes.dart';
+import 'package:flutter_up/widgets/up_card.dart';
+import 'package:flutter_up/widgets/up_list_tile.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:shop/is_user_admin.dart';
 import 'package:shop/widgets/add_media_widget.dart';
 import 'package:shop/widgets/drawer/nav_drawer.dart';
@@ -172,7 +176,6 @@ class _AdminCombosMobState extends State<AdminCombosMob> {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
-        color: Colors.grey[200],
         width: 300,
         constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height - 60,
@@ -191,10 +194,16 @@ class _AdminCombosMobState extends State<AdminCombosMob> {
                 }),
                 child: Container(
                   color: selectedCombo.id == -1
-                      ? UpConfig.of(context).theme.primaryColor[100]
+                      ? UpConfig.of(context).theme.primaryColor
                       : Colors.transparent,
-                  child: const ListTile(
-                    title: UpText("Create a new combo"),
+                  child: UpListTile(
+                    title: "Create a new combo",
+                    style: UpStyle(
+                      listTileTextColor: selectedCombo.id == -1
+                          ? UpThemes.getContrastColor(
+                              UpConfig.of(context).theme.primaryColor)
+                          : UpConfig.of(context).theme.baseColor.shade900,
+                    ),
                   ),
                 )),
             ...combos
@@ -214,10 +223,16 @@ class _AdminCombosMobState extends State<AdminCombosMob> {
                     }),
                     child: Container(
                       color: selectedCombo.id == e.id
-                          ? UpConfig.of(context).theme.primaryColor[100]
+                          ? UpConfig.of(context).theme.primaryColor
                           : Colors.transparent,
-                      child: ListTile(
-                        title: UpText(e.name),
+                      child: UpListTile(
+                        title: (e.name),
+                        style: UpStyle(
+                          listTileTextColor: selectedCombo.id == e.id
+                              ? UpThemes.getContrastColor(
+                                  UpConfig.of(context).theme.primaryColor)
+                              : UpConfig.of(context).theme.baseColor.shade900,
+                        ),
                       ),
                     ),
                   ),
@@ -288,8 +303,12 @@ class _AdminCombosMobState extends State<AdminCombosMob> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const UpAppBar(),
+    return UpScaffold(
+      appBar: UpAppBar(
+        style: UpStyle(
+            iconColor: UpThemes.getContrastColor(
+                UpConfig.of(context).theme.primaryColor)),
+      ),
       drawer: const NavDrawer(),
       endDrawer: SafeArea(
         child: StatefulBuilder(
@@ -343,15 +362,8 @@ class _AdminCombosMobState extends State<AdminCombosMob> {
                                   textFontStyle: FontStyle.italic),
                             ),
                             const SizedBox(height: 20),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: UpConfig.of(context)
-                                          .theme
-                                          .primaryColor,
-                                      width: 1)),
-                              child: Padding(
+                            UpCard(
+                              body: Padding(
                                 padding: const EdgeInsets.all(22.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

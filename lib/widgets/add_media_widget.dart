@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_up/config/up_config.dart';
-import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/dialogs/media_dialog.dart';
@@ -49,14 +47,14 @@ class _AddMediaWidgetState extends State<AddMediaWidget> {
                 width: 70,
                 child: UpButton(
                   text: "Select",
-                  style: UpStyle(
-                    buttonHoverBackgroundColor:
-                        UpConfig.of(context).theme.primaryColor[200],
-                    buttonBorderColor: Colors.transparent,
-                    buttonHoverBorderColor: Colors.transparent,
-                    buttonBackgroundColor:
-                        UpConfig.of(context).theme.primaryColor[100],
-                  ),
+                  // style: UpStyle(
+                  //   buttonHoverBackgroundColor:
+                  //       UpConfig.of(context).theme.primaryColor[200],
+                  //   buttonBorderColor: Colors.transparent,
+                  //   buttonHoverBorderColor: Colors.transparent,
+                  //   buttonBackgroundColor:
+                  //       UpConfig.of(context).theme.primaryColor[100],
+                  // ),
                   onPressed: () {
                     _openMediaDialog();
                   },

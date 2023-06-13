@@ -3,6 +3,8 @@ import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
 import 'package:flutter_up/services/up_navigation.dart';
 import 'package:flutter_up/themes/up_style.dart';
+import 'package:flutter_up/widgets/up_card.dart';
+import 'package:flutter_up/widgets/up_icon.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/models/attribute_value.dart';
@@ -38,49 +40,36 @@ class SearchByBodyWidget extends StatelessWidget {
           ...attributeValues.map(
             (e) {
               return GestureDetector(
-                onTap: () {
-                  gotoBodyType(e.id);
-                  ServiceManager<UpNavigationService>()
-                      .navigateToNamed(Routes.products, queryParams: {
-                    "collection": '$collection',
-                  });
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Container(
-                    height: 80,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        border: Border.all(
-                            color: UpConfig.of(context).theme.primaryColor,
-                            width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(12)),
-                        color: UpConfig.of(context).theme.secondaryColor),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.car_repair_rounded),
-                        const SizedBox(height: 6),
-                        UpText(
-                          e.name,
-                          style: UpStyle(
-                              textSize: 16, textWeight: FontWeight.bold),
-                        )
-                      ],
+                  onTap: () {
+                    gotoBodyType(e.id);
+                    ServiceManager<UpNavigationService>()
+                        .navigateToNamed(Routes.products, queryParams: {
+                      "collection": '$collection',
+                    });
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: SizedBox(
+                      height: 80,
+                      width: 100,
+                      child: UpCard(
+                        body: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            UpIcon(
+                                icon: Icons.car_repair_rounded,
+                                style: UpStyle(iconSize: 18)),
+                            const SizedBox(height: 6),
+                            UpText(
+                              e.name,
+                              style: UpStyle(textSize: 14),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
+                  ));
             },
           ),
         ],

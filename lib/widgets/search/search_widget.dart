@@ -1,10 +1,11 @@
 import 'package:flutter_up/models/up_label_value.dart';
 import 'package:flutter_up/services/up_navigation.dart';
 import 'package:flutter_up/widgets/up_button.dart';
+import 'package:flutter_up/widgets/up_card.dart';
+import 'package:flutter_up/widgets/up_icon.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_dropdown.dart';
@@ -155,106 +156,98 @@ class _SearchWidgetState extends State<SearchWidget> {
           }
 
           return products.isNotEmpty
-              ? Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: UpConfig.of(context).theme.primaryColor,
-                        width: 2),
-                    borderRadius: BorderRadius.circular(12),
-                    color: const Color.fromARGB(64, 249, 153, 153),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.search,
-                              color: UpConfig.of(context).theme.primaryColor,
-                              size: 30,
+              ? SizedBox(
+                  child: UpCard(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 12, 0, 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              UpIcon(
+                                icon: Icons.search,
+                                style: UpStyle(iconSize: 26),
+                              ),
+                              UpText(
+                                "Make/Model Seach",
+                                style: UpStyle(
+                                    textSize: 18, textWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 52, vertical: 4),
+                          child: Visibility(
+                            visible: dropDownManufacturer.isNotEmpty,
+                            child: UpDropDown(
+                              itemList: dropDownManufacturer,
+                              label: "Make",
+                              value: makeDropDownValue,
+                              onChanged: ((value) {
+                                makeDropDownValue = value ?? "";
+                                generateModelDropdown();
+                              }),
                             ),
-                            UpText(
-                              "Make/Model Seach",
-                              style: UpStyle(
-                                  textSize: 18, textWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 52, vertical: 4),
-                        child: Visibility(
-                          visible: dropDownManufacturer.isNotEmpty,
-                          child: UpDropDown(
-                            itemList: dropDownManufacturer,
-                            label: "Make",
-                            value: makeDropDownValue,
-                            onChanged: ((value) {
-                              makeDropDownValue = value ?? "";
-                              generateModelDropdown();
-                            }),
-                            style: UpStyle(dropdownFilledColor: Colors.white),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 52, vertical: 4),
-                        child: Visibility(
-                          visible: dropDownModel.isEmpty,
-                          child: UpDropDown(
-                            itemList: const [],
-                            value: modelDropDownValue,
-                            label: "Model",
-                            onChanged: ((value) {
-                              modelDropDownValue = value ?? "";
-                            }),
-                            style: UpStyle(dropdownFilledColor: Colors.white),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 52, vertical: 4),
+                          child: Visibility(
+                            visible: dropDownModel.isEmpty,
+                            child: UpDropDown(
+                              itemList: const [],
+                              value: modelDropDownValue,
+                              label: "Model",
+                              onChanged: ((value) {
+                                modelDropDownValue = value ?? "";
+                              }),
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 52, vertical: 4),
-                        child: Visibility(
-                          visible: dropDownModel.isNotEmpty,
-                          child: UpDropDown(
-                            itemList: dropDownModel,
-                            value: modelDropDownValue,
-                            label: "Model",
-                            onChanged: ((value) {
-                              modelDropDownValue = value ?? "";
-                            }),
-                            style: UpStyle(dropdownFilledColor: Colors.white),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 52, vertical: 4),
+                          child: Visibility(
+                            visible: dropDownModel.isNotEmpty,
+                            child: UpDropDown(
+                              itemList: dropDownModel,
+                              value: modelDropDownValue,
+                              label: "Model",
+                              onChanged: ((value) {
+                                modelDropDownValue = value ?? "";
+                              }),
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                        child: UpButton(
-                          onPressed: () {
-                            if (modelDropDownValue.isNotEmpty) {
-                              gotoMakeModel(int.parse(modelDropDownValue));
-                            } else if (makeDropDownValue.isNotEmpty &&
-                                modelDropDownValue.isEmpty) {
-                              gotoMake(int.parse(makeDropDownValue));
-                            }
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                          child: UpButton(
+                            onPressed: () {
+                              if (modelDropDownValue.isNotEmpty) {
+                                gotoMakeModel(int.parse(modelDropDownValue));
+                              } else if (makeDropDownValue.isNotEmpty &&
+                                  modelDropDownValue.isEmpty) {
+                                gotoMake(int.parse(makeDropDownValue));
+                              }
 
-                            ServiceManager<UpNavigationService>()
-                                .navigateToNamed(Routes.products, queryParams: {
-                              "collection": '${widget.collection}',
-                            });
-                          },
-                          style: UpStyle(buttonWidth: 100),
-                          text: "Search",
-                        ),
-                      )
-                    ],
+                              ServiceManager<UpNavigationService>()
+                                  .navigateToNamed(Routes.products,
+                                      queryParams: {
+                                    "collection": '${widget.collection}',
+                                  });
+                            },
+                            style: UpStyle(buttonWidth: 100),
+                            text: "Search",
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 )
               : const SizedBox();

@@ -30,7 +30,9 @@ class AutomobileAppbar extends StatelessWidget implements PreferredSizeWidget {
                   size: 25,
                 ),
                 onPressed: () {
-                  scaffoldKey!.currentState!.openDrawer();
+                  if (scaffoldKey!.currentState != null) {
+                    scaffoldKey!.currentState!.openDrawer();
+                  }
                 },
               ),
               Padding(
