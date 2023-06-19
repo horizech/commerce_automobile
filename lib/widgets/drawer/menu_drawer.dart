@@ -1,5 +1,4 @@
 import 'package:flutter_up/config/up_config.dart';
-import 'package:flutter_up/enums/text_style.dart';
 import 'package:flutter_up/locator.dart';
 import 'package:flutter_up/services/up_navigation.dart';
 import 'package:flutter/material.dart';
@@ -28,17 +27,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
     return BlocConsumer<StoreCubit, StoreState>(
       listener: (context, state) {},
       builder: (context, state) {
-        // collectionTree = state.collectionTree;
-        // List<TreeNode> nodes = collectionTree!.roots!
-        //     .map(
-        //       (e) => TreeNode(
-        //         e,
-        //         subNodes: e.children != null && e.children!.isNotEmpty
-        //             ? getTreeSubNodes(e) ?? []
-        //             : const [TreeNode("")],
-        //       ),
-        //     )
-        //     .toList();
         return Drawer(
           backgroundColor: UpConfig.of(context).theme.baseColor.shade50,
           child: SafeArea(

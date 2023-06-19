@@ -8,6 +8,7 @@ import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/themes/up_themes.dart';
 import 'package:flutter_up/widgets/up_app_bar.dart';
+import 'package:flutter_up/widgets/up_card.dart';
 import 'package:flutter_up/widgets/up_circualar_progress.dart';
 import 'package:flutter_up/widgets/up_list_tile.dart';
 import 'package:flutter_up/widgets/up_scaffold.dart';
@@ -75,63 +76,66 @@ class _AdminMediaMobState extends State<AdminMediaMob> {
   }
 
   Widget leftSide() {
-    return Container(
-      width: 300,
-      constraints: BoxConstraints(
-        minHeight: MediaQuery.of(context).size.height - 60,
-      ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            GestureDetector(
-                onTap: (() {
-                  selectedMedia = const Media(name: "", id: -1);
-                  nameController.text = selectedMedia.name;
-                  Navigator.pop(context);
-                  setState(() {});
-                }),
-                child: Container(
-                  color: selectedMedia.id == -1
-                      ? UpConfig.of(context).theme.primaryColor
-                      : Colors.transparent,
-                  child: UpListTile(
-                    title: "Create a new media",
-                    style: UpStyle(
-                      listTileTextColor: selectedMedia.id == -1
-                          ? UpThemes.getContrastColor(
-                              UpConfig.of(context).theme.primaryColor)
-                          : UpConfig.of(context).theme.baseColor.shade900,
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: UpCard(
+        style: UpStyle(cardWidth: 310, cardBodyPadding: false),
+        body: Container(
+          width: 300,
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: Column(
+            children: [
+              GestureDetector(
+                  onTap: (() {
+                    selectedMedia = const Media(name: "", id: -1);
+                    nameController.text = selectedMedia.name;
+                    Navigator.pop(context);
+                    setState(() {});
+                  }),
+                  child: Container(
+                    color: selectedMedia.id == -1
+                        ? UpConfig.of(context).theme.primaryColor
+                        : Colors.transparent,
+                    child: UpListTile(
+                      title: "Create a new media",
+                      style: UpStyle(
+                        listTileTextColor: selectedMedia.id == -1
+                            ? UpThemes.getContrastColor(
+                                UpConfig.of(context).theme.primaryColor)
+                            : UpConfig.of(context).theme.baseColor.shade900,
+                      ),
                     ),
-                  ),
-                )),
-            ...media
-                .map(
-                  (e) => GestureDetector(
-                    onTap: (() {
-                      selectedMedia = e;
-                      nameController.text = selectedMedia.name;
-                      Navigator.pop(context);
-                      setState(() {});
-                    }),
-                    child: Container(
-                      color: selectedMedia.id == e.id
-                          ? UpConfig.of(context).theme.primaryColor
-                          : Colors.transparent,
-                      child: UpListTile(
-                        title: (e.name),
-                        style: UpStyle(
-                          listTileTextColor: selectedMedia.id == e.id
-                              ? UpThemes.getContrastColor(
-                                  UpConfig.of(context).theme.primaryColor)
-                              : UpConfig.of(context).theme.baseColor.shade900,
+                  )),
+              ...media
+                  .map(
+                    (e) => GestureDetector(
+                      onTap: (() {
+                        selectedMedia = e;
+                        nameController.text = selectedMedia.name;
+                        Navigator.pop(context);
+                        setState(() {});
+                      }),
+                      child: Container(
+                        color: selectedMedia.id == e.id
+                            ? UpConfig.of(context).theme.primaryColor
+                            : Colors.transparent,
+                        child: UpListTile(
+                          title: (e.name),
+                          style: UpStyle(
+                            listTileTextColor: selectedMedia.id == e.id
+                                ? UpThemes.getContrastColor(
+                                    UpConfig.of(context).theme.primaryColor)
+                                : UpConfig.of(context).theme.baseColor.shade900,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-                .toList()
-          ],
+                  )
+                  .toList()
+            ],
+          ),
         ),
       ),
     );

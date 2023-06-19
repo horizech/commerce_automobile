@@ -103,61 +103,63 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
   Widget leftSide() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Container(
-        width: 300,
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height - 60,
-        ),
-        child: Column(
-          children: [
-            GestureDetector(
-                onTap: (() {
-                  selectedKeyword = const Keyword(name: "", id: -1);
-                  nameController.text = selectedKeyword.name;
-                  Navigator.pop(context);
-                  setState(() {});
-                }),
-                child: Container(
-                  color: selectedKeyword.id == -1
-                      ? UpConfig.of(context).theme.primaryColor
-                      : Colors.transparent,
-                  child: UpListTile(
-                    title: "Create a new keyword",
-                    style: UpStyle(
-                      listTileTextColor: selectedKeyword.id == -1
-                          ? UpThemes.getContrastColor(
-                              UpConfig.of(context).theme.primaryColor)
-                          : UpConfig.of(context).theme.baseColor.shade900,
+      child: UpCard(
+        style: UpStyle(cardWidth: 310, cardBodyPadding: false),
+        body: Container(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: Column(
+            children: [
+              GestureDetector(
+                  onTap: (() {
+                    selectedKeyword = const Keyword(name: "", id: -1);
+                    nameController.text = selectedKeyword.name;
+                    Navigator.pop(context);
+                    setState(() {});
+                  }),
+                  child: Container(
+                    color: selectedKeyword.id == -1
+                        ? UpConfig.of(context).theme.primaryColor
+                        : Colors.transparent,
+                    child: UpListTile(
+                      title: "Create a new keyword",
+                      style: UpStyle(
+                        listTileTextColor: selectedKeyword.id == -1
+                            ? UpThemes.getContrastColor(
+                                UpConfig.of(context).theme.primaryColor)
+                            : UpConfig.of(context).theme.baseColor.shade900,
+                      ),
                     ),
-                  ),
-                )),
-            ...keywords
-                .map(
-                  (e) => GestureDetector(
-                    onTap: (() {
-                      selectedKeyword = e;
-                      nameController.text = selectedKeyword.name;
-                      Navigator.pop(context);
-                      setState(() {});
-                    }),
-                    child: Container(
-                      color: selectedKeyword.id == e.id
-                          ? UpConfig.of(context).theme.primaryColor
-                          : Colors.transparent,
-                      child: UpListTile(
-                        title: (e.name),
-                        style: UpStyle(
-                          listTileTextColor: selectedKeyword.id == e.id
-                              ? UpThemes.getContrastColor(
-                                  UpConfig.of(context).theme.primaryColor)
-                              : UpConfig.of(context).theme.baseColor.shade900,
+                  )),
+              ...keywords
+                  .map(
+                    (e) => GestureDetector(
+                      onTap: (() {
+                        selectedKeyword = e;
+                        nameController.text = selectedKeyword.name;
+                        Navigator.pop(context);
+                        setState(() {});
+                      }),
+                      child: Container(
+                        color: selectedKeyword.id == e.id
+                            ? UpConfig.of(context).theme.primaryColor
+                            : Colors.transparent,
+                        child: UpListTile(
+                          title: (e.name),
+                          style: UpStyle(
+                            listTileTextColor: selectedKeyword.id == e.id
+                                ? UpThemes.getContrastColor(
+                                    UpConfig.of(context).theme.primaryColor)
+                                : UpConfig.of(context).theme.baseColor.shade900,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-                .toList()
-          ],
+                  )
+                  .toList()
+            ],
+          ),
         ),
       ),
     );
@@ -207,34 +209,55 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
                         ),
                         const SizedBox(height: 20),
                         UpCard(
+                          style: UpStyle(
+                              cardWidth: MediaQuery.of(context).size.width - 32,
+                              cardBodyPadding: false,
+                              cardRadius: 8),
                           body: Padding(
                             padding: const EdgeInsets.all(20.0),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 1.5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          width: 300,
-                                          child: UpTextField(
-                                            controller: nameController,
-                                            label: 'Name',
+                            child: Center(
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SizedBox(
+                                            width: 300,
+                                            child: UpTextField(
+                                              controller: nameController,
+                                              label: 'Name',
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Visibility(
-                                            visible: selectedKeyword.id != -1,
-                                            child: Padding(
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Visibility(
+                                              visible: selectedKeyword.id != -1,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: SizedBox(
+                                                  width: 70,
+                                                  height: 30,
+                                                  child: UpButton(
+                                                    onPressed: () {
+                                                      _deleteKeyword(
+                                                          selectedKeyword.id!);
+                                                    },
+                                                    text: "Delete",
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: SizedBox(
@@ -242,38 +265,24 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
                                                 height: 30,
                                                 child: UpButton(
                                                   onPressed: () {
-                                                    _deleteKeyword(
-                                                        selectedKeyword.id!);
+                                                    _updateKeyword(
+                                                        selectedKeyword.id != -1
+                                                            ? selectedKeyword
+                                                            : null);
                                                   },
-                                                  text: "Delete",
+                                                  text: "Save",
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: SizedBox(
-                                              width: 70,
-                                              height: 30,
-                                              child: UpButton(
-                                                onPressed: () {
-                                                  _updateKeyword(
-                                                      selectedKeyword.id != -1
-                                                          ? selectedKeyword
-                                                          : null);
-                                                },
-                                                text: "Save",
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

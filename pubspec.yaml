@@ -57,12 +57,9 @@ dependencies:
   image_picker: ^0.8.7+5
 
   scrollable_positioned_list: ^0.3.5
-  # flutter_up: ^3.0.1
+  flutter_up: ^3.0.3
   # path: ../flutter_up
   video_player: ^2.5.1
-
-  flutter_up:
-    path: ../flutter_up
 
 dev_dependencies:
   flutter_test:

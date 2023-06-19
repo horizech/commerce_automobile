@@ -76,6 +76,7 @@ class _AdminProductsState extends State<AdminProducts> {
       body: SizedBox(
         width: 300,
         height: 900,
+        
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(

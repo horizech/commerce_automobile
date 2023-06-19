@@ -42,24 +42,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: UpCard(
-          // width: 500,
-          // decoration: UpLayout.isLandscape(context)
-          //     ? BoxDecoration(
-          //         color: Colors.white,
-          //         borderRadius: const BorderRadius.only(
-          //             topLeft: Radius.circular(10),
-          //             topRight: Radius.circular(10),
-          //             bottomLeft: Radius.circular(10),
-          //             bottomRight: Radius.circular(10)),
-          //         boxShadow: [
-          //             BoxShadow(
-          //               color: Colors.grey.withOpacity(0.5),
-          //               spreadRadius: 5,
-          //               blurRadius: 7,
-          //               offset: const Offset(0, 3),
-          //             ),
-          //           ])
-          //     : const BoxDecoration(),
           body: Column(
             children: [
               _mode == Constant.authLogin
@@ -130,14 +112,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               ),
             ),
           )
-        : Container(
-            constraints:
-                BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-            // height: MediaQuery.of(context).size.height,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: view,
+        : Padding(
+            padding: const EdgeInsets.all(16),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: view,
+              ),
             ),
           );
   }
