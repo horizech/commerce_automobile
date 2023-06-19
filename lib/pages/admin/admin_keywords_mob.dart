@@ -198,17 +198,16 @@ class _AdminKeywordsMobState extends State<AdminKeywordsMob> {
                     child: Column(
                       children: [
                         const SizedBox(height: 20),
-                        UpText(
-                          selectedKeyword.id == -1
-                              ? "Add keyword"
-                              : "Update keyword",
-                          style: UpStyle(
-                              textSize: 24,
-                              textWeight: FontWeight.bold,
-                              textFontStyle: FontStyle.italic),
-                        ),
-                        const SizedBox(height: 20),
                         UpCard(
+                          header: Center(
+                            child: UpText(
+                              selectedKeyword.id == -1
+                                  ? "Add keyword"
+                                  : "Update keyword",
+                              style: UpStyle(
+                                  textSize: 24, textFontStyle: FontStyle.italic),
+                            ),
+                          ),
                           style: UpStyle(
                               cardWidth: MediaQuery.of(context).size.width - 32,
                               cardBodyPadding: false,

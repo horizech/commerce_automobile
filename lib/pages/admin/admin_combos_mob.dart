@@ -356,17 +356,20 @@ class _AdminCombosMobState extends State<AdminCombosMob> {
                         child: Column(
                           children: [
                             const SizedBox(height: 20),
-                            UpText(
-                              selectedCombo.id == -1
-                                  ? "Create Combo"
-                                  : "Update Combo",
-                              style: UpStyle(
-                                  textSize: 24,
-                                  textWeight: FontWeight.bold,
-                                  textFontStyle: FontStyle.italic),
-                            ),
-                            const SizedBox(height: 20),
+                            
+                           
                             UpCard(
+                              header: Center(
+                                child: UpText(
+                                selectedCombo.id == -1
+                                    ? "Create Combo"
+                                    : "Update Combo",
+                                style: UpStyle(
+                                    textSize: 24,
+                                    
+                                    textFontStyle: FontStyle.italic),
+                                                          ),
+                              ),
                               style: UpStyle(
                                   cardWidth:
                                       MediaQuery.of(context).size.width - 32,

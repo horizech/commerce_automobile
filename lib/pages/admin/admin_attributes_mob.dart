@@ -256,17 +256,17 @@ class _AdminAttributesMobState extends State<AdminAttributesMob> {
                     child: Column(
                       children: [
                         const SizedBox(height: 20),
-                        UpText(
-                          selectedAttribute.id == -1
-                              ? "Create Attribute"
-                              : "Update Attribute",
-                          style: UpStyle(
-                              textSize: 24,
-                              textWeight: FontWeight.bold,
-                              textFontStyle: FontStyle.italic),
-                        ),
-                        const SizedBox(height: 20),
                         UpCard(
+                          header: Center(
+                            child: UpText(
+                              selectedAttribute.id == -1
+                                  ? "Create Attribute"
+                                  : "Update Attribute",
+                              style: UpStyle(
+                                  textSize: 24,
+                                  textFontStyle: FontStyle.italic),
+                            ),
+                          ),
                           style: UpStyle(
                               cardWidth: MediaQuery.of(context).size.width - 32,
                               cardBodyPadding: false,

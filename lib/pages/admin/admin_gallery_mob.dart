@@ -249,21 +249,21 @@ class _AdminGalleryMobState extends State<AdminGalleryMob> {
                     child: Column(
                       children: [
                         const SizedBox(height: 20),
-                        UpText(
-                          selectedGallery.id == -1
-                              ? "Create Gallery"
-                              : "Update Gallery",
-                          style: UpStyle(
-                              textSize: 24,
-                              textWeight: FontWeight.bold,
-                              textFontStyle: FontStyle.italic),
-                        ),
-                        const SizedBox(height: 20),
                         UpCard(
                           style: UpStyle(
-                                  cardWidth:
-                                      MediaQuery.of(context).size.width - 32,
-                                  cardBodyPadding: false,cardRadius: 8),
+                              cardWidth: MediaQuery.of(context).size.width - 32,
+                              cardBodyPadding: false,
+                              cardRadius: 8),
+                          header: Center(
+                            child: UpText(
+                              selectedGallery.id == -1
+                                  ? "Create Gallery"
+                                  : "Update Gallery",
+                              style: UpStyle(
+                                  textSize: 24,
+                                  textFontStyle: FontStyle.italic),
+                            ),
+                          ),
                           body: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Center(
@@ -322,19 +322,19 @@ class _AdminGalleryMobState extends State<AdminGalleryMob> {
                                                                               e,
                                                                         )),
                                                                     InkWell(
-                                                                      onTap: (() {
+                                                                      onTap:
+                                                                          (() {
                                                                         _deleteDialog(
                                                                             e);
                                                                       }),
                                                                       child:
                                                                           Container(
                                                                         alignment:
-                                                                            Alignment
-                                                                                .topRight,
+                                                                            Alignment.topRight,
                                                                         child:
                                                                             const UpIcon(
-                                                                          icon: Icons
-                                                                              .cancel,
+                                                                          icon:
+                                                                              Icons.cancel,
                                                                         ),
                                                                       ),
                                                                     ),
@@ -354,7 +354,8 @@ class _AdminGalleryMobState extends State<AdminGalleryMob> {
                                                 child: Stack(
                                                   children: [
                                                     Container(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       width: 100,
                                                       height: 100,
                                                       child: Image.asset(
@@ -363,11 +364,12 @@ class _AdminGalleryMobState extends State<AdminGalleryMob> {
                                                       // color: Colors.grey,
                                                     ),
                                                     Container(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: UpIcon(
                                                         icon: Icons.add_a_photo,
-                                                        style:
-                                                            UpStyle(iconSize: 20),
+                                                        style: UpStyle(
+                                                            iconSize: 20),
                                                       ),
                                                     ),
                                                   ],
@@ -384,12 +386,14 @@ class _AdminGalleryMobState extends State<AdminGalleryMob> {
                                     SizedBox(
                                       width: 300,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           Visibility(
                                             visible: selectedGallery.id != -1,
                                             child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: SizedBox(
                                                 width: 70,
                                                 height: 30,
