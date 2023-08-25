@@ -20,7 +20,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return UpScaffold(
-      key: scaffoldKey,
+      scaffoldKey: scaffoldKey,
       drawer: const MenuDrawer(),
       drawerEnableOpenDragGesture: false,
       endDrawerEnableOpenDragGesture: false,
@@ -36,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
                 SizedBox(height: 80),
                 SizedBox(
                   child: SearchWidget(
-                    collection: 0,
+                    collection: 9,
                   ),
                 ),
               ],

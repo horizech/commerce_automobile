@@ -60,6 +60,7 @@ dependencies:
   flutter_up: ^3.0.3
   # path: ../flutter_up
   video_player: ^2.5.1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
+import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/locator.dart';
 import 'package:flutter_up/services/up_navigation.dart';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_card.dart';
@@ -26,6 +27,7 @@ class ProductGridItem extends StatelessWidget {
   }
 }
 
+NumberFormat numberFormat = NumberFormat.decimalPattern();
 Widget getWebInfo(BuildContext context, Product product, int? collection) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -73,14 +75,21 @@ Widget getWebInfo(BuildContext context, Product product, int? collection) {
                           product.name,
                           style: UpStyle(textSize: 20),
                         ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        PriceWidget(
-                          price: product.price,
-                          discountPrice: product.discounPrice,
-                          discountStartDate: product.discountStartDate,
-                          discountEndDate: product.discountEndDate,
+                        const SizedBox(height: 2),
+                        UpText("£ ${numberFormat.format(product.price)}"),
+                        // PriceWidget(
+                        //   discountPrice: product.discounPrice,
+                        //   discountStartDate: product.discountStartDate,
+                        //   discountEndDate: product.discountEndDate,
+                        // ),
+                        const SizedBox(height: 4),
+                        Text(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          product.description ?? "",
+                          style: TextStyle(
+                              color: UpConfig.of(context).theme.baseColor[700],
+                              fontSize: 12),
                         ),
                       ],
                     ),

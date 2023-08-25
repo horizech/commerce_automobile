@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/themes/up_style.dart';
 import 'package:flutter_up/widgets/up_circualar_progress.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_icon.dart';
 import 'package:flutter_up/widgets/up_orientational_column_row.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/models/attribute.dart';
@@ -14,7 +16,7 @@ import 'package:shop/models/attribute_value.dart';
 import 'package:shop/models/keyword.dart';
 import 'package:shop/models/media.dart';
 import 'package:shop/models/product.dart';
-
+import 'package:intl/intl.dart';
 import 'package:shop/widgets/appbar/automobile_appbar.dart';
 import 'package:shop/widgets/drawer/menu_drawer.dart';
 import 'package:shop/widgets/error/error.dart';
@@ -37,8 +39,8 @@ class ProductPage extends StatelessWidget {
       productId = int.parse(queryParams!['productId']!);
     }
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    return Scaffold(
-      key: scaffoldKey,
+    return UpScaffold(
+      scaffoldKey: scaffoldKey,
       drawer: const MenuDrawer(),
       appBar: AutomobileAppbar(
         scaffoldKey: scaffoldKey,
@@ -128,6 +130,7 @@ class _ProductDetailedInfoState extends State<ProductDetailedInfo> {
               state.attributeValues!.isNotEmpty) {
             attributeValues = state.attributeValues!.toList();
           }
+          NumberFormat numberFormat = NumberFormat.decimalPattern();
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Padding(
@@ -146,27 +149,33 @@ class _ProductDetailedInfoState extends State<ProductDetailedInfo> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: 30),
                           UpText(
                             widget.product.name,
                             style: UpStyle(
-                                textSize: 25, textWeight: FontWeight.w900),
+                              textSize: 25,
+                              textWeight: FontWeight.w900,
+                            ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           UpText(
-                            "£${widget.product.price.toString()}",
+                            "£ ${numberFormat.format(widget.product.price).toString()}",
                             style: UpStyle(
-                                textSize: 20,
-                                textWeight: FontWeight.w900,
-                                textColor: Colors.black),
+                              textSize: 20,
+                              // textWeight: FontWeight.w900,
+                            ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: DottedLine(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DottedLine(
+                              dashColor:
+                                  UpConfig.of(context).theme.baseColor.shade400,
+                            ),
                           ),
                           Visibility(
                             visible: keywords.isNotEmpty,
@@ -273,32 +282,27 @@ class __ProductDetail extends State<_ProductDetail> {
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  child: UpText(
-                    widget.attributes!
-                        .where((element) => element.id == int.parse(key))
-                        .first
-                        .name
-                        .toString(),
-                    style: UpStyle(
-                      textWeight: FontWeight.bold,
-                      textSize: 14,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  child: UpText(
-                      widget.attributeValues!
-                          .where((element) =>
-                              element.id == widget.product.options![key])
-                          .first
-                          .name
-                          .toString(),
+                Row(
+                  children: [
+                    UpText(
+                      "${widget.attributes!.where((element) => element.id == int.parse(key)).first.name.toString()} : ",
                       style: UpStyle(
-                        textSize: 14,
-                        // textColor: UpConfig.of(context).theme.primaryColor[400]),
-                      )),
-                )
+                        textSize: 16,
+                      ),
+                    ),
+                    UpText(
+                        widget.attributeValues!
+                            .where((element) =>
+                                element.id == widget.product.options![key])
+                            .first
+                            .name
+                            .toString(),
+                        style: UpStyle(
+                          textSize: 14,
+                          // textColor: UpConfig.of(context).theme.primaryColor[400]),
+                        )),
+                  ],
+                ),
               ],
             )
           : const SizedBox(),
@@ -567,22 +571,25 @@ class GetMedia extends StatelessWidget {
       future: MediaService.getMediaByList(mediaList),
       builder: (BuildContext context, AsyncSnapshot<List<Media>> snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          return Container(
-            height: 500,
-            color: Colors.grey[200],
-            child: const Center(
+          return Center(
+              child: SizedBox(
+            child: Padding(
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: CircularProgressIndicator(),
-                    )
-                  ]),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "automobilelogo.png",
+                    height: 100,
+                    width: 150,
+                  ),
+                  const UpText("Loading...")
+                ],
+              ),
             ),
-          );
+          ));
         }
         return snapshot.hasData
             ? ProductMediaWidget(

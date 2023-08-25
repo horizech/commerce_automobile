@@ -137,7 +137,7 @@ class _AllProductsState extends State<ProductsGridPage> {
           // ),
         ),
         child: UpScaffold(
-            key: scaffoldKey,
+            scaffoldKey: scaffoldKey,
             drawer: const MenuDrawer(),
             drawerEnableOpenDragGesture: false,
             endDrawerEnableOpenDragGesture: false,

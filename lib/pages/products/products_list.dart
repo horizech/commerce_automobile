@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_up/widgets/up_orientational_column_row.dart';
+import 'package:flutter_up/widgets/up_scaffold.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/widgets/appbar/automobile_appbar.dart';
 import 'package:shop/widgets/drawer/drawer.dart';
@@ -78,8 +79,8 @@ class _AllProductsState extends State<ProductsListPage> {
     }
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-    return Scaffold(
-      key: scaffoldKey,
+    return UpScaffold(
+      scaffoldKey: scaffoldKey,
       drawer: const CustomDrawer(),
       appBar: AutomobileAppbar(
         scaffoldKey: scaffoldKey,

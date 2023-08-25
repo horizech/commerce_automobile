@@ -137,9 +137,6 @@ class _NavDrawerState extends State<NavDrawer> {
                               : UpConfig.of(context).theme.baseColor.shade900),
                     ),
                     title: action.title,
-                    // style: UpStyle(
-                    //     iconColor:
-                    //         UpConfig.of(context).theme.baseColor.shade900),
                     onTap: () => {action.onTap(context)},
                   ),
                 ],

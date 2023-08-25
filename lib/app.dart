@@ -62,10 +62,11 @@ class ShopApp extends StatelessWidget {
           create: (_) => StoreCubit(),
           child: UpApp(
             theme: UpThemes.generateThemeByColor(
-              isDark: true,
-              baseColor: const Color.fromARGB(255, 63, 63, 63),
-              // baseColor: Colors.white,
+              // isDark: true,
+              // baseColor: Color.fromARGB(255, 32, 32, 32),
+              baseColor: Colors.white,
               // primaryColor: Colors.purple,
+              // primaryColor: Colors.pink,
               primaryColor: const Color.fromRGBO(200, 16, 46, 1.0),
               secondaryColor: Colors.white,
               tertiaryColor: const Color.fromARGB(255, 222, 84, 107),

@@ -130,7 +130,7 @@ class _AllProductsState extends State<ProductsGridPageMob> {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return UpScaffold(
-        key: scaffoldKey,
+        scaffoldKey: scaffoldKey,
         drawer: const MenuDrawer(),
         endDrawer: SafeArea(
           child: StatefulBuilder(
@@ -243,16 +243,17 @@ class _AllProductsState extends State<ProductsGridPageMob> {
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              top: 8.0,
-                                                              right: 16),
+                                                              top: 24.0,
+                                                              right: 20),
                                                       child: SizedBox(
-                                                        width: 100,
+                                                        width: 50,
                                                         child: UpButton(
                                                           style: UpStyle(
                                                               buttonBorderRadius:
                                                                   26,
                                                               buttonBorderColor:
-                                                                  Colors.white),
+                                                                  Colors
+                                                                      .transparent),
                                                           onPressed: () {
                                                             showDialog(
                                                               context: context,
@@ -262,6 +263,11 @@ class _AllProductsState extends State<ProductsGridPageMob> {
                                                                   (BuildContext
                                                                       context) {
                                                                 return AlertDialog(
+                                                                  backgroundColor:
+                                                                      UpConfig.of(
+                                                                              context)
+                                                                          .theme
+                                                                          .baseColor,
                                                                   content:
                                                                       SingleChildScrollView(
                                                                     scrollDirection:
@@ -284,8 +290,7 @@ class _AllProductsState extends State<ProductsGridPageMob> {
                                                           },
                                                           type: UpButtonType
                                                               .elevated,
-                                                          icon: Icons.filter,
-                                                          text: "filters",
+                                                          icon: Icons.tune,
                                                         ),
                                                       ),
                                                     ),

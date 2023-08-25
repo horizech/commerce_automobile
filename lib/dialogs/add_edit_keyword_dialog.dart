@@ -1,5 +1,6 @@
 import 'package:apiraiser/apiraiser.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_up/config/up_config.dart';
 import 'package:flutter_up/enums/up_color_type.dart';
 import 'package:flutter_up/helpers/up_toast.dart';
 import 'package:flutter_up/widgets/up_button.dart';
@@ -29,6 +30,7 @@ class _AddEditKeywordDialogState extends State<AddEditKeywordDialog> {
     }
 
     return AlertDialog(
+      backgroundColor: UpConfig.of(context).theme.baseColor,
       title: Padding(
         padding: const EdgeInsets.all(8.0),
         child: UpText(

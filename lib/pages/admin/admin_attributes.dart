@@ -67,6 +67,7 @@ class _AdminAttributesState extends State<AdminAttributes> {
           return StatefulBuilder(
             builder: (context, setState) {
               return AlertDialog(
+                backgroundColor: UpConfig.of(context).theme.baseColor,
                 title: Text(value != null
                     ? 'Edit attribute value'
                     : 'Add attribute value'),

@@ -553,6 +553,7 @@ class _AdminProductsState extends State<AdminProducts> {
 
   _deleteProduct(int productId) async {
     showDialog(
+      
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {

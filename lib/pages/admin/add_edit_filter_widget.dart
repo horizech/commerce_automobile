@@ -6,6 +6,7 @@ import 'package:flutter_up/enums/up_color_type.dart';
 import 'package:flutter_up/models/up_label_value.dart';
 import 'package:flutter_up/widgets/up_button.dart';
 import 'package:flutter_up/widgets/up_dropdown.dart';
+import 'package:flutter_up/widgets/up_icon.dart';
 import 'package:flutter_up/widgets/up_text.dart';
 import 'package:shop/dialogs/add_edit_attribute_dialog.dart';
 import 'package:shop/dialogs/add_edit_attribute_value_dialog.dart';
@@ -133,7 +134,6 @@ class _AddEditFiltersWidgetState extends State<AddEditFiltersWidget> {
                           width: 80,
                           height: 40,
                           child: UpButton(
-                            colorType: UpColorType.tertiary,
                             onPressed: () {
                               _attributeAddDialog();
                             },
@@ -158,7 +158,7 @@ class _AddEditFiltersWidgetState extends State<AddEditFiltersWidget> {
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                1.3,
+                                                1.8,
                                         child: AttributeDropdownWidget(
                                           attribute: element,
                                           attributeValues: attributeValues,
@@ -182,7 +182,7 @@ class _AddEditFiltersWidgetState extends State<AddEditFiltersWidget> {
                                           _attributeValueAddDialog(element);
                                         },
                                         type: UpButtonType.icon,
-                                        child: const Icon(Icons.add),
+                                        child: const UpIcon(icon: Icons.add),
                                       ),
                                     ],
                                   );
